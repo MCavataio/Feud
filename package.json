@@ -10,8 +10,15 @@
   "license": "ISC",
   "dependencies": {
     "angular-router": "0.0.2",
+    "bluebird": "^3.0.6",
     "body-parser": "^1.14.1",
     "express": "^4.13.3",
-    "morgan": "^1.6.1"
+    "fs": "0.0.2",
+    "morgan": "^1.6.1",
+    "mysql": "^2.9.0",
+    "path": "^0.12.7",
+    "pg": "^4.4.3",
+    "q": "^1.4.1",
+    "sequelize": "^3.14.2"
   }
 }

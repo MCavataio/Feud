@@ -1,5 +1,7 @@
 angular.module('feud', [
   'feud.query',
+  'feud.game',
+  'feud.services',
   'ui.router'
 ])
 
@@ -15,6 +17,10 @@ angular.module('feud', [
     .state('query', {
       url: '/query',
       templateUrl: 'query/query.html'
-    });
+    })
+    .state('game', {
+      url: '/game',
+      templateUrl: 'game/game.html'
+    })
 });
 

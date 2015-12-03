@@ -1,0 +1,7 @@
+<div ng-controller="GameController">
+  <button type="button" id="playGame" ng-click="startRound()">Play Round</button>
+  <form name="Guess" ng-submit="makeGuess()">
+    <input type="text" placeholder='Make Guess' ng-model="data.guess">
+      <button> Make Guess</button>
+  </form>
+</div>

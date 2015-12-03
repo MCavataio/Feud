@@ -1,10 +1,10 @@
 angular.module("feud.query", [])
 
-.controller("QueryController", function($scope, $window, $location) {
+.controller("QueryController", function($scope, $window, $location, Query) {
   $scope.data = {};
 
   $scope.addSearch = function() {
-    console.log('in addsearch');
+    var query = {title: $scope.data.search};
     console.log($scope.data.search)
     var suggestCallBack; // global var for autocomplete jsonp
     var request = {term: $scope.data.search};
@@ -16,8 +16,17 @@ angular.module("feud.query", [])
         "client":"youtube" // force youtube style response, i.e. jsonp
       })
     .then(function(data) {
-      data[1].forEach(function(team) {
-        console.log(team)
+      console.log(data[1])
+      for (var i = 0; i < data[1].length; i++ ){
+         console.log(data[1][i][0])
+        query["response" + (i + 1)] = data[1][i][0];
+      }
+    Query.addSearch(query)
+      .then(function() {
+        $scope.data.query = "";
+      }).catch(function (error) {
+        console.log("Error in submitting Query", error);
+        $scope.data.query = "";
       })
     })
   }
