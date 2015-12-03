@@ -1,0 +1,27 @@
+{
+  "name": "thesis",
+  "description": "Google Game",
+  "main": "index.html",
+  "authors": [
+    "Michael Cavataio"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/MCavataio/googleFeud",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.8",
+    "angular-ui-router": "~0.2.15",
+    "jquery": "~2.1.4",
+    "underscore": "~1.8.3",
+    "angular-route": "~1.4.8"
+  }
+}
