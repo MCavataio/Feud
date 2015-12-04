@@ -4,17 +4,17 @@ var Promise = require('bluebird')
 
 module.exports = {
   findOrCreateQuery: function (newQuery) {
-  var title = newQuery.title;
-  var response1 = newQuery.response1;
-  var response2 = newQuery.response2;
-  var response3 = newQuery.response3;
-  var response4 = newQuery.response4;
-  var response5 = newQuery.response5;
-  var response6 = newQuery.response6;
-  var response7 = newQuery.response7;
-  var response8 = newQuery.response8;
-  var response9 = newQuery.response9;
-  var response10 = newQuery.respose10;
+    var title = newQuery.title;
+    var response1 = newQuery.response1;
+    var response2 = newQuery.response2;
+    var response3 = newQuery.response3;
+    var response4 = newQuery.response4;
+    var response5 = newQuery.response5;
+    var response6 = newQuery.response6;
+    var response7 = newQuery.response7;
+    var response8 = newQuery.response8;
+    var response9 = newQuery.response9;
+    var response10 = newQuery.respose10;
     console.log(newQuery.response1 + "    ++++++++++++");
     return new Promise(function (resolve, reject) {
       db.Query.findOrCreate({
@@ -34,9 +34,25 @@ module.exports = {
         }
 
       }).spread(function (query, created) {
-        console.log(query)
-        // resolve(query, created)
+        resolve(query, created)
       }).catch(reject);
     })
+  },
+  getCount: function(cb) {
+    db.Query.findAndCountAll({}).then(function (size) {
+      cb (null, size);
+    }).catch(function (err) {
+      cb(err);
+    })
+
+  },
+  getQuery: function(id, cb) {
+    db.Query.findOne({where: {id: id}})
+    .then(function (query) {
+      cb(null, query)
+    }).catch(function (err) {
+      cb(err);
+    })
   }
+
 }

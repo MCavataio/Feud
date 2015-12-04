@@ -7,6 +7,7 @@ module.exports = function (app, express) {
   // var bracketRouter = express.Router();
   // var participantRouter = express.Router();
   var queryRouter = express.Router();
+  var gameRouter = express.Router();
 
   app.use(morgan('dev'));
   app.use(bodyParser.json());
@@ -16,9 +17,11 @@ module.exports = function (app, express) {
 
   // app.use('/api/users', userRouter);
   app.use('/api/queries', queryRouter);
+  app.use('/api/game', gameRouter);
   // app.use('/api/bracket', bracketRouter);
 
   // app.use('/api/participants' paricipantsRouter);
+  require('../game/gameRoutes.js')(gameRouter);
   require('../query/queryRoutes.js')(queryRouter);
   // require('../brackets/bracketRoutes.js')(bracketRouter);
   // require('../users/userRoutes.js')(userRouter)

@@ -22,6 +22,10 @@ db.authenticate()
   })
   .done();
 
+var QueryCount = db.define('querycount', {
+  size: Sequelize.INTEGER
+})
+
 var Query = db.define('query', {
   title: Sequelize.STRING,
   response1: Sequelize.STRING, 
@@ -36,7 +40,7 @@ var Query = db.define('query', {
   response10: Sequelize.STRING
 });
 
-db.sync({force: true})
+db.sync()
   .then(function(err) {
     console.log('created database')
   }, function (err) {

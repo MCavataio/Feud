@@ -16,10 +16,26 @@ angular.module('feud.services', [])
   }
  })
 .factory('Game', function($http, $window, $location) {
-  var startRound = function() {
-    console.log('in factory SR')
+  var getCount = function() {
+    return $http({
+      method: "GET",
+      url: 'api/game/count'
+    }).then (function (response) {
+      return response;
+    });
+  }
+  var startRound = function(queryId) {
+    var url = 'api/game/query/' + queryId
+    return $http({
+      method: "GET",
+      url: url
+    }).then(function (response) {
+      return response;
+    })
   }
   return {
+    getCount: getCount,
     startRound: startRound
   }
+
 })
