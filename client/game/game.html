@@ -1,7 +1,13 @@
 <div ng-controller="GameController">
   <button type="button" id="playGame" ng-click="startRound()">Play Round</button>
+  <div ng-if="query.title">
+    <div>Complete the Search: {{query.title}}</div>
+    <div ng-repeat="response in query.responses track by $index">{{$index + 1}}<span ng-if="queryAnswer[$index]"> {{response}} </span></div>
+  </div>
+
   <form name="Guess" ng-submit="makeGuess()">
     <input type="text" placeholder='Make Guess' ng-model="data.guess">
       <button> Make Guess</button>
   </form>
+
 </div>

@@ -2,6 +2,8 @@ angular.module('feud.game', [])
 
 .controller('GameController', function($scope, $window, $location, Game){
   $scope.data = {};
+  $scope.query = {};
+  $scope.queryAnswer = {};
   var dataSize;
 
   $scope.getCount = function() {
@@ -14,18 +16,30 @@ angular.module('feud.game', [])
   };
 
   $scope.startRound = function() {
-    console.log(dataSize)
     var queryId = Math.ceil(Math.random() * dataSize)
-    console.log(queryId)
     Game.startRound(queryId).then(function (query) {
-      console.log(query)
+      $scope.query.title = query.title;
+      $scope.query.responses = query.responses;
+      $scope.data.guess = query.title + " ";
+      $scope.queryAnswer = {};
+      console.log($scope.query.responses);
     }).catch(function (error) {
       console.log("Error in retrieving query", error)
     })
   }
 
   $scope.makeGuess = function() {
-    console.log('in GC for makeGuess')
+    var index = $scope.query.responses.indexOf($scope.data.guess)
+    console.log(index)
+    console.log($scope.data.guess);
+    console.log($scope.query.responses)
+    if (index > -1) {
+      $scope.queryAnswer[index] = $scope.query.responses[index]
+      $scope.data.guess = $scope.query.title + " ";
+    }
+    else {
+      $scope.data.guess = $scope.query.title + " ";
+    }
   }
   $scope.getCount();
 })

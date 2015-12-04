@@ -24,13 +24,30 @@ angular.module('feud.services', [])
       return response;
     });
   }
+
   var startRound = function(queryId) {
     var url = 'api/game/query/' + queryId
     return $http({
       method: "GET",
       url: url
     }).then(function (response) {
-      return response;
+      var parsedResponses = function (response, count, query) {
+        if(!query) {
+          var query = {
+            title: response.data.title,
+            responses: []
+          }
+        }
+        count = count || 1
+        var queryResponse = "response" + count;
+        if (response.data[queryResponse]) {
+          query.responses.push(response.data[queryResponse])
+          return parsedResponses (response, count+1, query)
+        } else {
+          return query;
+        }
+      }
+      return parsedResponses(response)
     })
   }
   return {
