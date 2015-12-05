@@ -18,9 +18,9 @@ angular.module("feud.query", [])
     .then(function(data) {
       console.log(data[1])
       for (var i = 0; i < data[1].length; i++ ){
-         console.log(data[1][i][0])
         query["response" + (i + 1)] = data[1][i][0];
       }
+      console.log(query)
     Query.addSearch(query)
       .then(function() {
         $scope.data.query = "";

@@ -1,11 +1,12 @@
 angular.module('feud.game', [])
 
-.controller('GameController', function($scope, $window, $location, Game){
+.controller('GameController', function($scope, $window, $location, $timeout, Game){
   $scope.data = {};
   $scope.query = {};
   $scope.queryAnswer = {};
   var dataSize;
-
+  // need to optimize calls to database
+  // possibly retrieve 3 unique queries to use for each round
   $scope.getCount = function() {
     Game.getCount()
     .then(function(size) {
@@ -15,6 +16,22 @@ angular.module('feud.game', [])
     })
   };
 
+  //change to angular directive to optimize speed and reliablility
+  function timer() {
+    $scope.counter = 30;
+    $scope.onTimeout = function(){
+      if($scope.counter !==0) {
+        $scope.counter--;
+        mytimeout = $timeout($scope.onTimeout,1000);
+      }
+    }
+    var mytimeout = $timeout($scope.onTimeout,1000);
+
+  }
+  var stop = function(){
+    $timeout.cancel(mytimeout);
+  }
+
   $scope.startRound = function() {
     var queryId = Math.ceil(Math.random() * dataSize)
     Game.startRound(queryId).then(function (query) {
@@ -22,6 +39,8 @@ angular.module('feud.game', [])
       $scope.query.responses = query.responses;
       $scope.data.guess = query.title + " ";
       $scope.queryAnswer = {};
+      stop
+      timer();
       console.log($scope.query.responses);
     }).catch(function (error) {
       console.log("Error in retrieving query", error)
