@@ -40,6 +40,10 @@ angular.module('feud.services', [])
             }
           }
           count = count || 1
+          if(count > 5) {
+            console.log(query);
+            return query;
+          }
           var queryResponse = "response" + count;
           if (response.data[queryResponse]) {
             query.responses.push(response.data[queryResponse])

@@ -16,6 +16,8 @@ angular.module('feud.game', [])
     })
   };
 
+
+
   //change to angular directive to optimize speed and reliablility
   function timer() {
     $scope.counter = 30;
@@ -39,12 +41,18 @@ angular.module('feud.game', [])
       $scope.query.responses = query.responses;
       $scope.data.guess = query.title + " ";
       $scope.queryAnswer = {};
-      stop
       timer();
       console.log($scope.query.responses);
     }).catch(function (error) {
       console.log("Error in retrieving query", error)
     })
+  }
+  var scoreValues = {
+    1: 500,
+    2: 400,
+    3: 300,
+    4: 200,
+    5: 100
   }
 
   $scope.makeGuess = function() {
@@ -55,6 +63,9 @@ angular.module('feud.game', [])
     if (index > -1) {
       $scope.queryAnswer[index] = $scope.query.responses[index]
       $scope.data.guess = $scope.query.title + " ";
+      index++;
+      $scope.data.score = 0;
+      $scope.data.score += scoreValues[index];
     }
     else {
       $scope.data.guess = $scope.query.title + " ";
