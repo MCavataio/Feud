@@ -20,6 +20,7 @@ module.exports = {
       if (err) {
         console.log(err);
       } else {
+        req.io.emit('playRound', response)
         res.json(response);
       }
     })

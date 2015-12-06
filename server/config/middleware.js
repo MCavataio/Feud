@@ -2,10 +2,15 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var helpers = require('./helpers.js');
 
-module.exports = function (app, express) {
+
+module.exports = function(app, express, io) {
+
+  
   // var userRouter = express.Router();
   // var bracketRouter = express.Router();
   // var participantRouter = express.Router();
+
+
   var queryRouter = express.Router();
   var gameRouter = express.Router();
 
@@ -13,6 +18,10 @@ module.exports = function (app, express) {
   app.use(bodyParser.json());
   console.log(__dirname);
   app.use(express.static(__dirname + '/../../client'));
+  app.use('/', function(req, res, next) {
+    req.io = io;
+    next();
+  });
 
 
   // app.use('/api/users', userRouter);
@@ -21,7 +30,7 @@ module.exports = function (app, express) {
   // app.use('/api/bracket', bracketRouter);
 
   // app.use('/api/participants' paricipantsRouter);
-  require('../game/gameRoutes.js')(gameRouter);
+  require('../game/gameRoutes.js')(gameRouter, io);
   require('../query/queryRoutes.js')(queryRouter);
   // require('../brackets/bracketRoutes.js')(bracketRouter);
   // require('../users/userRoutes.js')(userRouter)

@@ -1,6 +1,6 @@
 angular.module('feud.game', [])
 
-.controller('GameController', function($scope, $window, $location, $timeout, Game){
+.controller('GameController', function($scope, $window, $location, Game, socketio){
   $scope.data = {};
   $scope.query = {};
   $scope.queryAnswer = {};
@@ -15,7 +15,15 @@ angular.module('feud.game', [])
       console.log("Error in retrieving size", error)
     })
   };
-
+  
+  socketio.on('playRound', function(query) {
+    console.log('in socket')
+      $scope.query.title = query.title;
+      $scope.query.responses = query.responses;
+      $scope.data.guess = query.title + " ";
+      $scope.queryAnswer = {};
+      timer();
+  })
 
 
   //change to angular directive to optimize speed and reliablility
@@ -29,9 +37,9 @@ angular.module('feud.game', [])
     }
     var mytimeout = $timeout($scope.onTimeout,1000);
 
-  }
-  var stop = function(){
-    $timeout.cancel(mytimeout);
+    var stop = function(){
+      $timeout.cancel(mytimeout);
+    }
   }
 
   $scope.startRound = function() {
@@ -64,7 +72,7 @@ angular.module('feud.game', [])
       $scope.queryAnswer[index] = $scope.query.responses[index]
       $scope.data.guess = $scope.query.title + " ";
       index++;
-      $scope.data.score = 0;
+      $scope.data.score = $scope.data.score || 0;
       $scope.data.score += scoreValues[index];
     }
     else {
