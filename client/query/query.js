@@ -1,7 +1,12 @@
 angular.module("feud.query", [])
 
-.controller("QueryController", function($scope, $window, $location, Query) {
+.controller("QueryController", function($scope, $window, $location, Query, socketio) {
   $scope.data = {};
+
+  $scope.gameTime = function() {
+    socketio.emit('gameTime');
+    $location.path('/game');
+  }
 
   $scope.addSearch = function() {
     var query = {title: $scope.data.search};

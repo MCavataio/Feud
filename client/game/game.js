@@ -18,10 +18,13 @@ angular.module('feud.game', [])
   
   socketio.on('playRound', function(query) {
     console.log('in socket')
+    console.log(query);
+      query = parsedResponses(query, true)
       $scope.query.title = query.title;
       $scope.query.responses = query.responses;
       $scope.data.guess = query.title + " ";
       $scope.queryAnswer = {};
+      consol.log(query.responses)
       timer();
   })
 
@@ -42,9 +45,36 @@ angular.module('feud.game', [])
     }
   }
 
+  var parsedResponses = function (response, isSocket, count, query) {
+    var data = response.data;
+    if (isSocket) {
+      data = response;
+    } 
+    console.log("parsedResponses", data);
+          if(!query) {
+            var query = {
+              title: data.title,
+              responses: []
+            }
+          }
+          count = count || 1
+          if(count > 5) {
+            console.log(query);
+            return query;
+          }
+          var queryResponse = "response" + count;
+          if (data[queryResponse]) {
+            query.responses.push(data[queryResponse])
+            return parsedResponses (response, isSocket, count+1, query)
+          } else {
+            return query;
+          }
+        }
+
   $scope.startRound = function() {
     var queryId = Math.ceil(Math.random() * dataSize)
     Game.startRound(queryId).then(function (query) {
+      query = parsedResponses(query, false)
       $scope.query.title = query.title;
       $scope.query.responses = query.responses;
       $scope.data.guess = query.title + " ";

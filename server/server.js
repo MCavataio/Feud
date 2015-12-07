@@ -4,8 +4,6 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http)
 // var db = require("./db/dbconfig.js");
 
-
-
 require('./config/middleware.js')(app, express, io);
 
 http.listen(3000)

@@ -26,6 +26,10 @@ var QueryCount = db.define('querycount', {
   size: Sequelize.INTEGER
 })
 
+var User = db.define('user', {
+  name: Sequelize.STRING
+})
+
 var Query = db.define('query', {
   title: Sequelize.STRING,
   response1: Sequelize.STRING, 

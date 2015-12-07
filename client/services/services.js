@@ -32,27 +32,7 @@ angular.module('feud.services', [])
         method: "GET",
         url: url
       }).then(function (response) {
-        var parsedResponses = function (response, count, query) {
-          if(!query) {
-            var query = {
-              title: response.data.title,
-              responses: []
-            }
-          }
-          count = count || 1
-          if(count > 5) {
-            console.log(query);
-            return query;
-          }
-          var queryResponse = "response" + count;
-          if (response.data[queryResponse]) {
-            query.responses.push(response.data[queryResponse])
-            return parsedResponses (response, count+1, query)
-          } else {
-            return query;
-          }
-        }
-        return parsedResponses(response)
+        return response;
       })
     }
   return {

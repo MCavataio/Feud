@@ -9,4 +9,5 @@ module.exports = {
     var query = req.body.query
     helpers.findOrCreateQuery(query)
   }
+  
 }
