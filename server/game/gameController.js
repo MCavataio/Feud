@@ -10,7 +10,7 @@ module.exports = {
     helpers.getCount(function(err, response) {
       if (err) {
         console.log(err);
-      } else {
+      } else {  
         res.json(response);
       }
     })
@@ -23,10 +23,15 @@ module.exports = {
         console.log(err);
       } else {
         // if(participants.length > 1) {
+          
           req.io.emit('playRound', response);
+
         // }
         res.json(response);
       }
     })
+  },
+  startGame: function(req, res, next) {
+
   }
 }

@@ -1,6 +1,6 @@
 angular.module('feud.game', [])
 
-.controller('GameController', function($scope, $window, $location, Game, socketio){
+.controller('GameController', function($scope, $window, $location, Game, socket){
   $scope.data = {};
   $scope.query = {};
   $scope.queryAnswer = {};
@@ -16,7 +16,7 @@ angular.module('feud.game', [])
     })
   };
   
-  socketio.on('playRound', function(query) {
+  socket.on('playRound', function() {
     console.log('in socket')
     console.log(query);
       query = parsedResponses(query, true)
@@ -72,6 +72,7 @@ angular.module('feud.game', [])
         }
 
   $scope.startRound = function() {
+    socket.emit('startRound');
     var queryId = Math.ceil(Math.random() * dataSize)
     Game.startRound(queryId).then(function (query) {
       query = parsedResponses(query, false)
