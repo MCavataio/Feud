@@ -10,11 +10,36 @@ module.exports = {
     helpers.getCount(function(err, response) {
       if (err) {
         console.log(err);
-      } else {  
-        res.json(response);
+      } else {
+        helpers.getNumbers(response, function(err, response) {
+          if (err) {
+            console.log(err) 
+          } else {
+            helpers.getQueries(response, function(err, queries) {
+              if (err) {
+                console.log(err);
+              } else {
+                // console.log(response);
+                res.json(queries);;
+              }
+            });
+          }
+        })  
       }
     })
   },
+        
+        // helpers.getQueries(numbers, function(err, response) {
+        //   if (err) {
+        //     console.log(err);
+        //   } else {
+        //     // console.log(response);
+        //     res.json(response);
+        //   }
+        // })
+  //     }
+  //   })
+  // },
   // var participants = [];
   startRound: function(req, res, next) {
     console.log(req.params.id)
@@ -23,11 +48,11 @@ module.exports = {
         console.log(err);
       } else {
         // if(participants.length > 1) {
-          
-          req.io.emit('playRound', response);
+
+          req.io.sockets.to('1').emit('playRound', response)
 
         // }
-        res.json(response);
+        // res.json(response);
       }
     })
   },

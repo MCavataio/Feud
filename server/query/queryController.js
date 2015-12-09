@@ -3,6 +3,7 @@ var Q = require('q');
 var helpers = require('../config/helpers.js')
 var Promise = require('bluebird');
 var Query = db.Query;
+var rooms = [];
 
 
 module.exports = {
@@ -11,6 +12,24 @@ module.exports = {
     helpers.findOrCreateQuery(query)
   },
   createRoom: function(req, res, next) {
-    res.json({room: 1})
+    if(rooms.length > 0) {
+      // console.log('in createRoom', rooms);
+      var last = rooms.length - 1;
+      // console.log(rooms[last].full, "+++++++++++")
+        if (rooms[last].full === false) {
+          rooms[last].full = true;
+        } else {
+          var value = rooms[last].value
+          value++
+          rooms.push({value: value, full: false})
+          // console.log(rooms,"in else adding new +++++++++++")
+        }
+    } else {
+      
+      rooms.push({value: 1, full: false});
+      // console.log(rooms, "in else")
+    }
+    // console.log(rooms, "before sending ++=+======+++")
+    res.json({room: rooms[rooms.length -1].value})
   }
 }

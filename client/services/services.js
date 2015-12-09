@@ -48,6 +48,22 @@ angular.module('feud.services', [])
     startRound: startRound
   }
 })
+// .factory('Shared', function($rootScope) {
+//     var sharedService = {};
+    
+//     sharedService.message = {};
+
+//     sharedService.prepForBroadcast = function(msg) {
+//         this.message = msg;
+//         this.broadcastItem();
+//     };
+
+//     sharedService.broadcastItem = function() {
+//         $rootScope.$broadcast('handleBroadcast');
+//     };
+
+//     return sharedService;
+// }) 
   // brian ford socket wrapper implementation
 .factory('socket', function ($rootScope) {
   var socket = io.connect('http://localhost:3000/', {
@@ -55,7 +71,7 @@ angular.module('feud.services', [])
   return {
     on: function (eventName, callback) {
       socket.on(eventName, function() {
-        var args = arguments;
+        var args = arguments; 
         $rootScope.$apply(function () {
           callback.apply(socket, args);
         });

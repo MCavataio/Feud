@@ -41,6 +41,48 @@ module.exports = {
     }).catch(function (err) {
       cb(err);
     })
+  },
+  getNumbers: function(response, cb) {
+    var numbers = [];
+    var queries = {};
+      for (var i = 1; i <= 3; i++ ) {
+        var randomIndex = Math.ceil(Math.random() * response.count);
+        console.log(numbers)
+        console.log(randomIndex)
+        console.log(numbers.indexOf(randomIndex))
+        if (numbers.indexOf(randomIndex)) {
+
+          while(numbers.indexOf(randomIndex) != -1) {
+            console.log('in here index')
+            randomIndex = Math.ceil(Math.random() * response.count)
+            console.log(randomIndex)
+            test = numbers.indexOf(randomIndex)
+          }
+        }
+      numbers.push(randomIndex);
+    }
+    console.log(numbers);
+    if (numbers) {
+      cb(null, numbers);
+    } else {
+      cb(numbers);
+    }
+    // if (numbers) {
+    //   console.log(numbers, "_____________________")
+    //   return cb(null, numbers)
+    // } else {
+    //   return cb(numbers)
+    // }
+  },
+
+  getQueries: function(ids, cb) {
+    db.Query.findAll({where: {id: ids}
+    })
+    .then(function (query) {
+      cb(null, query)
+    }).catch(function (err) {
+      cb(err);
+    })
   }
 
 }

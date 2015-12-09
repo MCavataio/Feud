@@ -1,48 +1,24 @@
 angular.module("feud.query", [])
 
-.controller("QueryController", function($scope, $window, $location, Query, socket) {
+.controller("QueryController", function($rootScope, $scope, $window, $location, Query, socket) {
   $scope.data = {};
   $scope.socket = 0;
   var room;
   socket.on('playRound', function(response) {
-    
     $location.path('/game');
-  })
+    $scope.room(response);
+  }); 
 
   $scope.createRoom = function() {
     Query.createRoom()
     .then(function(room) {
+      console.log('in create room', room)
       socket.emit('changeRoom', {room: room})
     })
   }
 
-  // socket.on('init', function (data) {
-  //   $scope.name = data.name;
-  //   $scope.users = data.users;
-  // });
-
-  // socket.on('send:message', function (message) {
-  //   $scope.messages.push(message);
-  // });
-
-  // socket.on('change:name', function (data) {
-  //   changeName(data.oldName, data.newName);
-  // });
-
-  // socket.on('user:join', function (data) {
-  //   $scope.messages.push({
-  //     user: 'chatroom',
-  //     text: 'User ' + data.name + ' has joined.'
-  //   });
-  //   $scope.users.push(data.name);
-  // });
-  
-  // socketio.on('playRound', function(message) {
-  //   $scope.socket = message;
-  // })
   $scope.signIn = function() {
     Query.signIn($scope.userName)
-
   }
 
   $scope.addSearch = function() {

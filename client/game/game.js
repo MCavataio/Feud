@@ -1,30 +1,35 @@
 angular.module('feud.game', [])
 
-.controller('GameController', function($scope, $window, $location, Game, socket){
+.controller('GameController', function($rootScope, $scope, $window, $location, Game, socket){
   $scope.data = {};
   $scope.query = {};
   $scope.queryAnswer = {};
+  var room = 5;
   var dataSize;
   // need to optimize calls to database
   // possibly retrieve 3 unique queries to use for each round
   $scope.getCount = function() {
     Game.getCount()
-    .then(function(size) {
-      dataSize = size.data.count
+    .then(function(response) {
+      console.log(response)
     }).catch(function(error) {
       console.log("Error in retrieving size", error)
     })
-  };
+  }
+
+  // way to share data between controllers
+  $rootScope.room = function(data) {
+    room = data;
+  }
   
-  socket.on('playRound', function() {
-    console.log('in socket')
-    console.log(query);
+  socket.on('playRound', function(query) {
+    console.log(query, "query, room: ", room);
       query = parsedResponses(query, true)
       $scope.query.title = query.title;
       $scope.query.responses = query.responses;
       $scope.data.guess = query.title + " ";
       $scope.queryAnswer = {};
-      consol.log(query.responses)
+      console.log(query.responses)
       timer();
   })
 
@@ -72,7 +77,7 @@ angular.module('feud.game', [])
         }
 
   $scope.startRound = function() {
-    socket.emit('startRound');
+    // socket.emit('startRound');
     var queryId = Math.ceil(Math.random() * dataSize)
     Game.startRound(queryId).then(function (query) {
       query = parsedResponses(query, false)
