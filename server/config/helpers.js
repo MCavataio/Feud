@@ -46,33 +46,20 @@ module.exports = {
     var numbers = [];
     var queries = {};
       for (var i = 1; i <= 3; i++ ) {
-        var randomIndex = Math.ceil(Math.random() * response.count);
-        console.log(numbers)
-        console.log(randomIndex)
-        console.log(numbers.indexOf(randomIndex))
-        if (numbers.indexOf(randomIndex)) {
-
-          while(numbers.indexOf(randomIndex) != -1) {
-            console.log('in here index')
-            randomIndex = Math.ceil(Math.random() * response.count)
-            console.log(randomIndex)
-            test = numbers.indexOf(randomIndex)
-          }
+        var count = 0;
+        while(count < 1) {
+          var randomIndex = Math.ceil(Math.random() * response.count)
+          if(numbers.indexOf(randomIndex) === -1) {
+            count++
+            numbers.push(randomIndex);
+          } 
         }
-      numbers.push(randomIndex);
-    }
-    console.log(numbers);
+      }
     if (numbers) {
       cb(null, numbers);
     } else {
       cb(numbers);
     }
-    // if (numbers) {
-    //   console.log(numbers, "_____________________")
-    //   return cb(null, numbers)
-    // } else {
-    //   return cb(numbers)
-    // }
   },
 
   getQueries: function(ids, cb) {

@@ -6,6 +6,7 @@ var Query = db.Query;
 
 
 module.exports = {
+  //possible refactoring to get Queries
   getCount: function(req, res, next) {
     helpers.getCount(function(err, response) {
       if (err) {
@@ -19,7 +20,6 @@ module.exports = {
               if (err) {
                 console.log(err);
               } else {
-                // console.log(response);
                 res.json(queries);;
               }
             });
@@ -28,19 +28,7 @@ module.exports = {
       }
     })
   },
-        
-        // helpers.getQueries(numbers, function(err, response) {
-        //   if (err) {
-        //     console.log(err);
-        //   } else {
-        //     // console.log(response);
-        //     res.json(response);
-        //   }
-        // })
-  //     }
-  //   })
-  // },
-  // var participants = [];
+
   startRound: function(req, res, next) {
     console.log(req.params.id)
     helpers.getQuery(req.params.id, function (err, response) {
