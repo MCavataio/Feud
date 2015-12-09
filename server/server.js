@@ -2,6 +2,7 @@ var express = require ('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http)
+var GC = require('./game/gameController.js');
 // var db = require("./db/dbconfig.js");
 
 require('./config/middleware.js')(app, express, io);
@@ -33,13 +34,27 @@ io.on('connection', function(socket) {
 socket.on('changeRoom', function(data) {
   // this.leave(this.room)
   // this.join("" + data.room)
-  var nRoom = data.room.data.room
-  socket.join(nRoom);
-  var room = io.sockets.adapter.rooms[nRoom];
+  var nRoom = {
+    value: data.room.data.room,
+    io: io
+  }
+  socket.join(nRoom.value);
+  console.log(nRoom.value, "++++++++++++++++")
+  var room = io.sockets.adapter.rooms[nRoom.value];
   var length = Object.keys(room).length
   console.log(length)
   if (length === 2) {
-    io.sockets.in(nRoom).emit('playRound', {room: nRoom})
+    io.sockets.to(nRoom.value).emit('playRound', {room: nRoom.value})
+    GC.getQueries(nRoom)
+
+    //    ) function(err, queries) {
+    //   if (err) {
+    //     console.log(err)
+    //   } else {
+    //     console.log(queries)
+    //     io.sockets.in(nRoom).emit('startRound', queries)
+    //   }
+    // })
   }
   // console.log(socket.room)
 })

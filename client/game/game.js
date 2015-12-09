@@ -3,33 +3,40 @@ angular.module('feud.game', [])
 .controller('GameController', function($rootScope, $scope, $window, $location, Game, socket){
   $scope.data = {};
   $scope.query = {};
+  var queries;
+  var questions = {}
   $scope.queryAnswer = {};
   var room = 5;
   var dataSize;
   // need to optimize calls to database
   // possibly retrieve 3 unique queries to use for each round
-  $scope.getCount = function() {
-    Game.getCount()
-    .then(function(response) {
-      console.log(response)
-    }).catch(function(error) {
-      console.log("Error in retrieving size", error)
-    })
-  }
+  // $scope.getCount = function() {
+  //   console.log(room, "before calling function")
+  //   Game.getCount(room)
+  //   .then(function(response) {
+  //     queries = response;
+  //     console.log(queries)
+  //   }).catch(function(error) {
+  //     console.log("Error in retrieving size", error)
+  //   })
+  // }
 
   // way to share data between controllers
   $rootScope.room = function(data) {
     room = data;
   }
+  socket.on('startRound', function(response) {
+    console.log(response)
+  })
   
   socket.on('playRound', function(query) {
-    console.log(query, "query, room: ", room);
+    // console.log(query, "query, room: ", room);
       query = parsedResponses(query, true)
       $scope.query.title = query.title;
       $scope.query.responses = query.responses;
       $scope.data.guess = query.title + " ";
       $scope.queryAnswer = {};
-      console.log(query.responses)
+      // console.log(query.responses)
       timer();
   })
 
@@ -50,12 +57,9 @@ angular.module('feud.game', [])
     }
   }
 
-  var parsedResponses = function (response, isSocket, count, query) {
-    var data = response.data;
-    if (isSocket) {
-      data = response;
-    } 
-    console.log("parsedResponses", data);
+  var parsedResponses = function (response, count, query) {
+    var data = response;
+    
           if(!query) {
             var query = {
               title: data.title,
@@ -70,27 +74,33 @@ angular.module('feud.game', [])
           var queryResponse = "response" + count;
           if (data[queryResponse]) {
             query.responses.push(data[queryResponse])
-            return parsedResponses (response, isSocket, count+1, query)
+            return parsedResponses (response, count+1, query)
           } else {
             return query;
           }
         }
 
-  $scope.startRound = function() {
+  socket.on('playRound', function() { 
     // socket.emit('startRound');
-    var queryId = Math.ceil(Math.random() * dataSize)
-    Game.startRound(queryId).then(function (query) {
-      query = parsedResponses(query, false)
-      $scope.query.title = query.title;
-      $scope.query.responses = query.responses;
-      $scope.data.guess = query.title + " ";
+      if (!$scope.data.round) {
+        $scope.data.round = 1;
+      }
+     _.each(queries.data, function(query, index) {
+        console.log(query.title, index)
+        questions[index] = parsedResponses(query)
+      })
+      var number = $scope.data.round - 1;
+      $scope.query.title = questions[number].title;
+      $scope.query.responses = questions[number].responses;
+      $scope.data.guess = questions[number].title + " ";
       $scope.queryAnswer = {};
       timer();
-      console.log($scope.query.responses);
-    }).catch(function (error) {
-      console.log("Error in retrieving query", error)
-    })
-  }
+      $scope.data.round++
+      // console.log($scope.query.responses);
+    // }).catch(function (error) {
+    //   console.log("Error in retrieving query", error)
+    // })
+  });
   var scoreValues = {
     1: 500,
     2: 400,
@@ -101,9 +111,7 @@ angular.module('feud.game', [])
 
   $scope.makeGuess = function() {
     var index = $scope.query.responses.indexOf($scope.data.guess)
-    console.log(index)
-    console.log($scope.data.guess);
-    console.log($scope.query.responses)
+  
     if (index > -1) {
       $scope.queryAnswer[index] = $scope.query.responses[index]
       $scope.data.guess = $scope.query.title + " ";
@@ -115,5 +123,5 @@ angular.module('feud.game', [])
       $scope.data.guess = $scope.query.title + " ";
     }
   }
-  $scope.getCount();
+  // $scope.getCount();
 })

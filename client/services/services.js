@@ -26,10 +26,12 @@ angular.module('feud.services', [])
   }
  })
 .factory('Game', function($http, $window, $location) {
-  var getCount = function() {
+  var getCount = function(room) {
+    console.log('in get count')
+    var url = 'api/game/queries/' + room;
     return $http({
       method: "GET",
-      url: 'api/game/count'
+      url: url
     }).then (function (response) {
       return response;
     });

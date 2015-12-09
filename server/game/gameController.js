@@ -8,6 +8,7 @@ var Query = db.Query;
 module.exports = {
   //possible refactoring to get Queries
   getCount: function(req, res, next) {
+    console.log(req.param.id)
     helpers.getCount(function(err, response) {
       if (err) {
         console.log(err);
@@ -20,7 +21,33 @@ module.exports = {
               if (err) {
                 console.log(err);
               } else {
-                res.json(queries);;
+                req.io.sockets.in(req.param.id).emit('startRound', response)
+                res.json(queries);
+              }
+            });
+          }
+        })  
+      }
+    })
+  },
+
+  getQueries: function(room) {
+   console.log('inside get Queries +++++++++++++++++++')
+   helpers.getCount(function(err, response) {
+      if (err) {
+        console.log(err);
+      } else {
+        helpers.getNumbers(response, function(err, response) {
+          if (err) {
+            console.log(err) 
+          } else {
+            helpers.getQueries(response, function(err, queries) {
+              if (err) {
+                console.log(err);
+              } else {
+                // return response
+                room.io.to(room.value).emit('startRound', queries)
+                // res.json(queries);
               }
             });
           }
@@ -35,11 +62,7 @@ module.exports = {
       if (err) {
         console.log(err);
       } else {
-        // if(participants.length > 1) {
-
-          req.io.sockets.to('1').emit('playRound', response)
-
-        // }
+          req.io.sockets.to('req.paramas.id').emit('playRound', response)
         // res.json(response);
       }
     })
