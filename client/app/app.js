@@ -1,5 +1,5 @@
 angular.module('feud', [
-  'feud.query',
+  'feud.home',
   'feud.game',
   'feud.services',
   'ui.router'
@@ -11,8 +11,8 @@ angular.module('feud', [
   $stateProvider
     .state('/', {
       url: '/',
-      templateUrl:'query/query.html',
-      controller: 'QueryController'
+      templateUrl:'home/home.html',
+      controller: 'HomeController'
     })
     .state('query', {
       url: '/query',

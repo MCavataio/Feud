@@ -4,6 +4,7 @@ angular.module('feud.game', [])
   $scope.data = {};
   $scope.query = {};
   $scope.questions = {};
+  $scope.data.opponentScore = 0;
   var query;
   var gameTimer = 10; 
   var questions = {}
@@ -39,10 +40,14 @@ angular.module('feud.game', [])
     gameInfo($scope.questions, 1);
     timer();
   })
-
-  socket.on('updateScore', function(score) {
-    $scope.data.oppenentScore = score;
-  })
+  socket.on('updateScore', function(data) {
+    console.log(data.score)
+    $scope.data.opponentScore = $scope.data.opponentScore || 0
+    if (data.score > 0) {
+        $scope.data.opponentScore = $scope.data.opponentScore + data.score;
+      }
+    })
+  
 
   var gameInfo = function(query, number) {
     number = number - 1

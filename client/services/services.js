@@ -1,6 +1,6 @@
 angular.module('feud.services', [])
 
-.factory('Query', function ($http, $location, $window) {
+.factory('Home', function ($http, $location, $window) {
   var addSearch = function(search) {
     console.log(search ,"++++++")
 
@@ -12,10 +12,16 @@ angular.module('feud.services', [])
       }
     })
   }
+  var login = function(user) {
+    return $http({
+      method: 'POST',
+      url: 'api/home/login'
+    })
+  }
   var createRoom = function() {
     return $http({
       method: 'GET',
-      url: 'api/queries/room',
+      url: 'api/home/room',
     }).then(function(response) {
       return response;
     })

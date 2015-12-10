@@ -11,7 +11,7 @@ module.exports = function(app, express, io) {
   // var participantRouter = express.Router();
 
 
-  var queryRouter = express.Router();
+  var homeRouter = express.Router();
   var gameRouter = express.Router();
 
   app.use(morgan('dev'));
@@ -25,13 +25,13 @@ module.exports = function(app, express, io) {
 
 
   // app.use('/api/users', userRouter);
-  app.use('/api/queries', queryRouter);
+  app.use('/api/home', homeRouter);
   app.use('/api/game', gameRouter);
   // app.use('/api/bracket', bracketRouter);
 
   // app.use('/api/participants' paricipantsRouter);
   require('../game/gameRoutes.js')(gameRouter, io);
-  require('../query/queryRoutes.js')(queryRouter);
+  require('../home/homeRoutes.js')(homeRouter);
   // require('../brackets/bracketRoutes.js')(bracketRouter);
   // require('../users/userRoutes.js')(userRouter)
 }
