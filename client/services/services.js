@@ -68,6 +68,7 @@ angular.module('feud.services', [])
 // }) 
   // brian ford socket wrapper implementation
 .factory('socket', function ($rootScope) {
+  console.log('inside factory')
   var socket = io.connect('http://localhost:3000/', {
     'sync disconnect on unload': true });
   return {
@@ -90,4 +91,7 @@ angular.module('feud.services', [])
       });
     },
   };
+  return {
+    socket: socket
+  }
 })

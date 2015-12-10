@@ -5,6 +5,7 @@ angular.module('feud.game', [])
   $scope.query = {};
   $scope.questions = {};
   var query;
+  var gameTimer = 10; 
   var questions = {}
   $scope.queryAnswer = {};
   var dataSize;
@@ -34,8 +35,13 @@ angular.module('feud.game', [])
     socket.emit('getQueries')
     $scope.questions = parsedResponses(query)
     $scope.data.round = 1;
+    $scope.data.total = 0;
     gameInfo($scope.questions, 1);
     timer();
+  })
+
+  socket.on('updateScore', function(score) {
+    $scope.data.oppenentScore = score;
   })
 
   var gameInfo = function(query, number) {
@@ -48,8 +54,11 @@ angular.module('feud.game', [])
 
   var nextRound = function() {
     var round = Number($scope.data.round);
-    console.log(round)
-    console.log('in next round', $scope.data.round <= 3)
+    var roundScore = $scope.data.score;
+    $scope.data.score = 0;
+    $scope.data.total = $scope.data.total + roundScore || 0;
+    socket.emit('updateScore', $scope.data.total);
+    console.log('in next round', $scope.data.score <= 3)
     if (round <= 3) {
       console.log('in nextRound')
       // $timeout.cancel(myTimeout)
@@ -65,7 +74,7 @@ angular.module('feud.game', [])
 
   //change to angular directive to optimize speed and reliablility
   function timer() {
-    $scope.counter = 5;
+    $scope.counter = gameTimer;
     $scope.onTimeout = function(){
       if($scope.counter !==0) {
         $scope.counter--;
@@ -77,7 +86,7 @@ angular.module('feud.game', [])
         if ($scope.data.round !==3) {
           $scope.data.round++
           nextRound();
-          $scope.counter = 5;
+          $scope.counter = gameTimer;
         }
       }
     }

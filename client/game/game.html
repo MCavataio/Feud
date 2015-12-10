@@ -1,7 +1,8 @@
 <div ng-controller="GameController">
   <button type="button" id="playGame" ng-click="startRound()">Play Round</button>
   <div ng-if="query.title">
-    <h3>Current Score: {{data.score}}</h3>
+    <h3>Total Score: {{data.total}}</h3>
+    <h3>Round Score: {{data.score}}</h3>
     <h3>Round: {{data.round}} </h3>
     <h3>Time Remaining: {{counter}}</h3>
     <div>Complete the Search: {{query.title}}</div>
@@ -16,5 +17,9 @@
     <input type="text" placeholder='Make Guess' ng-model="data.guess">
       <button> Make Guess</button>
   </form>
+
+  <div>
+    <h3> Opponent Name: {{data.opponentName}} </h3>
+    <h3> Opponent Score: {{data.opponentScore}} </h3>
 
 </div>

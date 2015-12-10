@@ -2,31 +2,11 @@ var express = require ('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http)
-var GC = require('./server/game/gameController.js');
+var GC = require('./game/gameController.js');
 // var db = require("./db/dbconfig.js");
 
-require('./server/config/middleware.js')(app, express, io);
+require('./middleware.js')(app, express, io);
 
-
-// var nsp = io.of('/practice');
-// nsp.on('connection', function(socket){
-//   console.log('someone connected'):
-// });
-// nsp.emit('hi', 'everyone!');
-// var nsp = io.of('/1');
-// nsp.on('connection', function(socket) {
-//   // console.log(conn.id);
-//   console.log(socket.id, "connected in nsp")
-//   if (socket.server.eio.clientsCount > 2) {
-//     nsp.emit('playRound', 'everyone')
-//   } 
-//   //     'sync disconnect on unload': true });
-//   // connections.push(conn.id);
-//   socket.on('disconnect', function() {
-//     console.log(this.id, "logged out")
-//   });
-
-// })
 
 io.on('connection', function(socket) {
   console.log(socket.id, "connected")
@@ -47,26 +27,24 @@ socket.on('changeRoom', function(data) {
     setTimeout(function() {
       GC.getQueries(nRoom) 
     }, 2000)
-
-    //    ) function(err, queries) {
-    //   if (err) {
-    //     console.log(err)
-    //   } else {
-    //     console.log(queries)
-    //     io.sockets.in(nRoom).emit('startRound', queries)
-    //   }
-    // })
-  }
+  } 
   // console.log(socket.room)
 })
-socket.on('getQueries', function() {
+socket.on('updateScore', function(data) {
   // console.log(this)
+  console.log('from client' + data);
+  
 })
+})
+
+io.on('disconnect', function(conn) {
+  console.log(conn.id, " disconnected")
 })
 
 
 
 var port = process.env.PORT || 3000;
+
 
 http.listen(port)
 
