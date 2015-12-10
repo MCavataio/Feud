@@ -66,10 +66,10 @@ socket.on('getQueries', function() {
 
 
 
+var port = process.env.PORT || 3000;
 
 
-
-http.listen(3000)
+http.listen(port)
 
 console.log("connected to port: 3000")
 module.exports = app;
