@@ -50,10 +50,9 @@ angular.module('feud.game', [])
     var round = Number($scope.data.round);
     console.log(round)
     console.log('in next round', $scope.data.round <= 3)
-    if (round <= 2) {
+    if (round <= 3) {
       console.log('in nextRound')
       // $timeout.cancel(myTimeout)
-      $scope.data.round++
       gameInfo($scope.questions, round)
       timer()
     }
@@ -75,8 +74,11 @@ angular.module('feud.game', [])
       if($scope.counter === 0) {
         stop()
         console.log('reaching here')
-        nextRound();
-        $scope.counter = 5;
+        if ($scope.data.round !==3) {
+          $scope.data.round++
+          nextRound();
+          $scope.counter = 5;
+        }
       }
     }
 
