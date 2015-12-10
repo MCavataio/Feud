@@ -2,10 +2,10 @@ var express = require ('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http)
-var GC = require('./game/gameController.js');
+var GC = require('./server/game/gameController.js');
 // var db = require("./db/dbconfig.js");
 
-require('./config/middleware.js')(app, express, io);
+require('./server/config/middleware.js')(app, express, io);
 
 
 // var nsp = io.of('/practice');
