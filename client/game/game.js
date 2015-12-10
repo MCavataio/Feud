@@ -6,8 +6,8 @@ angular.module('feud.game', [])
   var queries;
   var questions = {}
   $scope.queryAnswer = {};
-  var room = 5;
   var dataSize;
+  var room;
   // need to optimize calls to database
   // possibly retrieve 3 unique queries to use for each round
   // $scope.getCount = function() {
@@ -25,20 +25,23 @@ angular.module('feud.game', [])
   $rootScope.room = function(data) {
     room = data;
   }
-  socket.on('startRound', function(response) {
-    console.log(response)
+
+  socket.on('startRound', function(query) {
+    room = query.room;
+    console.log(query.room)
+    console.log("query", query)
+    socket.emit('getQueries')
+    query = parsedResponses(query)
+    $scope.query.title = query[0].title;
+    $scope.query.responses = query[0].responses;
+    $scope.data.guess = query[0].title + " ";
+    $scope.queryAnswer = {};
+    timer();
   })
   
-  socket.on('playRound', function(query) {
-    // console.log(query, "query, room: ", room);
-      query = parsedResponses(query, true)
-      $scope.query.title = query.title;
-      $scope.query.responses = query.responses;
-      $scope.data.guess = query.title + " ";
-      $scope.queryAnswer = {};
-      // console.log(query.responses)
-      timer();
-  })
+  // socket.on('playRound', function(query) {
+  //   // console.log(query, "query, room: ", room);
+  // })
 
 
   //change to angular directive to optimize speed and reliablility
@@ -57,28 +60,48 @@ angular.module('feud.game', [])
     }
   }
 
-  var parsedResponses = function (response, count, query) {
-    var data = response;
-    
-          if(!query) {
-            var query = {
-              title: data.title,
-              responses: []
-            }
-          }
-          count = count || 1
-          if(count > 5) {
-            console.log(query);
-            return query;
-          }
-          var queryResponse = "response" + count;
-          if (data[queryResponse]) {
-            query.responses.push(data[queryResponse])
-            return parsedResponses (response, count+1, query)
-          } else {
-            return query;
-          }
+
+  var parsedResponses = function (data) {
+    var questions = {}
+    _.each(data, function(query, qNum) {
+    if(query) {
+      questions[qNum] = {
+        title: query.title,
+        responses: []
+      }
+      for (var i = 0; i < 5; i++) {
+        var queryResponse = "response" + (i + 1);
+        if (query[queryResponse]) {
+          questions[qNum].responses.push(query[queryResponse])
         }
+      }
+    }
+    })
+    console.log(questions)
+    return questions
+  }
+
+  // var parsedResponses = function(data, count, query, response) {}
+  //   response = response || 0;
+  //         if(!query) {
+  //           var query = {
+  //             title: data.title,
+  //             responses: []
+  //           }
+  //         }
+  //         count = count || 1
+  //         if(count > 5) {
+  //           console.log(query);
+  //           return query;
+  //         }
+  //         var queryResponse = "response" + count;
+  //         if (data[queryResponse]) {
+  //           query.responses.push(data[queryResponse])
+  //           return parsedResponses (response, count+1, query, response+1)
+  //         } else if (response === 2) {
+  //           return query;
+  //         }
+  //       }
 
   socket.on('playRound', function() { 
     // socket.emit('startRound');

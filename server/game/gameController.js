@@ -46,6 +46,8 @@ module.exports = {
                 console.log(err);
               } else {
                 // return response
+                console.log(room.value,"+++++++++++++++----------")
+                queries[3] = room.value
                 room.io.to(room.value).emit('startRound', queries)
                 // res.json(queries);
               }

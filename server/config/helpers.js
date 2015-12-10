@@ -42,6 +42,7 @@ module.exports = {
       cb(err);
     })
   },
+  
   getNumbers: function(response, cb) {
     var numbers = [];
     var queries = {};
@@ -60,6 +61,33 @@ module.exports = {
     } else {
       cb(numbers);
     }
+  },
+
+  getGameQueries: function(cb) {
+   console.log('inside get Queries +++++++++++++++++++')
+   this.getCount(function(err, response) {
+      if (err) {
+        console.log(err);
+      } else {
+        this.getNumbers(response, function(err, response) {
+          if (err) {
+            console.log(err) 
+          } else {
+            this.getQueries(response, function(err, queries) {
+              if (queries) {
+                cb(null, queries)
+              } else {
+                // return response
+                cb(queries);
+                // queries.room = room.value
+                // room.io.to(room.value).emit('startRound', queries)
+                // res.json(queries);
+              }
+            });
+          }
+        })  
+      }
+    })
   },
 
   getQueries: function(ids, cb) {

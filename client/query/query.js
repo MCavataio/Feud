@@ -12,7 +12,7 @@ angular.module("feud.query", [])
   $scope.createRoom = function() {
     Query.createRoom()
     .then(function(room) {
-      console.log('in create room', room)
+      // console.log('in create room', room)
       socket.emit('changeRoom', {room: room})
     })
   }

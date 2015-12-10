@@ -32,20 +32,21 @@ io.on('connection', function(socket) {
   console.log(socket.id, "connected")
 
 socket.on('changeRoom', function(data) {
-  // this.leave(this.room)
-  // this.join("" + data.room)
+  // data is the room number received from emit from queryController
   var nRoom = {
     value: data.room.data.room,
     io: io
   }
+  // joins respective room
   socket.join(nRoom.value);
-  console.log(nRoom.value, "++++++++++++++++")
+  // checks to see how many users are in current room;
   var room = io.sockets.adapter.rooms[nRoom.value];
   var length = Object.keys(room).length
-  console.log(length)
   if (length === 2) {
     io.sockets.to(nRoom.value).emit('playRound', {room: nRoom.value})
-    GC.getQueries(nRoom)
+    setTimeout(function() {
+      GC.getQueries(nRoom) 
+    }, 2000)
 
     //    ) function(err, queries) {
     //   if (err) {
@@ -57,6 +58,9 @@ socket.on('changeRoom', function(data) {
     // })
   }
   // console.log(socket.room)
+})
+socket.on('getQueries', function() {
+  console.log(this)
 })
 })
 
