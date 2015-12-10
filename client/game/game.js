@@ -1,9 +1,10 @@
 angular.module('feud.game', [])
 
-.controller('GameController', function($rootScope, $scope, $window, $location, Game, socket){
+.controller('GameController', function($rootScope, $scope, $window, $location, Game, socket, $timeout){
   $scope.data = {};
   $scope.query = {};
-  var queries;
+  $scope.questions = {};
+  var query;
   var questions = {}
   $scope.queryAnswer = {};
   var dataSize;
@@ -31,13 +32,32 @@ angular.module('feud.game', [])
     console.log(query.room)
     console.log("query", query)
     socket.emit('getQueries')
-    query = parsedResponses(query)
-    $scope.query.title = query[0].title;
-    $scope.query.responses = query[0].responses;
-    $scope.data.guess = query[0].title + " ";
-    $scope.queryAnswer = {};
+    $scope.questions = parsedResponses(query)
+    $scope.data.round = 1;
+    gameInfo($scope.questions, 1);
     timer();
   })
+
+  var gameInfo = function(query, number) {
+    number = number - 1
+     $scope.query.title = query[number].title;
+    $scope.query.responses = query[number].responses;
+    $scope.data.guess = query[number].title + " ";
+    $scope.queryAnswer = {};
+  }
+
+  var nextRound = function() {
+    var round = Number($scope.data.round);
+    console.log(round)
+    console.log('in next round', $scope.data.round <= 3)
+    if (round <= 2) {
+      console.log('in nextRound')
+      // $timeout.cancel(myTimeout)
+      $scope.data.round++
+      gameInfo($scope.questions, round)
+      timer()
+    }
+  }
   
   // socket.on('playRound', function(query) {
   //   // console.log(query, "query, room: ", room);
@@ -46,13 +66,20 @@ angular.module('feud.game', [])
 
   //change to angular directive to optimize speed and reliablility
   function timer() {
-    $scope.counter = 30;
+    $scope.counter = 5;
     $scope.onTimeout = function(){
       if($scope.counter !==0) {
         $scope.counter--;
         mytimeout = $timeout($scope.onTimeout,1000);
       }
+      if($scope.counter === 0) {
+        stop()
+        console.log('reaching here')
+        nextRound();
+        $scope.counter = 5;
+      }
     }
+
     var mytimeout = $timeout($scope.onTimeout,1000);
 
     var stop = function(){

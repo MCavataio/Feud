@@ -1,4 +1,4 @@
-var helpers = require(./config/helpers.js)
+var helpers = require('./config/helpers.js')
 var storage = [];
 
 for (var i = 0; i < 10; i++) {

@@ -60,7 +60,7 @@ socket.on('changeRoom', function(data) {
   // console.log(socket.room)
 })
 socket.on('getQueries', function() {
-  console.log(this)
+  // console.log(this)
 })
 })
 
