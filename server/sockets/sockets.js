@@ -15,7 +15,6 @@ module.exports = function(io) {
       if (rooms[room]) {
         GC.getQueries(room)
         delete rooms[room]
-        console.log('should be here once')
       } else {
         rooms[room] = true;
       }
@@ -39,6 +38,11 @@ module.exports = function(io) {
       //   GC.getQueries(nRoom) 
       // }, 2000)
     }
+    })
+    socket.on('leaveRoom', function() {
+      console.log(this.rooms, "before+++++++++++++++++++++++")
+      socket.leave(this.rooms[1]);
+      console.log(this.rooms, "++++++++++++++++++++++")
     })
     // sends scores to other individuals playing in the same room
     // this.rooms consists of connection id and room number

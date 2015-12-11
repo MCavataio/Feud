@@ -14,9 +14,11 @@ angular.module('feud.services', [])
     })
   }
   var login = function(user) {
+    console.log("in login")
     return $http({
       method: 'POST',
-      url: 'api/home/login'
+      url: 'api/home/login',
+      data: user
     })
   }
   var createRoom = function() {
@@ -29,30 +31,22 @@ angular.module('feud.services', [])
   }
   return {
     addQuery: addQuery,
-    createRoom: createRoom
+    createRoom: createRoom,
+    login: login
   }
  })
 .factory('Game', function($http, $window, $location) {
-  var getCount = function(room) {
-    console.log('in get count')
-    var url = 'api/game/queries/' + room;
-    return $http({
-      method: "GET",
-      url: url
-    }).then (function (response) {
-      return response;
-    });
-  }
-  var startRound = function(queryId) {
-    console.log('in start round')
-    var url = 'api/game/query/' + queryId
-    return $http({
-      method: "GET",
-      url: url
-    }).then(function (response) {
-      return response;
-    })
-  }
+
+  // var startRound = function(queryId) {
+  //   console.log('in start round')
+  //   var url = 'api/game/query/' + queryId
+  //   return $http({
+  //     method: "GET",
+  //     url: url
+  //   }).then(function (response) {
+  //     return response;
+  //   })
+  // }
   var fuzzyCheck = function(guess) {
     var url = 'api/game/natural'
     return $http({
@@ -65,12 +59,12 @@ angular.module('feud.services', [])
   }
   return {
     // getCount: getCount,
-    startRound: startRound,
+    
     fuzzyCheck: fuzzyCheck
   }
 })
   // brian ford socket wrapper implementation
-.factory('socket', function ($rootScope, $window) {
+.factory('Socket', function ($rootScope, $window) {
   var address = $window.location.origin
   var socket = io.connect(address, {
     'sync disconnect on unload': true });

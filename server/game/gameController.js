@@ -8,16 +8,16 @@ var natural = require('natural');
 
 module.exports = {
   //possible refactoring to get Queries
-  getCount: function(req, res, next) {
-    console.log(req.param.id)
-    helpers.getCount(function(err, response) {
-      if (err) {
-        console.log(err);
-      } else {
-        res.json(response);
-      }
-    })
-  },
+  // getCount: function(req, res, next) {
+  //   console.log(req.param.id)
+  //   helpers.getCount(function(err, response) {
+  //     if (err) {
+  //       console.log(err);
+  //     } else {
+  //       res.json(response);
+  //     }
+  //   })
+  // },
 
   fuzzyCheck: function(req, res, next) {
     var responses = req.body.responses
@@ -62,17 +62,17 @@ module.exports = {
         })  
       }
     })
-  },
+  }
 
-  startRound: function(req, res, next) {
-    console.log(req.params.id)
-    helpers.getQuery(req.params.id, function (err, response) {
-      if (err) {
-        console.log(err);
-      } else {
-          req.io.sockets.to('req.paramas.id').emit('playRound', response)
-        // res.json(response);
-      }
-    })
-  },
+  // startRound: function(req, res, next) {
+  //   console.log(req.params.id)
+  //   helpers.getQuery(req.params.id, function (err, response) {
+  //     if (err) {
+  //       console.log(err);
+  //     } else {
+  //         req.io.sockets.to('req.paramas.id').emit('playRound', response)
+  //       // res.json(response);
+  //     }
+  //   })
+  // },
 }

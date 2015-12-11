@@ -26,6 +26,20 @@ module.exports = {
       }).catch(reject);
     })
   },
+  findOrCreateUser: function (user) {
+    console.log(user)
+    return new Promise(function (resolve, reject) {
+      db.User.findOrCreate({
+        where: {
+          name: user.username,
+        }, defaults: {
+          password: user.password
+        }
+      }).spread(function (user, created) {
+        resolve(user, created)
+      }).catch(reject)
+    })
+  },
   getCount: function(cb) {
     db.Query.findAndCountAll({}).then(function (size) {
       cb (null, size);
@@ -63,32 +77,32 @@ module.exports = {
     }
   },
 
-  getGameQueries: function(cb) {
-   console.log('inside get Queries +++++++++++++++++++')
-   this.getCount(function(err, response) {
-      if (err) {
-        console.log(err);
-      } else {
-        this.getNumbers(response, function(err, response) {
-          if (err) {
-            console.log(err) 
-          } else {
-            this.getQueries(response, function(err, queries) {
-              if (queries) {
-                cb(null, queries)
-              } else {
-                // return response
-                cb(queries);
-                // queries.room = room.value
-                // room.io.to(room.value).emit('startRound', queries)
-                // res.json(queries);
-              }
-            });
-          }
-        })  
-      }
-    })
-  },
+  // getGameQueries: function(cb) {
+  //  console.log('inside get Queries +++++++++++++++++++')
+  //  this.getCount(function(err, response) {
+  //     if (err) {
+  //       console.log(err);
+  //     } else {
+  //       this.getNumbers(response, function(err, response) {
+  //         if (err) {
+  //           console.log(err) 
+  //         } else {
+  //           this.getQueries(response, function(err, queries) {
+  //             if (queries) {
+  //               cb(null, queries)
+  //             } else {
+  //               // return response
+  //               cb(queries);
+  //               // queries.room = room.value
+  //               // room.io.to(room.value).emit('startRound', queries)
+  //               // res.json(queries);
+  //             }
+  //           });
+  //         }
+  //       })  
+  //     }
+  //   })
+  // },
 
   getQueries: function(ids, cb) {
     db.Query.findAll({where: {id: ids}

@@ -1,26 +1,22 @@
 <div ng-controller="GameController">
   <button type="button" id="lobby" ng-click="toLobby()">Lobby</button>
   <div ng-if="query.title">
-    <h3>Total Score: {{data.total}}</h3>
-    <h3>Round Score: {{data.roundScore}}</h3>
-    <h3>Round: {{data.round}} </h3>
+    <h3>Total Score: {{scoreboard.total}}</h3>
+    <h3>Round Score: {{scoreboard.roundScore}}</h3>
+    <h3>Round: {{scoreboard.round}} </h3>
     <h3>Time Remaining: {{counter}}</h3>
     <div>Complete the Search: {{query.title}}</div>
     <div ng-repeat="response in query.responses track by $index">{{$index + 1}}<span ng-if="queryAnswer[$index]"> {{response}} </span></div>
   </div>
 
-        <h3><timer/></h3>
-        <button ng-click="startTimer()" ng-disabled="timerRunning">Start Timer</button>
-        <button ng-click="stopTimer()" ng-disabled="!timerRunning">Stop Timer</button>
-
   <form name="Guess" ng-submit="makeGuess()">
-    <input type="text" placeholder='Make Guess' ng-model="data.guess">
+    <input type="text" placeholder='Make Guess' ng-model="guess">
       <button> Make Guess</button>
   </form>
 
   <div>
-    <h3> Opponent Name: {{data.opponentName}} </h3>
-    <h3> Opponent Score: {{data.opponentScore}} </h3>
+    <h3> Opponent Name: {{scoreBoard.opponentName}} </h3>
+    <h3> Opponent Score: {{scoreBoard.opponentScore}} </h3>
   </div>
   <div ng-if="data.testing" ng-init="testing()"></div>
 </div>

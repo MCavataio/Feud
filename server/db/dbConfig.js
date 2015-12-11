@@ -27,7 +27,8 @@ var QueryCount = db.define('querycount', {
 })
 
 var User = db.define('user', {
-  name: Sequelize.STRING
+  name: Sequelize.STRING,
+  password: Sequelize.STRING
 })
 
 var Query = db.define('query', {
@@ -52,5 +53,6 @@ db.sync()
   })
 
 module.exports = {
-  Query: Query
+  Query: Query,
+  User: User
 }

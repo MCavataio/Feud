@@ -1,6 +1,6 @@
 angular.module("feud.home", [])
 
-.controller("HomeController", function($rootScope, $scope, $window, $location, Home, socket) {
+.controller("HomeController", function($scope, $location, Home, Socket) {
   $scope.data = {};
   $scope.socket = 0;
   var room;
@@ -10,9 +10,12 @@ angular.module("feud.home", [])
   ///////////////////////////////////////////
 
   $scope.login = function() {
-    Home.login($scope.data.user).then(function(user) {
-
-    })
+    console.log('in login controlelr')
+    var userInfo = {
+      username: $scope.data.username,
+      password: $scope.data.password
+    }
+    Home.login(userInfo)
   }
 
   ////////////////////////////////////////////
@@ -23,13 +26,12 @@ angular.module("feud.home", [])
     Home.createRoom()
     .then(function(room) {
       // console.log('in create room', room)
-      socket.emit('changeRoom', {room: room})
+      Socket.emit('changeRoom', {room: room})
     })
   }
 
-  socket.on('playRound', function(response) {
+  Socket.on('playRound', function(response) {
     $location.path('/game');
-    $scope.room(response);
   }); 
   ////////////////////////////////////////////
   //// add search feature
@@ -48,22 +50,23 @@ angular.module("feud.home", [])
       })
       .then(function(data) {
         console.log(data.title)
+        // create function for parsing
         for (var i = 0; i < data[1].length; i++ ){
           var split = data[1][i][0].split(query.title + " ")
-          console.log(split)
           if (split.length > 1) {
             query["response" + (i + 1)] = split[1];
           } else {
             query['response' + (i + 1)] = split[0];
           }
         } 
-      console.log(query)
-      Home.addQuery(query)
-        .then(function() {
-          $scope.data.query = "";
-        }).catch(function (error) {
-          console.log("Error in submitting Query", error);
-          $scope.data.query = "";
+      })
+      .then(function() {
+        Home.addQuery(query)
+          .then(function() {
+            $scope.data.query = "";
+          }).catch(function (error) {
+            console.log("Error in submitting Query", error);
+            $scope.data.query = "";
         })
       })
     }

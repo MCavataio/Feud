@@ -25,5 +25,8 @@ module.exports = {
       rooms.push({value: 1, full: false});
     }
     res.json({room: rooms[rooms.length -1].value})
+  },
+  login: function(req, res, next) {
+    helpers.findOrCreateUser(req.body)
   }
 }
