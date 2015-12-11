@@ -37,7 +37,6 @@ angular.module("feud.home", [])
 
   $scope.addQuery = function() {
     var query = {title: $scope.data.search};
-    console.log($scope.data.search)
     var suggestCallBack; // global var for autocomplete jsonp
     var request = {term: $scope.data.search};
     $.getJSON("http://suggestqueries.google.com/complete/search?callback=?",
@@ -48,11 +47,17 @@ angular.module("feud.home", [])
         "client":"youtube" // force youtube style response, i.e. jsonp
       })
       .then(function(data) {
-        console.log(data[1])
+        console.log(data.title)
         for (var i = 0; i < data[1].length; i++ ){
-          query["response" + (i + 1)] = data[1][i][0];
+          var split = data[1][i][0].split(query.title + " ")
+          console.log(split)
+          if (split.length > 1) {
+            query["response" + (i + 1)] = split[1];
+          } else {
+            query['response' + (i + 1)] = split[0];
+          }
         } 
-      // console.log(query)
+      console.log(query)
       Home.addQuery(query)
         .then(function() {
           $scope.data.query = "";

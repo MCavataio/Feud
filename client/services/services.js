@@ -53,9 +53,20 @@ angular.module('feud.services', [])
       return response;
     })
   }
+  var fuzzyCheck = function(guess) {
+    var url = 'api/game/natural'
+    return $http({
+      method: "POST",
+      url: url,
+      data: guess
+    }).then(function (result) {
+      return result;
+    })
+  }
   return {
     // getCount: getCount,
-    startRound: startRound
+    startRound: startRound,
+    fuzzyCheck: fuzzyCheck
   }
 })
   // brian ford socket wrapper implementation

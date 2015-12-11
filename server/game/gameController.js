@@ -3,6 +3,7 @@ var Q = require('q');
 var helpers = require('../config/helpers.js')
 var Promise = require('bluebird');
 var Query = db.Query;
+var natural = require('natural');
 
 
 module.exports = {
@@ -16,6 +17,24 @@ module.exports = {
         res.json(response);
       }
     })
+  },
+
+  fuzzyCheck: function(req, res, next) {
+    var responses = req.body.responses
+    var guess = req.body.guess
+    var greatest = {
+      value: .1,
+      index: null
+    }
+    for (var i = 0; i < responses.length; i++) {
+      var ratio = natural.JaroWinklerDistance(responses[i], guess)
+      if (ratio > greatest.value) {
+        greatest.value = ratio;
+        greatest.index = i
+      }
+    }
+    res.json(greatest);
+
   },
 
   getQueries: function(room) {

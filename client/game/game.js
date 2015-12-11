@@ -40,23 +40,25 @@ angular.module('feud.game', [])
   
   $scope.makeGuess = function() {
     var roundScore = $scope.data.roundScore;
-    var index = $scope.query.responses.indexOf($scope.data.guess)
+    var guess = $scope.data.guess;
+    var responses = $scope.query.responses;
+    var index = $scope.query.responses.indexOf(guess);
     // if guess is correct
     if (index > -1) {
-      // set the answer on view to correct response
-      $scope.queryAnswer[index] = $scope.query.responses[index]
-      $scope.data.guess = $scope.query.title + " ";
-      // increment index to correct value in scoreValues
-      index++;
-      // figure out whether or not to keep one score or continue to add to total
-      // initialize round score
-      roundScore = roundScore || 0;
-      roundScore += scoreValues[index];
-      // add to total score
-      $scope.data.total += scoreValues[index];
+      updateBoard(index)
     }
     else {
-      $scope.data.guess = $scope.query.title + " ";
+      var data = {responses: responses, guess: guess};
+      Game.fuzzyCheck(data)
+      .then(function(response) {
+        var value = response.data.value;
+        var index = response.data.index;
+        if (value > .85) {
+          updateBoard(index)
+        }
+      })
+      // $scope.data.guess = $scope.query.title + " ";
+      $scope.data.guess = "";
     }
   }
 
@@ -70,6 +72,20 @@ angular.module('feud.game', [])
     3: 300,
     4: 200,
     5: 100
+  }
+  var updateBoard = function(index) {
+      // set the answer on view to correct response
+     $scope.queryAnswer[index] = $scope.query.responses[index]
+      // $scope.data.guess = $scope.query.title + " ";
+      $scope.data.guess = "";
+      // increment index to correct value in scoreValues
+      index++;
+      // figure out whether or not to keep one score or continue to add to total
+      // initialize round score
+      roundScore = roundScore || 0;
+      roundScore += scoreValues[index];
+      // add to total score
+      $scope.data.total += scoreValues[index];
   }
 
   var parsedResponses = function (data) {
@@ -124,7 +140,7 @@ angular.module('feud.game', [])
     number = number - 1
      $scope.query.title = query[number].title;
     $scope.query.responses = query[number].responses;
-    $scope.data.guess = query[number].title + " ";
+    // $scope.data.guess = query[number].title + " ";
     $scope.queryAnswer = {};
   }
 
