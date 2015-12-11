@@ -4,16 +4,20 @@ angular.module("feud.home", [])
   $scope.data = {};
   $scope.socket = 0;
   var room;
-  socket.on('playRound', function(response) {
-    $location.path('/game');
-    $scope.room(response);
-  }); 
+
+  ///////////////////////////////////////////
+  /////// Login
+  ///////////////////////////////////////////
 
   $scope.login = function() {
     Home.login($scope.data.user).then(function(user) {
 
     })
   }
+
+  ////////////////////////////////////////////
+  ////// Socket
+  ////////////////////////////////////////////
 
   $scope.createRoom = function() {
     Home.createRoom()
@@ -23,11 +27,15 @@ angular.module("feud.home", [])
     })
   }
 
-  $scope.signIn = function() {
-    Home.signIn($scope.userName)
-  }
+  socket.on('playRound', function(response) {
+    $location.path('/game');
+    $scope.room(response);
+  }); 
+  ////////////////////////////////////////////
+  //// add search feature
+  ////////////////////////////////////////////
 
-  $scope.addSearch = function() {
+  $scope.addQuery = function() {
     var query = {title: $scope.data.search};
     console.log($scope.data.search)
     var suggestCallBack; // global var for autocomplete jsonp
@@ -39,19 +47,19 @@ angular.module("feud.home", [])
         "q":request.term, // query term
         "client":"youtube" // force youtube style response, i.e. jsonp
       })
-    .then(function(data) {
-      console.log(data[1])
-      for (var i = 0; i < data[1].length; i++ ){
-        query["response" + (i + 1)] = data[1][i][0];
-      }
-      console.log(query)
-    Home.addSearch(query)
-      .then(function() {
-        $scope.data.query = "";
-      }).catch(function (error) {
-        console.log("Error in submitting Query", error);
-        $scope.data.query = "";
+      .then(function(data) {
+        console.log(data[1])
+        for (var i = 0; i < data[1].length; i++ ){
+          query["response" + (i + 1)] = data[1][i][0];
+        } 
+      // console.log(query)
+      Home.addQuery(query)
+        .then(function() {
+          $scope.data.query = "";
+        }).catch(function (error) {
+          console.log("Error in submitting Query", error);
+          $scope.data.query = "";
+        })
       })
-    })
-  }
-});
+    }
+  });

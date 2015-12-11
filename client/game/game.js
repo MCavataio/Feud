@@ -5,104 +5,72 @@ angular.module('feud.game', [])
   $scope.query = {};
   $scope.questions = {};
   $scope.data.opponentScore = 0;
-  var query;
-  var gameTimer = 10; 
-  var questions = {}
   $scope.queryAnswer = {};
-  var dataSize;
-  var room;
-  // need to optimize calls to database
-  // possibly retrieve 3 unique queries to use for each round
-  // $scope.getCount = function() {
-  //   console.log(room, "before calling function")
-  //   Game.getCount(room)
-  //   .then(function(response) {
-  //     queries = response;
-  //     console.log(queries)
-  //   }).catch(function(error) {
-  //     console.log("Error in retrieving size", error)
-  //   })
-  // }
-
-  // way to share data between controllers
-  $rootScope.room = function(data) {
-    room = data;
+  var gameTimer = 25; 
+  
+  $scope.toLobby = function() {
+    $location.path('/home')
   }
-
-  socket.on('startRound', function(query) {
-    room = query.room;
-    console.log(query.room)
-    console.log("query", query)
-    socket.emit('getQueries')
+  var init = function() {
+    socket.emit('initGame', "hello")
+  }
+  /////////////////////////////////////////////////////
+  ////////// Game Logic
+  /////////////////////////////////////////////////////
+  var startRound = function(query) {
     $scope.questions = parsedResponses(query)
     $scope.data.round = 1;
     $scope.data.total = 0;
     gameInfo($scope.questions, 1);
     timer();
-  })
-  socket.on('updateScore', function(data) {
-    console.log(data.score)
-    $scope.data.opponentScore = $scope.data.opponentScore || 0
-    if (data.score > 0) {
-        $scope.data.opponentScore = $scope.data.opponentScore + data.score;
-      }
-    })
-  
-
-  var gameInfo = function(query, number) {
-    number = number - 1
-     $scope.query.title = query[number].title;
-    $scope.query.responses = query[number].responses;
-    $scope.data.guess = query[number].title + " ";
-    $scope.queryAnswer = {};
   }
 
   var nextRound = function() {
     var round = Number($scope.data.round);
-    var roundScore = $scope.data.score;
+    var roundScore = $scope.data.roundScore;
     $scope.data.score = 0;
-    $scope.data.total = $scope.data.total + roundScore || 0;
+    // $scope.data.total = $scope.data.total + roundScore || 0;
     socket.emit('updateScore', $scope.data.total);
-    console.log('in next round', $scope.data.score <= 3)
     if (round <= 3) {
       console.log('in nextRound')
-      // $timeout.cancel(myTimeout)
       gameInfo($scope.questions, round)
       timer()
     }
   }
   
-  // socket.on('playRound', function(query) {
-  //   // console.log(query, "query, room: ", room);
-  // })
-
-
-  //change to angular directive to optimize speed and reliablility
-  function timer() {
-    $scope.counter = gameTimer;
-    $scope.onTimeout = function(){
-      if($scope.counter !==0) {
-        $scope.counter--;
-        mytimeout = $timeout($scope.onTimeout,1000);
-      }
-      if($scope.counter === 0) {
-        stop()
-        console.log('reaching here')
-        if ($scope.data.round !==3) {
-          $scope.data.round++
-          nextRound();
-          $scope.counter = gameTimer;
-        }
-      }
+  $scope.makeGuess = function() {
+    var roundScore = $scope.data.roundScore;
+    var index = $scope.query.responses.indexOf($scope.data.guess)
+    // if guess is correct
+    if (index > -1) {
+      // set the answer on view to correct response
+      $scope.queryAnswer[index] = $scope.query.responses[index]
+      $scope.data.guess = $scope.query.title + " ";
+      // increment index to correct value in scoreValues
+      index++;
+      // figure out whether or not to keep one score or continue to add to total
+      // initialize round score
+      roundScore = roundScore || 0;
+      roundScore += scoreValues[index];
+      // add to total score
+      $scope.data.total += scoreValues[index];
     }
-
-    var mytimeout = $timeout($scope.onTimeout,1000);
-
-    var stop = function(){
-      $timeout.cancel(mytimeout);
+    else {
+      $scope.data.guess = $scope.query.title + " ";
     }
   }
 
+////////////////////////////////////////////////
+//////////////  Game Helpers
+////////////////////////////////////////////////
+
+  var scoreValues = {
+    1: 500,
+    2: 400,
+    3: 300,
+    4: 200,
+    5: 100
+  }
 
   var parsedResponses = function (data) {
     var questions = {}
@@ -124,70 +92,59 @@ angular.module('feud.game', [])
     return questions
   }
 
-  // var parsedResponses = function(data, count, query, response) {}
-  //   response = response || 0;
-  //         if(!query) {
-  //           var query = {
-  //             title: data.title,
-  //             responses: []
-  //           }
-  //         }
-  //         count = count || 1
-  //         if(count > 5) {
-  //           console.log(query);
-  //           return query;
-  //         }
-  //         var queryResponse = "response" + count;
-  //         if (data[queryResponse]) {
-  //           query.responses.push(data[queryResponse])
-  //           return parsedResponses (response, count+1, query, response+1)
-  //         } else if (response === 2) {
-  //           return query;
-  //         }
-  //       }
-
-  socket.on('playRound', function() { 
-    // socket.emit('startRound');
-      if (!$scope.data.round) {
-        $scope.data.round = 1;
+  // need to refactor angular timer
+  var timer = function () {
+    $scope.counter = gameTimer;
+    $scope.onTimeout = function(){
+      if($scope.counter !==0) {
+        $scope.counter--;
+        mytimeout = $timeout($scope.onTimeout,1000);
       }
-     _.each(queries.data, function(query, index) {
-        console.log(query.title, index)
-        questions[index] = parsedResponses(query)
-      })
-      var number = $scope.data.round - 1;
-      $scope.query.title = questions[number].title;
-      $scope.query.responses = questions[number].responses;
-      $scope.data.guess = questions[number].title + " ";
-      $scope.queryAnswer = {};
-      timer();
-      $scope.data.round++
-      // console.log($scope.query.responses);
-    // }).catch(function (error) {
-    //   console.log("Error in retrieving query", error)
-    // })
-  });
-  var scoreValues = {
-    1: 500,
-    2: 400,
-    3: 300,
-    4: 200,
-    5: 100
+      if($scope.counter === 0) {
+        stop()
+        console.log('reaching here')
+        if ($scope.data.round !== 3) {
+          $scope.data.round++
+          nextRound();
+          $scope.counter = gameTimer;
+        } else {
+          socket.emit('updateScore', $scope.data.total)
+        }
+      }
+    }
+    var mytimeout = $timeout($scope.onTimeout,1000);
+
+    var stop = function(){
+      $timeout.cancel(mytimeout);
+    }
+  }
+  
+
+  var gameInfo = function(query, number) {
+    number = number - 1
+     $scope.query.title = query[number].title;
+    $scope.query.responses = query[number].responses;
+    $scope.data.guess = query[number].title + " ";
+    $scope.queryAnswer = {};
   }
 
-  $scope.makeGuess = function() {
-    var index = $scope.query.responses.indexOf($scope.data.guess)
-  
-    if (index > -1) {
-      $scope.queryAnswer[index] = $scope.query.responses[index]
-      $scope.data.guess = $scope.query.title + " ";
-      index++;
-      $scope.data.score = $scope.data.score || 0;
-      $scope.data.score += scoreValues[index];
-    }
-    else {
-      $scope.data.guess = $scope.query.title + " ";
-    }
-  }
-  // $scope.getCount();
+////////////////////////////////////////
+//////////// Socket
+////////////////////////////////////////
+
+  socket.on('startRound', function(query) {
+    room = query.room;
+    socket.emit('getQueries')
+    startRound(query);
+  })
+
+  socket.on('updateScore', function(data) {
+    console.log(data.score)
+    $scope.data.opponentScore = $scope.data.opponentScore || 0
+    if (data.score > 0 && data.score !== $scope.data.opponentScore) {
+        $scope.data.opponentScore = $scope.data.opponentScore + data.score;
+      }
+    })
+  init()
 })
+

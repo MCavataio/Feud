@@ -13,26 +13,12 @@ module.exports = {
       if (err) {
         console.log(err);
       } else {
-        helpers.getNumbers(response, function(err, response) {
-          if (err) {
-            console.log(err) 
-          } else {
-            helpers.getQueries(response, function(err, queries) {
-              if (err) {
-                console.log(err);
-              } else {
-                req.io.sockets.in(req.param.id).emit('startRound', response)
-                res.json(queries);
-              }
-            });
-          }
-        })  
+        res.json(response);
       }
     })
   },
 
   getQueries: function(room) {
-   console.log('inside get Queries +++++++++++++++++++')
    helpers.getCount(function(err, response) {
       if (err) {
         console.log(err);
@@ -46,8 +32,9 @@ module.exports = {
                 console.log(err);
               } else {
                 // return response
-                console.log(room.value,"+++++++++++++++----------")
+                // setting index 3 to the socket room back to the client
                 queries[3] = room.value
+                console.log(room.value, "++++++++++++++++++++++++++++++");
                 room.io.to(room.value).emit('startRound', queries)
                 // res.json(queries);
               }
@@ -69,7 +56,4 @@ module.exports = {
       }
     })
   },
-  startGame: function(req, res, next) {
-
-  }
 }

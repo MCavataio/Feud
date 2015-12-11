@@ -1,12 +1,13 @@
 angular.module('feud.services', [])
 
 .factory('Home', function ($http, $location, $window) {
-  var addSearch = function(search) {
+  // adds google search to database
+  // needs some sort of logic filtering eventually
+  var addQuery = function(search) {
     console.log(search ,"++++++")
-
     return $http({
       method: 'POST',
-      url: 'api/queries',
+      url: 'api/home/query',
       data: {
         query: search
       }
@@ -27,7 +28,7 @@ angular.module('feud.services', [])
     })
   }
   return {
-    addSearch: addSearch,
+    addQuery: addQuery,
     createRoom: createRoom
   }
  })
@@ -43,6 +44,7 @@ angular.module('feud.services', [])
     });
   }
   var startRound = function(queryId) {
+    console.log('in start round')
     var url = 'api/game/query/' + queryId
     return $http({
       method: "GET",
@@ -52,29 +54,12 @@ angular.module('feud.services', [])
     })
   }
   return {
-    getCount: getCount,
+    // getCount: getCount,
     startRound: startRound
   }
 })
-// .factory('Shared', function($rootScope) {
-//     var sharedService = {};
-    
-//     sharedService.message = {};
-
-//     sharedService.prepForBroadcast = function(msg) {
-//         this.message = msg;
-//         this.broadcastItem();
-//     };
-
-//     sharedService.broadcastItem = function() {
-//         $rootScope.$broadcast('handleBroadcast');
-//     };
-
-//     return sharedService;
-// }) 
   // brian ford socket wrapper implementation
 .factory('socket', function ($rootScope) {
-  console.log('inside factory')
   var socket = io.connect('http://localhost:3000/', {
     'sync disconnect on unload': true });
   return {

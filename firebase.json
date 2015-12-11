@@ -1,0 +1,9 @@
+{
+  "firebase": "gFeud",
+  "public": "client",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

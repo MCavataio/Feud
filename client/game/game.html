@@ -1,8 +1,8 @@
 <div ng-controller="GameController">
-  <button type="button" id="playGame" ng-click="startRound()">Play Round</button>
+  <button type="button" id="lobby" ng-click="toLobby()">Lobby</button>
   <div ng-if="query.title">
     <h3>Total Score: {{data.total}}</h3>
-    <h3>Round Score: {{data.score}}</h3>
+    <h3>Round Score: {{data.roundScore}}</h3>
     <h3>Round: {{data.round}} </h3>
     <h3>Time Remaining: {{counter}}</h3>
     <div>Complete the Search: {{query.title}}</div>
@@ -21,5 +21,6 @@
   <div>
     <h3> Opponent Name: {{data.opponentName}} </h3>
     <h3> Opponent Score: {{data.opponentScore}} </h3>
-
+  </div>
+  <div ng-if="data.testing" ng-init="testing()"></div>
 </div>

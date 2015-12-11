@@ -1,0 +1,72 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      node /usr/local/bin/firebase deploy
+[debug] Platform:     darwin
+[debug] Node Version: v0.12.7
+[debug] Time:         Thu Dec 10 2015 16:23:55 GMT-0800 (PST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/firebase/gFeud/token?token=XXX 
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/firebase/gFeud/token?token=XXX 
+[debug] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'gFeud'...
+[info] 
+[info] i  deploying hosting
+[info] i  preparing client directory for upload...
+[debug] >>> HTTP REQUEST PUT https://deploy.firebase.com/firebase/gFeud/uploads/-K5DQ2bxzz0MNMF3zkLn?token=XXX&fileCount=177&message= 
+[debug] <<< HTTP RESPONSE 200
+[debug] ----------------------------------------------------------------------
+[debug] Command:      node /usr/local/bin/firebase deploy
+[debug] Platform:     darwin
+[debug] Node Version: v0.12.7
+[debug] Time:         Thu Dec 10 2015 16:26:10 GMT-0800 (PST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/firebase/gFeud/token?token=XXX 
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/firebase/gFeud/token?token=XXX 
+[debug] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'gFeud'...
+[info] 
+[info] i  deploying hosting
+[info] i  preparing server directory for upload...
+[warn] ⚠  Warning: Public directory does not contain index.html
+[debug] >>> HTTP REQUEST PUT https://deploy.firebase.com/firebase/gFeud/uploads/-K5DQZcLLhU25QoSli3B?token=XXX&fileCount=11&message= 
+[debug] <<< HTTP RESPONSE 200
+[debug] ----------------------------------------------------------------------
+[debug] Command:      node /usr/local/bin/firebase deploy
+[debug] Platform:     darwin
+[debug] Node Version: v0.12.7
+[debug] Time:         Thu Dec 10 2015 16:26:44 GMT-0800 (PST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/firebase/gFeud/token?token=XXX 
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/firebase/gFeud/token?token=XXX 
+[debug] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'gFeud'...
+[info] 
+[info] i  deploying hosting
+[info] i  preparing client directory for upload...
+[debug] >>> HTTP REQUEST PUT https://deploy.firebase.com/firebase/gFeud/uploads/-K5DQh2PbESEgLXmafTq?token=XXX&fileCount=177&message= 
+[debug] <<< HTTP RESPONSE 200
+[debug] ----------------------------------------------------------------------
+[debug] Command:      node /usr/local/bin/firebase deploy
+[debug] Platform:     darwin
+[debug] Node Version: v0.12.7
+[debug] Time:         Thu Dec 10 2015 16:42:50 GMT-0800 (PST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/firebase/gFeud/token?token=XXX 
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/firebase/gFeud/token?token=XXX 
+[debug] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'gFeud'...
+[info] 
+[info] i  deploying hosting
+[info] i  preparing client directory for upload...
+[debug] >>> HTTP REQUEST PUT https://deploy.firebase.com/firebase/gFeud/uploads/-K5DUO-UgmdVX5s2cG3J?token=XXX&fileCount=177&message= 
