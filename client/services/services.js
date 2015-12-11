@@ -70,8 +70,9 @@ angular.module('feud.services', [])
   }
 })
   // brian ford socket wrapper implementation
-.factory('socket', function ($rootScope) {
-  var socket = io.connect('http://localhost:3000/', {
+.factory('socket', function ($rootScope, $window) {
+  var address = $window.location.origin
+  var socket = io.connect(address, {
     'sync disconnect on unload': true });
   return {
     on: function (eventName, callback) {
