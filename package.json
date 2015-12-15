@@ -1,14 +1,10 @@
 {
-  "name": "thesis",
+  "name": "rest",
   "version": "1.0.0",
   "description": "Google Game",
   "main": "server.js",
   "start": "node server.js",
   "scripts": {
-    "engines": {
-      "node": "0.12.7",
-      "npm": "2.11.3"
-    },
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -16,7 +12,7 @@
   "dependencies": {
     "bluebird": "^3.0.6",
     "body-parser": "^1.14.1",
-    "express": "4.13.3",
+    "express": "^4.13.3",
     "fs": "0.0.2",
     "morgan": "^1.6.1",
     "mysql": "^2.9.0",
@@ -26,5 +22,14 @@
     "q": "^1.4.1",
     "sequelize": "^3.14.2",
     "socket.io": "^1.3.7"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MCavataio/Feud.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MCavataio/Feud/issues"
+  },
+  "homepage": "https://github.com/MCavataio/Feud#readme"
 }

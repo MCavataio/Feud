@@ -1,12 +1,15 @@
 angular.module('feud', [
   'feud.home',
   'feud.game',
+  'feud.auth',
   'feud.services',
   'ui.router'
 ])
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider, BackandProvider) {
+  BackandProvider.runSocket(true);
   $urlRouterProvider.otherwise('/');
+
 
   $stateProvider
     .state('/', {
