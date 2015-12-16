@@ -23,14 +23,14 @@ angular.module('feud.game', [])
     $scope.questions = parsedResponses(query)
     $scope.scoreBoard.round = 1;
     $scope.scoreBoard.total = 0;
+    $scope.scoreBoard.roundScore = 0;
     gameInfo($scope.questions, 1);
     timer();
   }
 
   var nextRound = function() {
     var round = Number($scope.scoreBoard.round);
-    var roundScore = $scope.scoreBoard.roundScore;
-    $scope.scoreBoard.score = 0;
+    $scope.scoreBoard.roundScore = 0;
     // $scope.scoreBoard.total = $scope.scoreBoard.total + roundScore || 0;
     Socket.emit('updateScore', $scope.scoreBoard.total);
     if (round <= 3) {
@@ -76,7 +76,6 @@ angular.module('feud.game', [])
     5: 100
   }
   var updateBoard = function(index) {
-    var roundScore = $scope.scoreBoard.roundScore;
     var guess = $scope.guess;
     var responses = $scope.query.responses;
       // set the answer on view to correct response
@@ -87,7 +86,6 @@ angular.module('feud.game', [])
     index++;
     // figure out whether or not to keep one score or continue to add to total
     // initialize round score
-    roundScore = roundScore || 0;
     $scope.scoreBoard.roundScore += scoreValues[index];
     // add to total score
     $scope.scoreBoard.total += scoreValues[index];
