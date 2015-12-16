@@ -42,7 +42,7 @@ module.exports = {
       if (err) {
         console.log(err);
       } else {
-        console.log(repsonse, 'count step 1 ++++++++++++++++++')
+        console.log(response, 'count step 1 ++++++++++++++++++')
         helpers.getNumbers(response, function(err, response) {
           if (err) {
             console.log(err) 
@@ -52,7 +52,7 @@ module.exports = {
               if (err) {
                 console.log(err);
               } else {
-                console.log(response, 'queries step 3***************************')
+                console.log(queries, 'queries step 3***************************')
                 // return response
                 // setting index 3 to the socket room back to the client
                 queries[3] = room.value
