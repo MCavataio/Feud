@@ -73,6 +73,7 @@ module.exports = {
         }
       }
     if (numbers) {
+      console.log(numbers, "in numbersssssssss")
       cb(null, numbers);
     } else {
       cb(numbers);
