@@ -15,7 +15,7 @@ module.exports = {
       console.log('successful');
       res.json(response);
     }).catch(function(err) {
-      res.json(err);
+      res.send(err);
     })
   },
   createRoom: function(req, res, next) {
