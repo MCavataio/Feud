@@ -8,9 +8,11 @@ var rooms = [];
 
 module.exports = {
   addQuery: function (req, res, next) {
+    console.log('got request');
     var query = req.body.query
     helpers.findOrCreateQuery(query)
     .then(function(response) {
+      console.log('successful');
       res.json(response);
     }).catch(function(err) {
       res.json(err);
