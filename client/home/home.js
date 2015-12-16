@@ -48,7 +48,7 @@ angular.module("feud.home", [])
     var query = {title: $scope.data.search};
     var suggestCallBack; // global var for autocomplete jsonp
     var request = {term: $scope.data.search};
-    $.getJSON("http://suggestqueries.google.com/complete/search?callback=?",
+    $.getJSON("https://suggestqueries.google.com/complete/search?callback=?",
       { 
         "hl":"en", // Language                  
         // "jsonp":"suggestCallBack", // jsonp callback function name
