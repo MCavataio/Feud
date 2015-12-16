@@ -38,7 +38,7 @@ var User = db.define('user', {
 
 var Query = db.define('query', {
    id: {
-        type: Seq.INTEGER,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
