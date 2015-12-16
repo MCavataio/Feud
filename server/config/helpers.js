@@ -108,7 +108,7 @@ module.exports = {
 
   getQueries: function(ids, cb) {
     console.log(ids, ('in ids before searching queries'))
-    db.Query.findAll({where: {id: ids}
+    db.Query.findAll({where: {number: ids}
     })
     .then(function (query) {
       cb(null, query)
