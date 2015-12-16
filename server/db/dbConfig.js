@@ -37,11 +37,6 @@ var User = db.define('user', {
 })
 
 var Query = db.define('query', {
-   id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    },
   title: Sequelize.STRING,
   response1: Sequelize.STRING, 
   response2: Sequelize.STRING,
@@ -52,7 +47,11 @@ var Query = db.define('query', {
   response7: Sequelize.STRING,
   response8: Sequelize.STRING,
   response9: Sequelize.STRING,
-  response10: Sequelize.STRING
+  response10: Sequelize.STRING,
+  identifier: { type: Sequelize.STRING, primaryKey: true},
+ 
+  // autoIncrement can be used to create auto_incrementing integer columns
+  incrementMe: { type: Sequelize.INTEGER, autoIncrement: true }
 });
 
 db.sync()
