@@ -9,6 +9,7 @@ module.exports = {
         where : {
           title: newQuery.title
         }, defaults: {
+          number: newQuery.number
           response1: newQuery.response1,
           response2: newQuery.response2,
           response3: newQuery.response3,

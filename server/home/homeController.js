@@ -4,15 +4,22 @@ var helpers = require('../config/helpers.js')
 var Promise = require('bluebird');
 var Query = db.Query;
 var rooms = [];
+var number = 1;
 
 
 module.exports = {
   addQuery: function (req, res, next) {
     console.log('got request');
     var query = req.body.query
+    query.number = number;
+    var count = Query.count();
+    console.log(count)
     helpers.findOrCreateQuery(query)
     .then(function(response) {
       console.log('successful');
+      if (Query.count() > count) {
+        number++;
+      }
       res.json(response);
     }).catch(function(err) {
       res.send(err);
