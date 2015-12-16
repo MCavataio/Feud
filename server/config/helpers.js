@@ -53,7 +53,6 @@ module.exports = {
   getQuery: function(id, cb) {
     db.Query.findOne({where: {id: id}})
     .then(function (query) {
-      console.log(query, "++++++++++++++-------------------")
       cb(null, query)
     }).catch(function (err) {
       cb(err);
@@ -111,6 +110,7 @@ module.exports = {
     db.Query.findAll({where: {id: ids}
     })
     .then(function (query) {
+      console.log(query,"queryyyy")
       cb(null, query)
     }).catch(function (err) {
       cb(err);

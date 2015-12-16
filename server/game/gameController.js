@@ -53,7 +53,7 @@ module.exports = {
                 // return response
                 // setting index 3 to the socket room back to the client
                 queries[3] = room.value
-                console.log(room.value, "++++++++++++++++++++++++++++++");
+                console.log(queries, "before being sent --------------------")
                 room.io.to(room.value).emit('startRound', queries)
                 // res.json(queries);
               }
