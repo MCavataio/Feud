@@ -1,6 +1,7 @@
 angular.module("feud.home", [])
 
 .controller("HomeController", function($scope, $location, Home, Socket) {
+  $scope.query = {};
   $scope.data = {};
   $scope.socket = 0;
   var room;
@@ -45,9 +46,9 @@ angular.module("feud.home", [])
   // }
 
   $scope.addQuery = function() {
-    var query = {title: $scope.data.search};
+    var query = {title: $scope.query.search};
     var suggestCallBack; // global var for autocomplete jsonp
-    var request = {term: $scope.data.search};
+    var request = {term: $scope.query.search};
     $.getJSON("https://suggestqueries.google.com/complete/search?callback=?",
       { 
         "hl":"en", // Language                  
@@ -69,8 +70,9 @@ angular.module("feud.home", [])
       })
       .then(function() {
         Home.addQuery(query)
-          .then(function() {
-            $scope.data.query = "";
+          .then(function(query) {
+            $scope.query.search = "";
+            console.log("success")
           }).catch(function (error) {
             console.log("Error in submitting Query", error);
             $scope.data.query = "";
