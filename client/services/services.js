@@ -7,7 +7,7 @@ angular.module('feud.services', [])
     console.log(search ,"++++++")
     return $http({
       method: 'POST',
-      url: 'api/home/query',
+      url: '/api/home/query',
       data: {
         query: search
       }
@@ -17,14 +17,14 @@ angular.module('feud.services', [])
     console.log("in login")
     return $http({
       method: 'POST',
-      url: 'api/home/login',
+      url: '/api/home/login',
       data: user
     })
   }
   var createRoom = function() {
     return $http({
       method: 'GET',
-      url: 'api/home/room',
+      url: '/api/home/room',
     }).then(function(response) {
       return response;
     })
@@ -48,7 +48,7 @@ angular.module('feud.services', [])
   //   })
   // }
   var fuzzyCheck = function(guess) {
-    var url = 'api/game/natural'
+    var url = '/api/game/natural'
     return $http({
       method: "POST",
       url: url,
