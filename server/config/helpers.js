@@ -43,7 +43,6 @@ module.exports = {
   getCount: function(cb) {
     db.Query.findAndCountAll({})
     .then(function (size) {
-      console.log(size.count, '++++++++++++++++++ in findAndCountAll')
       cb (null, size);
     }).catch(function (err) {
       cb(err);
@@ -73,7 +72,6 @@ module.exports = {
         }
       }
     if (numbers) {
-      console.log(numbers, "in numbersssssssss")
       cb(null, numbers);
     } else {
       cb(numbers);
@@ -111,7 +109,6 @@ module.exports = {
     db.Query.findAll({where: {id: ids}
     })
     .then(function (query) {
-      console.log(query,"queryyyy")
       cb(null, query)
     }).catch(function (err) {
       cb(err);
