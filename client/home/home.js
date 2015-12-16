@@ -36,6 +36,13 @@ angular.module("feud.home", [])
   ////////////////////////////////////////////
   //// add search feature
   ////////////////////////////////////////////
+  $scope.addQuery= function() {
+    Home.findQuery($scope.data.search)
+    .then(function(response) {
+      console.log('used http')
+      console.log(response)
+    })
+  }
 
   $scope.addQuery = function() {
     var query = {title: $scope.data.search};
