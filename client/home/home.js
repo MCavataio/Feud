@@ -56,7 +56,7 @@ angular.module("feud.home", [])
         "client":"youtube" // force youtube style response, i.e. jsonp
       })
       .then(function(data) {
-        console.log(data.title)
+        console.log(data)
         // create function for parsing
         for (var i = 0; i < data[1].length; i++ ){
           var split = data[1][i][0].split(query.title + " ")

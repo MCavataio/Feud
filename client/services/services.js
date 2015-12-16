@@ -3,16 +3,6 @@ angular.module('feud.services', [])
 .factory('Home', function ($http, $location, $window) {
   // adds google search to database
   // needs some sort of logic filtering eventually
-  var findQuery = function(search) {
-    var url = "http://suggestqueries.google.com/complete/search?callback=?" + search
-    return $.ajax({
-      type: "GET",
-      url: url,
-      dataType: "jsonp"
-    }). then(function(response) {
-      return response;
-    })
-  }
   var addQuery = function(search) {
     console.log(search ,"++++++")
     return $http({
@@ -40,7 +30,6 @@ angular.module('feud.services', [])
     })
   }
   return {
-    findQuery: findQuery,
     addQuery: addQuery,
     createRoom: createRoom,
     login: login
