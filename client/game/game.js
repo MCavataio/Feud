@@ -157,6 +157,7 @@ angular.module('feud.game', [])
   Socket.on('startRound', function(query) {
     // room = query.room;
     // Socket.emit('getQueries')
+    console.log(query)
     startRound(query);
   })
 
