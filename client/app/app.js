@@ -6,8 +6,8 @@ angular.module('feud', [
   'ui.router'
 ])
 
-.config(function ($stateProvider, $urlRouterProvider, BackandProvider) {
-  BackandProvider.runSocket(true);
+.config(function ($stateProvider, $urlRouterProvider) {
+  
   $urlRouterProvider.otherwise('/');
 
 
