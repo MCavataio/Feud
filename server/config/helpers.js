@@ -43,7 +43,7 @@ module.exports = {
   getCount: function(cb) {
     db.Query.findAndCountAll({})
     .then(function (size) {
-      console.log(size, '++++++++++++++++++ in findAndCountAll')
+      console.log(size.count, '++++++++++++++++++ in findAndCountAll')
       cb (null, size);
     }).catch(function (err) {
       cb(err);
