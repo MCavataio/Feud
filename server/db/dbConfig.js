@@ -4,7 +4,7 @@ var fs = require('fs');
 var mysql = require('mysql');
 
 if (process.env.NODE_ENV === 'production') {
-  var sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL);
+  var db = new Sequelize(process.env.CLEARDB_DATABASE_URL);
 } else {
   // vadr secret = require('../lib/secrets').sql || "blue";
   var db = new Sequelize('feud', 'root', "null", {
