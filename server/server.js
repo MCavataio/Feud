@@ -1,16 +1,16 @@
-var express = require ('express');
-var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http)
-var socket = require('./sockets/sockets.js')(io);
+// var express = require ('express');
+// var app = express();
+// var http = require('http').Server(app);
+// var io = require('socket.io').listen(app)
+// var socket = require('./sockets/sockets.js')(io);
 
 
-require('./config/middleware.js')(app, express, io);
+// require('./config/middleware.js')(app, express, io);
 
 
-var port = process.env.PORT || 3000;
+// var port = process.env.PORT || 3000;
 
-http.listen(port)
+// app.listen(port)
 
-console.log("connected to port: ",port)
-module.exports = app;
+// console.log("connected to port: ",port)
+// module.exports = app;

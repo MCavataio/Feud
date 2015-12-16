@@ -26,6 +26,10 @@ var QueryCount = db.define('querycount', {
   size: Sequelize.INTEGER
 })
 
+var PotentialQuery = db.define('potentialquery', {
+  query: Sequelize.STRING
+})
+
 var User = db.define('user', {
   name: Sequelize.STRING,
   password: Sequelize.STRING

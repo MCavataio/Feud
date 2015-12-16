@@ -1,5 +1,5 @@
 angular.module('feud.game', [])
-
+  // john pappas styling guide
 .controller('GameController', function($scope, $location, Game, Socket, $timeout){
   $scope.scoreBoard = {};
   $scope.query = {};

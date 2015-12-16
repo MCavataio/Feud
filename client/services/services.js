@@ -5,9 +5,10 @@ angular.module('feud.services', [])
   // needs some sort of logic filtering eventually
   var findQuery = function(search) {
     var url = "http://suggestqueries.google.com/complete/search?callback=?" + search
-    return $http({
-      method: "GET",
+    return $.ajax({
+      type: "GET",
       url: url,
+      dataType: "jsonp"
     }). then(function(response) {
       return response;
     })
@@ -39,6 +40,7 @@ angular.module('feud.services', [])
     })
   }
   return {
+    findQuery: findQuery,
     addQuery: addQuery,
     createRoom: createRoom,
     login: login
@@ -75,6 +77,7 @@ angular.module('feud.services', [])
   // brian ford socket wrapper implementation
 .factory('Socket', function ($rootScope, $window) {
   var address = $window.location.origin
+  console.log(address)
   var socket = io.connect(address, {
     'sync disconnect on unload': true });
   return {
