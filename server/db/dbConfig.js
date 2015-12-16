@@ -18,7 +18,7 @@ db.authenticate()
     console.log('connected!');
   })
   .catch(function (err) {
-    console.log('Not Connected!', err)
+    console.log('Not Connected!', err )
   })
   .done();
 
