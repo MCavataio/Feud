@@ -7,7 +7,7 @@ angular.module('feud.game', [])
   $scope.guess;
   $scope.scoreBoard.opponentScore = 0;
   $scope.queryAnswer = {};
-  var gameTimer = 10; 
+  var gameTimer = 30; 
   
   $scope.toLobby = function() {
     Socket.emit('leaveRoom')
