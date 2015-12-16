@@ -4,26 +4,46 @@ var helpers = require('../config/helpers.js')
 var Promise = require('bluebird');
 var Query = db.Query;
 var rooms = [];
-var number = 1;
+var number = [];
 
 
 module.exports = {
   addQuery: function (req, res, next) {
     console.log('got request');
     var query = req.body.query
-    query.number = number;
-    var count = Query.count();
-    console.log(count)
-    helpers.findOrCreateQuery(query)
-    .then(function(response) {
-      console.log('successful');
-      if (Query.count() > count) {
-        number++;
+    helpers.getQuery({title: query.title}, function(err, response) {
+      if (err) {
+        console.log(err, "in errror ahhh")
+      } else {
+        console.log("hello from else statement __________")
+        console.log(response);
+        if (response === null) {
+
+        if (!number.length){
+          number.push(1);
+          query.number = number[0];
+        } else {
+          number[0]++
+          query.number = number[0];
+        }
+        helpers.findOrCreateQuery(query)
+        .then(function(response) {
+          console.log('successful')
+          res.json(response);
+        }).catch(function(err) {
+          res.json(response);
+        })
+
+        }
       }
-      res.json(response);
-    }).catch(function(err) {
-      res.send(err);
     })
+    // .then(function(response) {
+    //   console.log('successful');
+    //   number++;
+    //   res.json(response);
+    // }).catch(function(err) {
+    //   res.send(err);
+    // })
   },
   createRoom: function(req, res, next) {
     if(rooms.length > 0) {

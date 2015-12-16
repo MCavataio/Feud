@@ -9,7 +9,7 @@ module.exports = {
         where : {
           title: newQuery.title
         }, defaults: {
-          number: newQuery.number
+          number: newQuery.number,
           response1: newQuery.response1,
           response2: newQuery.response2,
           response3: newQuery.response3,
@@ -50,8 +50,8 @@ module.exports = {
     })
 
   },
-  getQuery: function(id, cb) {
-    db.Query.findOne({where: {id: id}})
+  getQuery: function(value, cb) {
+    db.Query.findOne({where: value})
     .then(function (query) {
       cb(null, query)
     }).catch(function (err) {

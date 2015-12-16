@@ -37,7 +37,7 @@ var User = db.define('user', {
 })
 
 var Query = db.define('query', {
-  number: Sequelize.Integer,
+  number: Sequelize.INTEGER,
   title: Sequelize.STRING,
   response1: Sequelize.STRING, 
   response2: Sequelize.STRING,
@@ -51,7 +51,7 @@ var Query = db.define('query', {
   response10: Sequelize.STRING,
 });
 
-db.sync()
+db.sync({force: true})
   .then(function(err) {
     console.log('created database')
   }, function (err) {

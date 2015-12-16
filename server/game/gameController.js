@@ -48,7 +48,7 @@ module.exports = {
             console.log(err) 
           } else {
             console.log(response, 'get numbers step 2=========================')
-            helpers.getQueries(response, function(err, queries) {
+            helpers.getQueries({id: response}, function(err, queries) {
               if (err) {
                 console.log(err);
               } else {
