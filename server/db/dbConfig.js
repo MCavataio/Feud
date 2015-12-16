@@ -48,10 +48,6 @@ var Query = db.define('query', {
   response8: Sequelize.STRING,
   response9: Sequelize.STRING,
   response10: Sequelize.STRING,
-  identifier: { type: Sequelize.STRING, primaryKey: true},
- 
-  // autoIncrement can be used to create auto_incrementing integer columns
-  incrementMe: { type: Sequelize.INTEGER, autoIncrement: true }
 });
 
 db.sync()
