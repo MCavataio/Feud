@@ -10,6 +10,11 @@ module.exports = {
   addQuery: function (req, res, next) {
     var query = req.body.query
     helpers.findOrCreateQuery(query)
+    .then(function(response) {
+      res.json(response);
+    }).catch(function(err) {
+      res.json(err);
+    })
   },
   createRoom: function(req, res, next) {
     if(rooms.length > 0) {
