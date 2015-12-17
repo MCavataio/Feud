@@ -4,6 +4,8 @@ angular.module("feud.home", [])
   $scope.query = {};
   $scope.data = {};
   $scope.socket = 0;
+  $scope.status = true;;
+
   var room;
 
   ///////////////////////////////////////////
@@ -24,8 +26,10 @@ angular.module("feud.home", [])
   ////////////////////////////////////////////
 
   $scope.createRoom = function() {
+    $scope.status = false;
     Home.createRoom()
     .then(function(room) {
+      console.log(room);
       // console.log('in create room', room)
       Socket.emit('changeRoom', {room: room})
     })

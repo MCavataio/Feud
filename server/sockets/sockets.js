@@ -28,15 +28,18 @@ module.exports = function(io) {
       io: io
     }
     // joins respective room
-    socket.join(nRoom.value);
-    // checks to see how many users are in current room;
-    var room = io.sockets.adapter.rooms[nRoom.value];
-    var length = Object.keys(room).length
-    if (length === 2) {
-      io.sockets.to(nRoom.value).emit('playRound', {room: nRoom.value})
-      // setTimeout(function() {
-      //   GC.getQueries(nRoom) 
-      // }, 2000)
+    if(!this.rooms[1]) {
+      
+      socket.join(nRoom.value);
+      // checks to see how many users are in current room;
+      var room = io.sockets.adapter.rooms[nRoom.value];
+      var length = Object.keys(room).length
+      if (length === 2) {
+        io.sockets.to(nRoom.value).emit('playRound', {room: nRoom.value})
+        // setTimeout(function() {
+        //   GC.getQueries(nRoom) 
+        // }, 2000)
+      }
     }
     })
     socket.on('leaveRoom', function() {
