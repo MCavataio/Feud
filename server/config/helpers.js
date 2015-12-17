@@ -62,7 +62,7 @@ module.exports = {
   getNumbers: function(response, cb) {
     var numbers = [];
     var queries = {};
-      for (var i = 1; i <= 3; i++ ) {
+      for (var i = 1; i <= 7; i++ ) {
         var count = 0;
         while(count < 1) {
           var randomIndex = Math.ceil(Math.random() * response.count)

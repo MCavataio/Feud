@@ -4,7 +4,8 @@ angular.module('feud.game', [])
   $scope.scoreBoard = {};
   $scope.query = {};
   $scope.questions = {};
-  $scope.guess;
+  $scope.data = {};
+  $scope.gameboard;
   $scope.scoreBoard.opponentScore = 0;
   $scope.queryAnswer = {};
   var gameTimer = 30; 
@@ -20,7 +21,8 @@ angular.module('feud.game', [])
   ////////// Game Logic
   /////////////////////////////////////////////////////
   var startRound = function(query) {
-    $scope.questions = parsedResponses(query)
+    $scope.gameBoard = true;
+    $scope.questions = parsedResponses(query);
     $scope.scoreBoard.round = 1;
     $scope.scoreBoard.total = 0;
     $scope.scoreBoard.roundScore = 0;
@@ -37,17 +39,20 @@ angular.module('feud.game', [])
       console.log('in nextRound')
       gameInfo($scope.questions, round)
       timer()
+    } else {
+
     }
   }
   
   $scope.makeGuess = function() {
-    var guess = $scope.guess;
+
+    var guess = $scope.data.guess;
     var foundIndex = $scope.query.responses.indexOf(guess);
     var responses = $scope.query.responses;
-
     // if guess is correct
     if (foundIndex > -1) {
       updateBoard(foundIndex)
+      $scope.data.guess = "";
     }
     else {
       var data = {responses: responses, guess: guess};
@@ -59,9 +64,7 @@ angular.module('feud.game', [])
           updateBoard(index)
         }
       })
-      // $scope.data.guess = $scope.query.title + " ";
-      $scope.guess = "";
-    }
+    } $scope.data.guess = "";
   }
 
 ////////////////////////////////////////////////
@@ -112,7 +115,7 @@ angular.module('feud.game', [])
   }
 
   // need to refactor angular timer
-  var timer = function () {
+  var timer = function (time, cb) {
     $scope.counter = gameTimer;
     $scope.onTimeout = function(){
       if($scope.counter !==0) {
@@ -121,7 +124,7 @@ angular.module('feud.game', [])
       }
       if($scope.counter === 0) {
         stop()
-        console.log('reaching here')
+    
         ///move logic set up callback
         if ($scope.scoreBoard.round !== 3) {
           $scope.scoreBoard.round++
