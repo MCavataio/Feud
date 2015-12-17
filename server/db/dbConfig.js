@@ -40,9 +40,11 @@ var Query = db.define('query', {
   number: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
-        primaryKey: true
       },
-  title: Sequelize.STRING,
+  title: {
+    type: Sequelize.STRING,
+    primaryKey: true
+  }
   response1: Sequelize.STRING, 
   response2: Sequelize.STRING,
   response3: Sequelize.STRING,
