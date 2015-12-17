@@ -14,7 +14,7 @@
 
 <form name="searchForm" ng-submit="addQuery()" novalidate>
   <input type="text" placeholder="Enter Google Search" ng-model="query.search" required>
-  <button type="button" id="search">Search!!!</button>
+  <button type="submit" id="search">Search!!!</button>
 </form>
 <button type="button" ng-click="createRoom()">Play Game</button>
 <div ng-if="data.usersOnline" ng-repeat="user in $data.usersOnline">{{user}}</div>

@@ -49,6 +49,7 @@ angular.module("feud.home", [])
     var query = {title: $scope.query.search};
     var suggestCallBack; // global var for autocomplete jsonp
     var request = {term: $scope.query.search};
+    $scope.query.search = "";
     $.getJSON("https://suggestqueries.google.com/complete/search?callback=?",
       { 
         "hl":"en", // Language                  
@@ -75,7 +76,7 @@ angular.module("feud.home", [])
             console.log("success")
           }).catch(function (error) {
             console.log("Error in submitting Query", error);
-            $scope.data.query = "";
+            $scope.query.search = "";
         })
       })
     }
