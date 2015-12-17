@@ -133,7 +133,7 @@ angular.module('feud.game', [])
           nextRound();
           $scope.counter = gameTimer;
         } else {
-          Socket.emit('updateScore', $scope.scoreBoard.total)
+          Socket.emit('updateScore', $scope.scoreBoard.roundScore)
         }
       }
     }
