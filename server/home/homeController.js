@@ -15,35 +15,25 @@ module.exports = {
       if (err) {
         console.log(err, "in errror ahhh")
       } else {
-        console.log("hello from else statement __________")
-        console.log(response);
+        // creating value to add for saving number since heroku automatically increments by 10
         if (response === null) {
-
-        if (!number.length){
-          number.push(1);
-          query.number = number[0];
-        } else {
-          number[0]++
-          query.number = number[0];
-        }
-        helpers.findOrCreateQuery(query)
-        .then(function(response) {
-          console.log('successful')
-          res.json(response);
-        }).catch(function(err) {
-          res.json(response);
-        })
-
+          if (!number.length){
+            number.push(1);
+            query.number = number[0];
+          } else {
+            number[0]++
+            query.number = number[0];
+          }
+          helpers.findOrCreateQuery(query)
+          .then(function(response) {
+            console.log('successful')
+            res.json(response);
+          }).catch(function(err) {
+            res.json(response);
+          })
         }
       }
     })
-    // .then(function(response) {
-    //   console.log('successful');
-    //   number++;
-    //   res.json(response);
-    // }).catch(function(err) {
-    //   res.send(err);
-    // })
   },
   createRoom: function(req, res, next) {
     if(rooms.length > 0) {

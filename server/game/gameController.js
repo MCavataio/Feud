@@ -54,10 +54,14 @@ module.exports = {
               } else {
                 console.log(queries, 'queries step 3***************************')
                 // return response
-                // setting index 3 to the socket room back to the client
+                if (req.body.param) {
+                  res.json(queries);
+                } else {
                 queries[3] = room.value
                 console.log(queries, "before being sent --------------------")
                 room.io.to(room.value).emit('startRound', queries)
+                }
+                // setting index 3 to the socket room back to the client
                 // res.json(queries);
               }
             });

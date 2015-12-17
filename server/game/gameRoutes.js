@@ -5,5 +5,5 @@ module.exports = function (app, io) {
   // app.get('/quqery/:id', gameController.startRound);
   app.post('/natural', gameController.fuzzyCheck);
   // app.get('/:id', gameController.startGame);
-  app.get('/queries', gameController.getQueries)
+  app.get('/queries/:id', gameController.getQueries)
 }
