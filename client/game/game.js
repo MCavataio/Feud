@@ -32,17 +32,19 @@ angular.module('feud.game', [])
 
   var nextRound = function() {
     var round = Number($scope.scoreBoard.round);
+    Socket.emit('updateScore', $scope.scoreBoard.roundScore);
     $scope.scoreBoard.roundScore = 0;
     // $scope.scoreBoard.total = $scope.scoreBoard.total + roundScore || 0;
-    Socket.emit('updateScore', $scope.scoreBoard.total);
     if (round <= 3) {
       console.log('in nextRound')
       gameInfo($scope.questions, round)
       timer()
     } else {
-
+      lightningRound();
     }
   }
+
+
   
   $scope.makeGuess = function() {
 
@@ -165,10 +167,11 @@ angular.module('feud.game', [])
   Socket.on('updateScore', function(data) {
     $scope.scoreBoard.opponentScore = $scope.scoreBoard.opponentScore || 0
     console.log(data.score)
-    if (data.score > 0 && data.score !== $scope.scoreBoard.opponentScore) {
-        console.log('inside here');
-        $scope.scoreBoard.opponentScore = $scope.scoreBoard.opponentScore + data.score;
-      }
+    $scope.scoreBoard.opponentScore += data.score;
+    // if (data.score > 0 && data.score !== $scope.scoreBoard.opponentScore) {
+    //     console.log('inside here');
+    //     $scope.scoreBoard.opponentScore = $scope.scoreBoard.opponentScore + data.score;
+    //   }
     })
   init()
 })
