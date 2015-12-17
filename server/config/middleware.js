@@ -17,10 +17,6 @@ module.exports = function(app, express, io) {
     next();
   });
 
-  app.get('/api/game/test/1', function(req,res,next) {
-    res.send("hello");
-  }
-
 
   app.use('/api/home', homeRouter);
   app.use('/api/game', gameRouter);

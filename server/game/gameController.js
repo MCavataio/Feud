@@ -55,7 +55,7 @@ module.exports = {
                 console.log(queries, 'queries step 3***************************')
                 // return response
                 if (req.body.param) {
-                  res.json(queries);
+                  res.send(queries);
                 } else {
                 queries[3] = room.value
                 console.log(queries, "before being sent --------------------")
