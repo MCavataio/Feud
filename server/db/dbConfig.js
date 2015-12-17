@@ -37,14 +37,8 @@ var User = db.define('user', {
 })
 
 var Query = db.define('query', {
-  number: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-      },
-  title: {
-    type: Sequelize.STRING,
-    primaryKey: true
-  }
+  number: Sequelize.INTEGER,
+  title: Sequelize.STRING,
   response1: Sequelize.STRING, 
   response2: Sequelize.STRING,
   response3: Sequelize.STRING,

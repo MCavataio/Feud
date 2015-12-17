@@ -6,44 +6,41 @@ var Query = db.Query;
 var rooms = [];
 var number = [];
 
+helpers.getCount(function(err, response) {
+  if (err) {
+    console.log(err)
+  } else {
+    var count = response.count
+    count++
+    number.push(count)
+    }
+    console.log(number)
+})
+
 
 module.exports = {
   addQuery: function (req, res, next) {
     console.log('got request');
     var query = req.body.query
-    // helpers.getQuery({title: query.title}, function(err, response) {
-    //   if (err) {
-    //     console.log(err, "in errror ahhh")
-    //   } else {
-    //     console.log("hello from else statement __________")
-    //     console.log(response);
-    //     if (response === null) {
-
-    //     if (!number.length){
-    //       number.push(1);
-    //       query.number = number[0];
-    //     } else {
-    //       number[0]++
-    //       query.number = number[0];
-    //     }
-        helpers.findOrCreateQuery(query)
-        .then(function(response) {
-          console.log('successful')
-          res.json(response);
-        }).catch(function(err) {
-          res.json(response);
-        })
-
-    //     }
-    //   }
-    // })
-    // .then(function(response) {
-    //   console.log('successful');
-    //   number++;
-    //   res.json(response);
-    // }).catch(function(err) {
-    //   res.send(err);
-    // })
+    helpers.getQuery({title: query.title}, function(err, response) {
+      if (err) {
+        console.log(err, "in errror ahhh")
+      } else {
+        if (response === null) {
+          query.number= number[0]
+          helpers.findOrCreateQuery(query)
+          .then(function(response) {
+            console.log('successful')
+            res.json(response);
+            number[0]++
+          }).catch(function(err) {
+            res.json(response);
+          })
+        } else {
+          res.json(response)
+        }
+      }
+    })
   },
   createRoom: function(req, res, next) {
     if(rooms.length > 0) {
