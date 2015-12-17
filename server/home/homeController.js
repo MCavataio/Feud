@@ -11,21 +11,21 @@ module.exports = {
   addQuery: function (req, res, next) {
     console.log('got request');
     var query = req.body.query
-    helpers.getQuery({title: query.title}, function(err, response) {
-      if (err) {
-        console.log(err, "in errror ahhh")
-      } else {
-        console.log("hello from else statement __________")
-        console.log(response);
-        if (response === null) {
+    // helpers.getQuery({title: query.title}, function(err, response) {
+    //   if (err) {
+    //     console.log(err, "in errror ahhh")
+    //   } else {
+    //     console.log("hello from else statement __________")
+    //     console.log(response);
+    //     if (response === null) {
 
-        if (!number.length){
-          number.push(1);
-          query.number = number[0];
-        } else {
-          number[0]++
-          query.number = number[0];
-        }
+    //     if (!number.length){
+    //       number.push(1);
+    //       query.number = number[0];
+    //     } else {
+    //       number[0]++
+    //       query.number = number[0];
+    //     }
         helpers.findOrCreateQuery(query)
         .then(function(response) {
           console.log('successful')
@@ -34,9 +34,9 @@ module.exports = {
           res.json(response);
         })
 
-        }
-      }
-    })
+    //     }
+    //   }
+    // })
     // .then(function(response) {
     //   console.log('successful');
     //   number++;

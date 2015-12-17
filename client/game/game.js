@@ -5,7 +5,7 @@ angular.module('feud.game', [])
   $scope.query = {};
   $scope.questions = {};
   $scope.data = {};
-  $scope.gameboard;
+  $scope.gameBoard;
   $scope.scoreBoard.opponentScore = 0;
   $scope.queryAnswer = {};
   var gameTimer = 30; 
@@ -27,20 +27,21 @@ angular.module('feud.game', [])
     $scope.scoreBoard.total = 0;
     $scope.scoreBoard.roundScore = 0;
     gameInfo($scope.questions, 1);
-    timer();
+    timer(10, nextRound);
   }
 
   var nextRound = function() {
-    var round = Number($scope.scoreBoard.round);
-    $scope.scoreBoard.roundScore = 0;
+    
     // $scope.scoreBoard.total = $scope.scoreBoard.total + roundScore || 0;
-    Socket.emit('updateScore', $scope.scoreBoard.total);
-    if (round <= 3) {
+    Socket.emit('updateScore', $scope.scoreBoard.roundScore);
+    $scope.scoreBoard.roundScore = 0;
+    if ($scope.scoreBoard.round <= 3) {
+      $scope.scoreBoard.round++
       console.log('in nextRound')
-      gameInfo($scope.questions, round)
-      timer()
+      gameInfo($scope.questions, $scope.scoreBoard.round)
+      timer(10, nextRound)
     } else {
-
+      $scope.gameBoard = true;
     }
   }
   
@@ -115,31 +116,48 @@ angular.module('feud.game', [])
   }
 
   // need to refactor angular timer
+  // var timer = function (time, cb) {
+  //   $scope.counter = gameTimer;
+  //   $scope.onTimeout = function(){
+  //     if($scope.counter !==0) {
+  //       $scope.counter--;
+  //       mytimeout = $timeout($scope.onTimeout,1000);
+  //     }
+  //     if($scope.counter === 0) {
+  //       stop()
+    
+  //       ///move logic set up callback
+  //       if ($scope.scoreBoard.round !== 3) {
+  //         $scope.scoreBoard.round++
+  //         nextRound();
+  //         $scope.counter = gameTimer;
+  //       } else {
+  //         Socket.emit('updateScore', $scope.scoreBoard.total)
+  //       }
+  //     }
+  //   }
+  //   var mytimeout = $timeout($scope.onTimeout,1000);
+
+  //   var stop = function(){
+  //     $timeout.cancel(mytimeout);
+  //   }
+  // }
+
   var timer = function (time, cb) {
-    $scope.counter = gameTimer;
-    $scope.onTimeout = function(){
+    $scope.counter = time;
+    $scope.onTimeout = function() {
       if($scope.counter !==0) {
         $scope.counter--;
-        mytimeout = $timeout($scope.onTimeout,1000);
-      }
-      if($scope.counter === 0) {
+        mytimeout = $timeout($scope.onTimeout, 1000);
+      }if($scope.counter === 0) {
         stop()
-    
-        ///move logic set up callback
-        if ($scope.scoreBoard.round !== 3) {
-          $scope.scoreBoard.round++
-          nextRound();
-          $scope.counter = gameTimer;
-        } else {
-          Socket.emit('updateScore', $scope.scoreBoard.total)
-        }
+          cb();
       }
     }
-    var mytimeout = $timeout($scope.onTimeout,1000);
-
-    var stop = function(){
-      $timeout.cancel(mytimeout);
-    }
+      var mytimeout = $timeout($scope.onTimeout, 1000);
+      var stop = function() {
+        $timeout.cancel(mytimeout);
+      }
   }
   
 
