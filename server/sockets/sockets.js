@@ -18,7 +18,9 @@ module.exports = function(io) {
         rooms[room] = true;
       }
     })
-
+    socket.on('test' function(data) {
+      console.log(dta)
+    })
     // pairs random users to play against one another
     socket.on('changeRoom', function(data) {
     // data is the room number received from emit from queryController
