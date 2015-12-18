@@ -2,7 +2,6 @@ var GC = require('../game/gameController.js');
 var rooms = {};
 
 module.exports = function(io) {
-  io.set('origins', ['http:/localhost:8100'])
   io.on('connection', function(socket) {
     console.log(socket.id, "connected")
     
