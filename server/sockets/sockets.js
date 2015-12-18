@@ -18,8 +18,8 @@ module.exports = function(io) {
         rooms[room] = true;
       }
     })
-    socket.on('test' function(data) {
-      console.log(dta)
+    socket.on('test', function(data) {
+      console.log(data)
     })
     // pairs random users to play against one another
     socket.on('changeRoom', function(data) {
