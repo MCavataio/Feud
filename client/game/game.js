@@ -27,7 +27,7 @@ angular.module('feud.game', [])
     $scope.scoreBoard.total = 0;
     $scope.scoreBoard.roundScore = 0;
     gameInfo($scope.questions, 1);
-    timer(10, nextRound);
+    timer(30, nextRound);
   }
 
   var nextRound = function() {
@@ -39,7 +39,7 @@ angular.module('feud.game', [])
       $scope.scoreBoard.round++
       console.log('in nextRound')
       gameInfo($scope.questions, $scope.scoreBoard.round)
-      timer(10, nextRound)
+      timer(30, nextRound)
     } else {
       $scope.gameBoard = true;
     }
