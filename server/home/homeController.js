@@ -6,42 +6,61 @@ var Query = db.Query;
 var rooms = [];
 var number = [];
 
-helpers.getCount(function(err, response) {
-  if (err) {
-    console.log(err)
-  } else {
-    var count = response.count
-    count++
-    number.push(count)
-    }
-    console.log(number)
+
+helpers.getCount()
+.then(function(response) {
+  count = response.count
+  count++
+  number.push(count);
+}).catch(function(err) {
+  console.log(err)
 })
 
 
 module.exports = {
+  // addQuery: function (req, res, next) {
+  //   console.log('got request');
+  //   var query = req.body.query
+  //   helpers.getQuery({title: query.title}, function(err, response) {
+  //     if (err) {
+  //       console.log(err, "in errror ahhh")
+  //     } else {
+  //       if (response === null) {
+  //         query.number= number[0]
+  //         helpers.findOrCreateQuery(query)
+  //         .then(function(response) {
+  //           console.log('successful')
+  //           res.json(response);
+  //           number[0]++
+  //         }).catch(function(err) {
+  //           res.json(response);
+  //         })
+  //       } else {
+  //         res.json(response)
+  //       }
+  //     }
+  //   })
+  // },
   addQuery: function (req, res, next) {
-    console.log('got request');
     var query = req.body.query
-    helpers.getQuery({title: query.title}, function(err, response) {
-      if (err) {
-        console.log(err, "in errror ahhh")
-      } else {
-        if (response === null) {
-          query.number= number[0]
-          helpers.findOrCreateQuery(query)
+    helpers.getQuery({title: query.title})
+    .then(function(response) {
+      if (response === null) {
+        query.number = number[0]
+        return helpers.findOrCreateQuery(query)
           .then(function(response) {
-            console.log('successful')
-            res.json(response);
-            number[0]++
-          }).catch(function(err) {
-            res.json(response);
-          })
-        } else {
-          res.json(response)
-        }
+          console.log('successful')
+          res.json(response);
+          number[0]++
+        })
+      } else {
+        res.json(response)
       }
+    }).catch(function(err) {
+      res.json(response);
     })
   },
+
   createRoom: function(req, res, next) {
     if(rooms.length > 0) {
       var last = rooms.length - 1;

@@ -8,7 +8,8 @@ angular.module('feud.game', [])
   $scope.gameBoard;
   $scope.scoreBoard.opponentScore = 0;
   $scope.queryAnswer = {};
-  var gameTimer = 30; 
+  $scope.lightningRound = false;
+  var gameTimer = 1; 
   
   $scope.toLobby = function() {
     Socket.emit('leaveRoom')
@@ -27,7 +28,7 @@ angular.module('feud.game', [])
     $scope.scoreBoard.total = 0;
     $scope.scoreBoard.roundScore = 0;
     gameInfo($scope.questions, 1);
-    timer(30, nextRound);
+    timer(gameTimer, nextRound);
   }
 
   var nextRound = function() {
@@ -35,14 +36,69 @@ angular.module('feud.game', [])
     // $scope.scoreBoard.total = $scope.scoreBoard.total + roundScore || 0;
     Socket.emit('updateScore', $scope.scoreBoard.roundScore);
     $scope.scoreBoard.roundScore = 0;
-    if ($scope.scoreBoard.round <= 3) {
+    if ($scope.scoreBoard.round < 3) {
       $scope.scoreBoard.round++
       console.log('in nextRound')
       gameInfo($scope.questions, $scope.scoreBoard.round)
-      timer(30, nextRound)
+      timer(gameTimer, nextRound)
     } else {
-      $scope.gameBoard = true;
+      $scope.lightningRound = true;
+      $scope.gameBoard = false;
+      lightningRound();
     }
+  }
+
+//////////////////////////////////////
+//////////////// Lightning Round
+/////////////////////////////////////
+
+  var lightningRound = function() {
+    if ($scope.scoreBoard.round < 10) {
+      $scope.scoreBoard.round++;
+      if ($scope.scoreBoard.round !== 9) {
+        gameInfo($scope.questions, $scope.scoreBoard.round, true)
+        timer(5, lightningRound)
+      } else {
+        socket.emit('updateScore', $scope.scoreBoard.score)
+      }
+    }
+  }
+
+  var gameInfo = function(query, number, lightningRound) {
+    number = number - 1
+    console.log(number)
+    $scope.query.title = query[number].title;
+    if (!lightningRound) {
+      $scope.query.responses = query[number].responses;
+      // $scope.guess = query[number].title + " ";
+      $scope.queryAnswer = {};    
+    } else {
+      $scope.query.responses = query[number].responses
+      $scope.query.choices = shuffle(query[number].responses)
+    }
+  }
+
+  function shuffle(array) {
+    var counter = array.length, temp, index;
+    // While there are elements in the array
+    while (counter > 0) {
+        // Pick a random index
+        index = Math.floor(Math.random() * counter);
+        // Decrease counter by 1
+        counter--;
+        // And swap the last element with it
+        temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
+    }
+    return array;
+  }
+
+  $scope.checkAnswer = function(response) {
+    var foundIndex = $scope.query.responses.indexOf(response)
+    console.log(foundIndex)
+    console.log(scoreValues[foundIndex++]);
+    $scope.scoreBoard.total += scoreValues[foundIndex]
   }
 
 
@@ -117,34 +173,6 @@ angular.module('feud.game', [])
     return questions
   }
 
-  // need to refactor angular timer
-  // var timer = function (time, cb) {
-  //   $scope.counter = gameTimer;
-  //   $scope.onTimeout = function(){
-  //     if($scope.counter !==0) {
-  //       $scope.counter--;
-  //       mytimeout = $timeout($scope.onTimeout,1000);
-  //     }
-  //     if($scope.counter === 0) {
-  //       stop()
-    
-  //       ///move logic set up callback
-  //       if ($scope.scoreBoard.round !== 3) {
-  //         $scope.scoreBoard.round++
-  //         nextRound();
-  //         $scope.counter = gameTimer;
-  //       } else {
-  //         Socket.emit('updateScore', $scope.scoreBoard.total)
-  //       }
-  //     }
-  //   }
-  //   var mytimeout = $timeout($scope.onTimeout,1000);
-
-  //   var stop = function(){
-  //     $timeout.cancel(mytimeout);
-  //   }
-  // }
-
   var timer = function (time, cb) {
     $scope.counter = time;
     $scope.onTimeout = function() {
@@ -163,13 +191,7 @@ angular.module('feud.game', [])
   }
   
 
-  var gameInfo = function(query, number) {
-    number = number - 1
-    $scope.query.title = query[number].title;
-    $scope.query.responses = query[number].responses;
-    // $scope.guess = query[number].title + " ";
-    $scope.queryAnswer = {};
-  }
+
 
 ////////////////////////////////////////
 //////////// Socket

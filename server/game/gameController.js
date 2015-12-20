@@ -7,17 +7,6 @@ var natural = require('natural');
 
 
 module.exports = {
-  //possible refactoring to get Queries
-  // getCount: function(req, res, next) {
-  //   console.log(req.param.id)
-  //   helpers.getCount(function(err, response) {
-  //     if (err) {
-  //       console.log(err);
-  //     } else {
-  //       res.json(response);
-  //     }
-  //   })
-  // },
 
   fuzzyCheck: function(req, res, next) {
     var responses = req.body.responses
@@ -36,37 +25,17 @@ module.exports = {
     res.json(greatest);
 
   },
-
   getQueries: function(room) {
-   helpers.getCount(function(err, response) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(response, 'count step 1 ++++++++++++++++++')
-        helpers.getNumbers(response, function(err, response) {
-          if (err) {
-            console.log(err) 
-          } else {
-            console.log(response, 'get numbers step 2=========================')
-            helpers.getQueries(response, function(err, queries) {
-              if (err) {
-                console.log(err);
-              } else {
-                console.log(queries, 'queries step 3***************************')
-                // return response
-                // if (req.body.param) {
-                //   res.send(queries);
-                // } else {
-                queries[3] = room.value
-                console.log(queries, "before being sent --------------------")
-                room.io.to(room.value).emit('startRound', queries)
-                // setting index 3 to the socket room back to the client
-                // res.json(queries);
-              }
-            });
-          }
-        })  
-      }
+    helpers.getCount()
+    .then(function(size) {
+      return helpers.getQueries(helpers.getNumbers(size))
+    })
+    .then(function(gameQuestions) {
+      // gameQuestions[8] = room.value
+      room.io.to(room.value).emit('startRound', gameQuestions)
+    })
+    .catch(function(err) {
+      console.log(err)
     })
   }
 

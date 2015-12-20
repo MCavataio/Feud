@@ -41,28 +41,34 @@ module.exports = {
       }).catch(reject)
     })
   },
-  getCount: function(cb) {
-    db.Query.findAndCountAll({})
-    .then(function (size) {
-      cb (null, size);
-    }).catch(function (err) {
-      cb(err);
-    })
-
-  },
-  getQuery: function(value, cb) {
-    db.Query.findOne({where: value})
-    .then(function (query) {
-      cb(null, query)
-    }).catch(function (err) {
-      cb(err);
-    })
-  },
   
-  getNumbers: function(response, cb) {
+  getCount: function() {
+    return new Promise(function (resolve, reject) {
+      db.Query.findAndCountAll({})
+      .then(function(size) {
+        resolve(size)
+      })
+      .catch(function(err) {
+        reject(err);
+      })
+    })
+  },  
+
+  getQuery: function(value, cb) {
+    return new Promise(function (resolve, reject) {
+      db.Query.findOne({where: value})  
+      .then(function (query) {
+        resolve(query)
+      }).catch(function (err) {
+        reject(err)
+      })
+    })
+  },
+
+  getNumbers: function(response) {
     var numbers = [];
     var queries = {};
-      for (var i = 1; i <= 7; i++ ) {
+      for (var i = 1; i <= 8; i++ ) {
         var count = 0;
         while(count < 1) {
           var randomIndex = Math.ceil(Math.random() * response.count)
@@ -72,11 +78,8 @@ module.exports = {
           } 
         }
       }
-    if (numbers) {
-      cb(null, numbers);
-    } else {
-      cb(numbers);
-    }
+
+    return numbers;
   },
 
   // getGameQueries: function(cb) {
@@ -106,14 +109,14 @@ module.exports = {
   //   })
   // },
 
-  getQueries: function(ids, cb) {
-    console.log(ids, ('in ids before searching queries'))
-    db.Query.findAll({where: {number: ids}
-    })
-    .then(function (query) {
-      cb(null, query)
-    }).catch(function (err) {
-      cb(err);
+  getQueries: function(ids) {
+    return new Promise(function(resolve, reject) {
+      db.Query.findAll({where: {number: ids}})
+      .then(function (query) {
+        resolve(query)
+      }).catch(function (err) {
+        reject(err)
+      })
     })
   }
 
