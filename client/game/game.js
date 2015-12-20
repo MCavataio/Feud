@@ -10,7 +10,7 @@ angular.module('feud.game', [])
   $scope.scoreBoard.opponentScore = 0;
   $scope.queryAnswer = {};
   $scope.lightningRound = false;
-  var gameTimer = 1; 
+  var gameTimer = 30; 
   
   $scope.toLobby = function() {
     Socket.emit('leaveRoom')
@@ -106,7 +106,7 @@ angular.module('feud.game', [])
     console.log(foundIndex, "after addition")
     console.log(scoreValues[foundIndex], "after addition")
     $scope.scoreBoard.total += scoreValues[foundIndex]
-    $scope.showRound = true;
+    $scope.showRound = false;
   }
 
 
