@@ -17,10 +17,10 @@
   </div>
   <div ng-if="lightningRound">
     <h3>Time Remaining: {{counter}}</h3>
-    <h3>{{scoreBoard.total}}</h3>
+    <h3>Your Score: {{scoreBoard.total}}</h3>
     <h3> Guess the number one answer!! {{query.title}} </h3>
-    <div ng-repeat="response in query.choices track by $index" ng-click="checkAnswer(response)"> {{response}} </div>
+    <div ng-if="showRound" ng-repeat="response in query.choices track by $index" ng-click="checkAnswer(response)"> <h4> {{response}} <h4> </div>
+  </div>
       <h3> Opponent Name: {{scoreBoard.opponentName}} </h3>
       <h3> Opponent Score: {{scoreBoard.opponentScore}} </h3>
-  </div>
 </div>

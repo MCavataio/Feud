@@ -5,6 +5,7 @@ angular.module('feud.game', [])
   $scope.query = {};
   $scope.questions = {};
   $scope.data = {};
+  $scope.showRound = false
   $scope.gameBoard;
   $scope.scoreBoard.opponentScore = 0;
   $scope.queryAnswer = {};
@@ -34,7 +35,7 @@ angular.module('feud.game', [])
   var nextRound = function() {
     
     // $scope.scoreBoard.total = $scope.scoreBoard.total + roundScore || 0;
-    Socket.emit('updateScore', $scope.scoreBoard.roundScore);
+    Socket.emit('updateScore', $scope.scoreBoard.total);
     $scope.scoreBoard.roundScore = 0;
     if ($scope.scoreBoard.round < 3) {
       $scope.scoreBoard.round++
@@ -53,28 +54,29 @@ angular.module('feud.game', [])
 /////////////////////////////////////
 
   var lightningRound = function() {
-    if ($scope.scoreBoard.round < 10) {
+    if ($scope.scoreBoard.round <= 9) {
+      $scope.showRound = true;
       $scope.scoreBoard.round++;
       if ($scope.scoreBoard.round !== 9) {
         gameInfo($scope.questions, $scope.scoreBoard.round, true)
         timer(5, lightningRound)
       } else {
-        socket.emit('updateScore', $scope.scoreBoard.score)
+        Socket.emit('updateScore', $scope.scoreBoard.total)
       }
     }
   }
 
   var gameInfo = function(query, number, lightningRound) {
     number = number - 1
-    console.log(number)
     $scope.query.title = query[number].title;
     if (!lightningRound) {
       $scope.query.responses = query[number].responses;
       // $scope.guess = query[number].title + " ";
       $scope.queryAnswer = {};    
     } else {
+      var temp = query[number].responses.slice(0)
       $scope.query.responses = query[number].responses
-      $scope.query.choices = shuffle(query[number].responses)
+      $scope.query.choices = shuffle(temp)
     }
   }
 
@@ -95,10 +97,16 @@ angular.module('feud.game', [])
   }
 
   $scope.checkAnswer = function(response) {
-    var foundIndex = $scope.query.responses.indexOf(response)
-    console.log(foundIndex)
-    console.log(scoreValues[foundIndex++]);
+    // console.log(response, "this is response")
+    // console.log($scope.query.responses, "these are responses");
+    var foundIndex = Number($scope.query.responses.indexOf(response))
+    console.log(foundIndex, "foundIndex")
+    console.log(scoreValues[foundIndex], "score addd")
+    foundIndex++
+    console.log(foundIndex, "after addition")
+    console.log(scoreValues[foundIndex], "after addition")
     $scope.scoreBoard.total += scoreValues[foundIndex]
+    $scope.showRound = true;
   }
 
 
@@ -137,20 +145,23 @@ angular.module('feud.game', [])
     4: 200,
     5: 100
   }
-  var updateBoard = function(index) {
-    var guess = $scope.guess;
-    var responses = $scope.query.responses;
-      // set the answer on view to correct response
-   $scope.queryAnswer[index] = $scope.query.responses[index]
-    // $scope.guess = $scope.query.title + " ";
-    $scope.guess = "";
-    // increment index to correct value in scoreValues
-    index++;
-    // figure out whether or not to keep one score or continue to add to total
-    // initialize round score
-    $scope.scoreBoard.roundScore += scoreValues[index];
-    // add to total score
-    $scope.scoreBoard.total += scoreValues[index];
+  var updateBoard = function(index, lightningRound) {
+      var guess = $scope.guess;
+      var responses = $scope.query.responses;
+        // set the answer on view to correct response
+     $scope.queryAnswer[index] = $scope.query.responses[index]
+      // $scope.guess = $scope.query.title + " ";
+      $scope.guess = "";
+      // increment index to correct value in scoreValues
+      index++;
+      // figure out whether or not to keep one score or continue to add to total
+      // initialize round score
+      $scope.scoreBoard.roundScore += scoreValues[index];
+      // add to total score
+      $scope.scoreBoard.total += scoreValues[index];
+      
+  
+
   }
 
   var parsedResponses = function (data) {
@@ -205,9 +216,8 @@ angular.module('feud.game', [])
   })
 
   Socket.on('updateScore', function(data) {
-    $scope.scoreBoard.opponentScore = $scope.scoreBoard.opponentScore || 0
+    $scope.scoreBoard.opponentScore = data.score || 0
     console.log(data.score)
-    $scope.scoreBoard.opponentScore += data.score;
     // if (data.score > 0 && data.score !== $scope.scoreBoard.opponentScore) {
     //     console.log('inside here');
     //     $scope.scoreBoard.opponentScore = $scope.scoreBoard.opponentScore + data.score;
