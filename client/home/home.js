@@ -5,7 +5,6 @@ angular.module("feud.home", [])
   $scope.data = {};
   $scope.socket = 0;
   $scope.status = true;;
-
   var room;
 
   ///////////////////////////////////////////
@@ -38,16 +37,10 @@ angular.module("feud.home", [])
   Socket.on('playRound', function(response) {
     $location.path('/game');
   }); 
+
   ////////////////////////////////////////////
   //// add search feature
   ////////////////////////////////////////////
-  // $scope.addQuery = function() {
-  //   Home.findQuery($scope.data.search)
-  //   .then(function(response) {
-  //     console.log('used http')
-  //     console.log(response)
-  //   })
-  // }
 
   $scope.addQuery = function() {
     var query = {title: $scope.query.search};

@@ -48,11 +48,9 @@ angular.module('feud.game', [])
       lightningRound();
     }
   }
-
 //////////////////////////////////////
 //////////////// Lightning Round
 /////////////////////////////////////
-
   var lightningRound = function() {
     if ($scope.scoreBoard.round <= 9) {
       $scope.showRound = true;
@@ -92,27 +90,18 @@ angular.module('feud.game', [])
         temp = array[counter];
         array[counter] = array[index];
         array[index] = temp;
-    }
+    }.
     return array;
   }
 
   $scope.checkAnswer = function(response) {
-    // console.log(response, "this is response")
-    // console.log($scope.query.responses, "these are responses");
     var foundIndex = Number($scope.query.responses.indexOf(response))
-    console.log(foundIndex, "foundIndex")
-    console.log(scoreValues[foundIndex], "score addd")
     foundIndex++
-    console.log(foundIndex, "after addition")
-    console.log(scoreValues[foundIndex], "after addition")
     $scope.scoreBoard.total += scoreValues[foundIndex]
     $scope.showRound = false;
   }
 
-
-  
   $scope.makeGuess = function() {
-
     var guess = $scope.data.guess;
     var foundIndex = $scope.query.responses.indexOf(guess);
     var responses = $scope.query.responses;
@@ -133,11 +122,9 @@ angular.module('feud.game', [])
       })
     } $scope.data.guess = "";
   }
-
 ////////////////////////////////////////////////
 //////////////  Game Helpers
 ////////////////////////////////////////////////
-
   var scoreValues = {
     1: 500,
     2: 400,
@@ -159,12 +146,10 @@ angular.module('feud.game', [])
       $scope.scoreBoard.roundScore += scoreValues[index];
       // add to total score
       $scope.scoreBoard.total += scoreValues[index];
-      
-  
-
   }
 
   var parsedResponses = function (data) {
+    // refactor to have constant time look up for score values
     var questions = {}
     _.each(data, function(query, qNum) {
     if(query) {
@@ -180,7 +165,6 @@ angular.module('feud.game', [])
       }
     }
     })
-    console.log(questions)
     return questions
   }
 
@@ -200,28 +184,16 @@ angular.module('feud.game', [])
       $timeout.cancel(mytimeout);
     }
   }
-  
-
-
-
 ////////////////////////////////////////
 //////////// Socket
 ////////////////////////////////////////
 
   Socket.on('startRound', function(query) {
-    // room = query.room;
-    // Socket.emit('getQueries')
-    console.log(query)
     startRound(query);
   })
 
   Socket.on('updateScore', function(data) {
     $scope.scoreBoard.opponentScore = data.score || 0
-    console.log(data.score)
-    // if (data.score > 0 && data.score !== $scope.scoreBoard.opponentScore) {
-    //     console.log('inside here');
-    //     $scope.scoreBoard.opponentScore = $scope.scoreBoard.opponentScore + data.score;
-    //   }
     })
   init()
 })
