@@ -33,7 +33,13 @@ var PotentialQuery = db.define('potentialquery', {
 
 var User = db.define('user', {
   name: Sequelize.STRING,
-  password: Sequelize.STRING
+  password: Sequelize.STRING,
+  wins: Sequelize.INTEGER,
+  losses: Sequelize.INTEGER
+})
+var Game = db.define('game', {
+  score: Sequelize.INTEGER,
+   
 })
 
 var Query = db.define('query', {

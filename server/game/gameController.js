@@ -14,7 +14,7 @@ module.exports = {
     var greatest = {
       value: .1,
       index: null
-    }
+    } 
     for (var i = 0; i < responses.length; i++) {
       var ratio = natural.JaroWinklerDistance(responses[i], guess)
       if (ratio > greatest.value) {
