@@ -1,7 +1,7 @@
 angular.module('feud', [
   'feud.home',
   'feud.game',
-  'feud.auth',
+  'feud.welcome',
   'feud.services',
   'ui.router'
 ])
@@ -22,5 +22,9 @@ angular.module('feud', [
       url: '/game',
       templateUrl: 'game/game.html'
     })
+    // .state('friends', {
+    //   url: '/friends',
+    //   templateUrl: 'friends/friends.html'
+    // })
 });
 

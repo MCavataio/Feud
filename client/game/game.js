@@ -90,7 +90,7 @@ angular.module('feud.game', [])
         temp = array[counter];
         array[counter] = array[index];
         array[index] = temp;
-    }.
+    }
     return array;
   }
 
