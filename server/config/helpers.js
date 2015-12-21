@@ -113,11 +113,27 @@ module.exports = {
     return new Promise(function(resolve, reject) {
       db.Query.findAll({where: {number: ids}})
       .then(function (query) {
-        resolve(query)
+        resolve(shuffle(query))
       }).catch(function (err) {
         reject(err)
       })
     })
   }
-
+}
+  
+function shuffle(array) {
+  console.log(array.length)
+  var counter = array.length, temp, index;
+  // While there are elements in the array
+  while (counter > 0) {
+      // Pick a random index
+      index = Math.floor(Math.random() * counter);
+      // Decrease counter by 1
+      counter--;
+      // And swap the last element with it
+      temp = array[counter];
+      array[counter] = array[index];
+      array[index] = temp;
+  }
+  return array;
 }

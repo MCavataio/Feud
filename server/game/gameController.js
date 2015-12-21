@@ -32,6 +32,7 @@ module.exports = {
     })
     .then(function(gameQuestions) {
       // gameQuestions[8] = room.value
+      console.log(console.log(gameQuestions));
       room.io.to(room.value).emit('startRound', gameQuestions)
     })
     .catch(function(err) {
