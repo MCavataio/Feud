@@ -41,7 +41,7 @@ module.exports = {
   user: function(userInfo) {
     helpers.findOrCreateUser(userInfo)
     .then(function(user) {
-      Socket.emit(user);
+      Socket.emit('userInfo', user);
     })
   },
 
