@@ -9,6 +9,7 @@ module.exports = function(io) {
     socket.on('userInfo', function(user) {
       console.log(this.id, " ++++++++++++ ")
       user.socket = this.id
+      user.io = io
       HC.user(user);
     })
     // once both users are on game page send data
