@@ -5,6 +5,7 @@ module.exports = function(io) {
   io.on('connection', function(socket) {
     console.log(socket.id, "connected")
     socket.on('test', function() {
+      console.log('trying to test and about to emit')
       socket.emit('hello')
     })
     // once both users are on game page send data
