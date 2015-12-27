@@ -32,7 +32,7 @@ var User = db.define('user', {
   wins: Sequelize.INTEGER,
   losses: Sequelize.INTEGER
 })
-var Game = db.define('game', {
+var friendGame = db.define('game', {
   user1: Sequelize.INTEGER,
   user2: Sequelize.INTEGER,
   user1score: Sequelize.INTEGER,
@@ -61,7 +61,7 @@ var Query = db.define('query', {
   response10: Sequelize.STRING,
 });
 
-db.sync({force:true})
+db.sync()
   .then(function(err) {
     console.log('created database')
   }, function (err) {
