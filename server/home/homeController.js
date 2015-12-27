@@ -43,7 +43,7 @@ module.exports = {
     .then(function(user) {
       console.log(user, "before being send +++++++++++++++")
       console.log(userInfo.socket);
-      user.io.to(userInfo.socket).emit('userInfo', user);
+      userInfo.io.to(userInfo.socket).emit('userInfo', user);
     })
   },
 
