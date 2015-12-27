@@ -4,10 +4,10 @@ var rooms = {};
 
 module.exports = function(io) {
   io.on('connection', function(socket) {
-    var socket = this.rooms[0];
+    var socketID = this.rooms[0];
     console.log(socket.id, "connected")
     socket.on('userInfo', function(user) {
-      user.socket = socket;
+      user.socket = socketID;
       HC.user(user);
     })
     // once both users are on game page send data
