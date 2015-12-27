@@ -4,7 +4,9 @@ var rooms = {};
 module.exports = function(io) {
   io.on('connection', function(socket) {
     console.log(socket.id, "connected")
-    
+    socket.on('test', function() {
+      socket.emit('hello')
+    })
     // once both users are on game page send data
     socket.on('initGame', function(data) {
       var room = {
@@ -17,9 +19,6 @@ module.exports = function(io) {
       } else {
         rooms[room] = true;
       }
-    })
-    socket.on('test', function(data) {
-      console.log(data)
     })
     // pairs random users to play against one another
     socket.on('changeRoom', function(data) {

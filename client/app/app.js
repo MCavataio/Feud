@@ -22,6 +22,10 @@ angular.module('feud', [
       url: '/game',
       templateUrl: 'game/game.html'
     })
+    .state('welcome', {
+      url: '/welcome',
+      templateUrl: 'welcome/welcome.html'
+    })
     // .state('friends', {
     //   url: '/friends',
     //   templateUrl: 'friends/friends.html'

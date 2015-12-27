@@ -1,0 +1,14 @@
+.choiceBox {
+  width: 25%;
+  background-color: blue;
+  border-radius: 5px;
+}
+.choice {
+  font-size: 20px;
+  color: white;
+  text-align: center;
+}
+.choiceBox:hover {
+  color: red;
+  cursor: pointer;
+}

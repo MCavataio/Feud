@@ -19,7 +19,12 @@
     <h3>Time Remaining: {{counter}}</h3>
     <h3>Your Score: {{scoreBoard.total}}</h3>
     <h3> Guess the number one answer!! {{query.title}} </h3>
-    <div ng-if="showRound" ng-repeat="response in query.choices track by $index" ng-click="checkAnswer(response)"> <h4> {{response}} <h4> </div>
+    <div ng-if="showRound" ng-repeat="response in query.choices track by $index" ng-click="checkAnswer(response)">
+      <div class="choiceBox"> 
+        <span class="choice"> {{response}} </span>
+      </div> 
+      </br>
+    </div>
   </div>
       <h3> Opponent Name: {{scoreBoard.opponentName}} </h3>
       <h3> Opponent Score: {{scoreBoard.opponentScore}} </h3>
