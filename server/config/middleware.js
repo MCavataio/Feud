@@ -22,5 +22,5 @@ module.exports = function(app, express, io) {
   app.use('/api/game', gameRouter);
 
   require('../game/gameRoutes.js')(gameRouter, io);
-  require('../home/homeRoutes.js')(homeRouter);
+  require('../home/homeRoutes.js')(homeRouter, io);
 }

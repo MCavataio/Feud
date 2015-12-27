@@ -18,29 +18,6 @@ helpers.getCount()
 
 
 module.exports = {
-  // addQuery: function (req, res, next) {
-  //   console.log('got request');
-  //   var query = req.body.query
-  //   helpers.getQuery({title: query.title}, function(err, response) {
-  //     if (err) {
-  //       console.log(err, "in errror ahhh")
-  //     } else {
-  //       if (response === null) {
-  //         query.number= number[0]
-  //         helpers.findOrCreateQuery(query)
-  //         .then(function(response) {
-  //           console.log('successful')
-  //           res.json(response);
-  //           number[0]++
-  //         }).catch(function(err) {
-  //           res.json(response);
-  //         })
-  //       } else {
-  //         res.json(response)
-  //       }
-  //     }
-  //   })
-  // },
   addQuery: function (req, res, next) {
     var query = req.body.query
     helpers.getQuery({title: query.title})
@@ -58,6 +35,13 @@ module.exports = {
       }
     }).catch(function(err) {
       res.json(response);
+    })
+  },
+
+  user: function(userInfo) {
+    helpers.findOrCreateUser(userInfo)
+    .then(function(user) {
+      Socket.emit(user);
     })
   },
 

@@ -1,12 +1,12 @@
 var GC = require('../game/gameController.js');
+var HC = require('../home/homeController.js');
 var rooms = {};
 
 module.exports = function(io) {
   io.on('connection', function(socket) {
     console.log(socket.id, "connected")
-    socket.on('test', function() {
-      console.log('trying to test and about to emit')
-      socket.emit('test', 'hello')
+    socket.on('userInfo', function(user) {
+      HC.user(user);
     })
     // once both users are on game page send data
     socket.on('initGame', function(data) {
@@ -21,6 +21,7 @@ module.exports = function(io) {
         rooms[room] = true;
       }
     })
+
     // pairs random users to play against one another
     socket.on('changeRoom', function(data) {
     // data is the room number received from emit from queryController

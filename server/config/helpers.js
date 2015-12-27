@@ -1,5 +1,6 @@
 var db = require('../db/dbConfig.js');
 var Query = db.Query;
+var User = db.User;
 var Promise = require('bluebird')
 
 module.exports = {
@@ -32,9 +33,7 @@ module.exports = {
     return new Promise(function (resolve, reject) {
       db.User.findOrCreate({
         where: {
-          name: user.username,
-        }, defaults: {
-          password: user.password
+          name: user.name,
         }
       }).spread(function (user, created) {
         resolve(user, created)
