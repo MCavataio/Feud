@@ -23,10 +23,6 @@ db.authenticate()
   })
   .done();
 
-var QueryCount = db.define('querycount', {
-  size: Sequelize.INTEGER
-})
-
 var PotentialQuery = db.define('potentialquery', {
   query: Sequelize.STRING
 })
