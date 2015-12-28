@@ -38,7 +38,7 @@ module.exports = {
     })
   },
   addPotential: function(data) {
-    helpers.findOrCreateQuery(data, 'Potential')
+    helpers.findOrCreateQuery(data, 'PotentialQuery')
   },
 
   user: function(userInfo) {

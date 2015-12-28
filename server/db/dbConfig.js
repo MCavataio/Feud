@@ -95,5 +95,6 @@ db.sync({force: true})
 module.exports = {
   Query: Query,
   User: User,
-  RandomGame: RandomGame
+  RandomGame: RandomGame,
+  PotentialQuery: PotentialQuery
 }

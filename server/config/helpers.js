@@ -1,6 +1,7 @@
 var db = require('../db/dbConfig.js');
 var Query = db.Query;
 var User = db.User;
+var PotentialQuery = db.PotentialQuery
 var RandomGame = db.RandomGame;
 var Promise = require('bluebird')
 
