@@ -41,8 +41,8 @@ module.exports = {
   user: function(userInfo) {
     helpers.findOrCreateUser(userInfo)
     .then(function(user) {
-      console.log(user, "before being send +++++++++++++++")
-      console.log(userInfo.socket);
+      // console.log(user, "before being send +++++++++++++++")
+      // console.log(userInfo.socket);
       userInfo.io.to(userInfo.socket).emit('userInfo', user);
     })
   },

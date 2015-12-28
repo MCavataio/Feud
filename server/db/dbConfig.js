@@ -46,14 +46,17 @@ var RandomGame = db.define('randomGame', {
   questionRD2: Sequelize.INTEGER,
   questionRD3: Sequelize.INTEGER,
   questionRD4: Sequelize.STRING,
+  turn: Sequelize.STRING,
   user1RD1: Sequelize.INTEGER,
-  user2SRD1: Sequelize.INTEGER,
+  user2RD1: Sequelize.INTEGER,
   user1RD2: Sequelize.INTEGER,
   user2RD2: Sequelize.INTEGER,
   user1RD3: Sequelize.INTEGER,
   user2RD3: Sequelize.INTEGER,
   user1RD4: Sequelize.INTEGER,
   user2RD4: Sequelize.INTEGER,
+  user1Total: Sequelize.INTEGER,
+  user2Total: Sequelize.INTEGER
 })
 
 var Query = db.define('query', {

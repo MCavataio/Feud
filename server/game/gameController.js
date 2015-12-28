@@ -7,10 +7,9 @@ var natural = require('natural');
 
 
 module.exports = {
-
-  fuzzyCheck: function(req, res, next) {
-    var responses = req.body.responses
-    var guess = req.body.guess
+  fuzzyCheck: function(data) {
+    var responses = data.responses
+    var guess = data.guess
     var greatest = {
       value: .1,
       index: null
@@ -22,9 +21,26 @@ module.exports = {
         greatest.index = i
       }
     }
-    res.json(greatest);
-
+    data.io.to(data.id).emit('fuzzyCheck', greatest)
   },
+
+  // fuzzyCheck: function(req, res, next) {
+  //   var responses = req.body.responses
+  //   var guess = req.body.guess
+  //   var greatest = {
+  //     value: .1,
+  //     index: null
+  //   } 
+  //   for (var i = 0; i < responses.length; i++) {
+  //     var ratio = natural.JaroWinklerDistance(responses[i], guess)
+  //     if (ratio > greatest.value) {
+  //       greatest.value = ratio;
+  //       greatest.index = i
+  //     }
+  //   }
+  //   res.json(greatest);
+
+  // },
   getQueries: function(room) {
     helpers.getCount()
     .then(function(size) {
@@ -32,7 +48,7 @@ module.exports = {
     })
     .then(function(gameQuestions) {
       // gameQuestions[8] = room.value
-      console.log(console.log(gameQuestions));
+      // console.log(console.log(gameQuestions));
       room.io.to(room.value).emit('startRound', gameQuestions)
     })
     .catch(function(err) {

@@ -40,9 +40,9 @@ module.exports = {
     var c = numbers [2];
     return new Promise(function(resolve, reject) {
       db.RandomGame.update({
-          questionRD1: a,
-          questionRD2: b,
-          questionRD3: c,
+          questionRD1: numbers[0],
+          questionRD2: numbers[1],
+          questionRD3: numbers[2],
           questionRD4: lightning
         }, {
           where: {id: game}

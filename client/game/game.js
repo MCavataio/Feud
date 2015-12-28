@@ -112,16 +112,26 @@ angular.module('feud.game', [])
     }
     else {
       var data = {responses: responses, guess: guess};
-      Game.fuzzyCheck(data)
-      .then(function(response) {
-        var value = response.data.value;
-        var index = response.data.index;
-        if (value > .85) {
-          updateBoard(index)
-        }
-      })
+
+      Socket.emit('fuzzyCheck', data);
+      // Game.fuzzyCheck(data)
+      // .then(function(response) {
+      //   var value = response.data.value;
+      //   var index = response.data.index;
+      //   if (value > .85) {
+      //     updateBoard(index)
+      //   }
+      // })
     } $scope.data.guess = "";
   }
+  Socket.on('fuzzyCheck', function(greatest) {
+    console.log(greatest)
+    var value = greatest.value;
+    var index = greatest.index;
+    if (value > .85) {
+      updateBoard(index)
+    }
+  })
 ////////////////////////////////////////////////
 //////////////  Game Helpers
 ////////////////////////////////////////////////

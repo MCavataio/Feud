@@ -13,6 +13,12 @@ module.exports = function(io) {
       HC.user(user);
     })
 
+    socket.on('fuzzyCheck', function(data) {
+      data.id = this.id
+      data.io = io
+      GC.fuzzyCheck(data);
+    })
+
     socket.on('playRandom', function(user) {
       console.log('in playRandom')
       RC.playGame(user)
