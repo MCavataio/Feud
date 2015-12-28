@@ -55,9 +55,9 @@ module.exports = {
       })
     })
   },
-  findOrCreateQuery: function (newQuery) {
+  findOrCreateQuery: function (newQuery, table) {
     return new Promise(function (resolve, reject) {
-      db.Query.findOrCreate({
+      db[table].findOrCreate({
         where : {
           title: newQuery.title
         }, defaults: {

@@ -23,8 +23,19 @@ db.authenticate()
   })
   .done();
 
-var PotentialQuery = db.define('potentialquery', {
-  query: Sequelize.STRING
+var PotentialQuery = db.define('potentialQuery', {
+  number: Sequelize.INTEGER,
+  title: Sequelize.STRING,
+  response1: Sequelize.STRING, 
+  response2: Sequelize.STRING,
+  response3: Sequelize.STRING,
+  response4: Sequelize.STRING,
+  response5: Sequelize.STRING,
+  response6: Sequelize.STRING,
+  response7: Sequelize.STRING,
+  response8: Sequelize.STRING,
+  response9: Sequelize.STRING,
+  response10: Sequelize.STRING,
 })
 
 var User = db.define('user', {
@@ -74,7 +85,7 @@ var Query = db.define('query', {
   response10: Sequelize.STRING,
 });
 
-db.sync({force: false})
+db.sync({force: true})
   .then(function(err) {
     console.log('created database')
   }, function (err) {

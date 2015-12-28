@@ -24,7 +24,7 @@ module.exports = {
     .then(function(response) {
       if (response === null) {
         query.number = number[0]
-        return helpers.findOrCreateQuery(query)
+        return helpers.findOrCreateQuery(query, 'Query')
           .then(function(response) {
           console.log('successful')
           res.json(response);
@@ -36,6 +36,9 @@ module.exports = {
     }).catch(function(err) {
       res.json(response);
     })
+  },
+  addPotential: function(data) {
+    helpers.findOrCreateQuery(data, 'Potential')
   },
 
   user: function(userInfo) {

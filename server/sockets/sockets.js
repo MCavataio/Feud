@@ -14,15 +14,16 @@ module.exports = function(io) {
     })
 
     socket.on('fuzzyCheck', function(data) {
+      console.log(data)
       data.id = this.id
       data.io = io
       GC.fuzzyCheck(data);
     })
-
-    socket.on('playRandom', function(user) {
-      console.log('in playRandom')
-      RC.playGame(user)
-    })
+    //************************************************
+    // socket.on('playRandom', function(user) {
+    //   console.log('in playRandom')
+    //   RC.playGame(user)
+    // })
     // once both users are on game page send data
     socket.on('initGame', function(data) {
       var room = {
@@ -63,6 +64,9 @@ module.exports = function(io) {
     socket.on('updateScore', function(data) {
       socket.broadcast.to(this.rooms[1]).emit('updateScore', {score: data})
       // console.log(this.rooms, this.id);
+    })
+    socket.on('addPotential', function(data) {
+      HC.addPotential(data);
     })
   })
 }
