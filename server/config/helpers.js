@@ -16,16 +16,42 @@ module.exports = {
       })
     });
   },
-  findRandomGame: function() {
+  findRandomGame: function(user) {
+    console.log(user, "++++++++++")
     return new Promise(function(resolve, reject) {
-      db.RandomGame.find({where: {user2: 'null'}})
-      .then(function (game) {
-        console.log(game, "in then for findRandomGame")
+      db.RandomGame.findOrCreate({where: {user2: 'null'},
+        defaults: {
+          user1: user
+        }
+      })
+      .then(function(game) {
         resolve(game)
       })
       .catch(function(game) {
         console.log(game, "in catch for findRandomGame");
         reject(game);
+      })
+    })
+  },
+  updateRandomGame: function(game, numbers, lightning) {
+    console.log(game, numbers, lightning)
+    var a = numbers[0];
+    var b = numbers [1];
+    var c = numbers [2];
+    return new Promise(function(resolve, reject) {
+      db.RandomGame.update({
+          questionRD1: a,
+          questionRD2: b,
+          questionRD3: c,
+          questionRD4: lightning
+        }, {
+          where: {id: game}
+        }
+      ).then(function(response){
+        console.log(response)
+        resolve(response)
+      }).catch(function(error) {
+        reject(error)
       })
     })
   },

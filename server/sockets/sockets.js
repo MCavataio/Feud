@@ -13,12 +13,9 @@ module.exports = function(io) {
       HC.user(user);
     })
 
-    socket.on('playRandom', function() {
-      var user = {
-        socket: this.id,
-        io: io
-      }
-      RC.playGame(user);
+    socket.on('playRandom', function(user) {
+      console.log('in playRandom')
+      RC.playGame(user)
     })
     // once both users are on game page send data
     socket.on('initGame', function(data) {

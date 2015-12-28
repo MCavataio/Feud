@@ -9,11 +9,42 @@ var natural = require('natural');
 module.exports = {
   playGame: function(user) {
     console.log('inside playGame');
-    helpers.findRandomGame(user)
-    .then(function(response) {
-      console.log(response)
+    return helpers.findRandomGame(user)
+    .then(function(game) {
+      if (game[0].dataValues.user2 === 'null') {
+        return helpers.getCount()
+        .then(function(response) {
+          return helpers.getNumbers(response)
+        })
+        .then(function(numbers) {
+          var lightning = numbers.slice(3);
+          lightning = lightning.join("A")
+          game = game[0].dataValues.id
+
+          console.log(typeof(game), "+++++++")
+          return helpers.updateRandomGame(game, numbers, lightning)
+        })
+        .then(function(updated) {
+          console.log(updated)
+        })
+      }
+    })
+    .catch(function(error) {
+      console.log(error)
     })
   }
+}
+  // player wants to play game
+  // find if there is an available room
+  // if there is available room
+    // send player questions that were stored in room and user
+    // send player question
+    // save question round
+    // info of opponent
+  // else create new game
+    // going to have to get numbers
+    // save user name to random game along with random numbers
+
 
 
   //   helpers.getCount()
@@ -25,4 +56,3 @@ module.exports = {
   //   })
 
   // })
-}

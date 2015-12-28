@@ -10,7 +10,9 @@ angular.module("feud.home", [])
   ///////////////////////////////////////////
   /////// Login
   ///////////////////////////////////////////
-
+  $scope.test = function() {
+    Socket.emit('playRandom', 'michael')
+  }
   $scope.login = function() {
     console.log('in login controlelr')
     var userInfo = {

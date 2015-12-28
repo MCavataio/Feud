@@ -32,19 +32,28 @@ var User = db.define('user', {
   wins: Sequelize.INTEGER,
   losses: Sequelize.INTEGER
 })
-var friendGame = db.define('game', {
-  user1: Sequelize.INTEGER,
-  user2: Sequelize.INTEGER,
+var FriendGame = db.define('game', {
+  user1: Sequelize.STRING,
+  user2: Sequelize.STRING,
   user1score: Sequelize.INTEGER,
   user2score: Sequelize.INTEGER
 })
 
 var RandomGame = db.define('randomGame', {
-  user1: Sequelize.INTEGER,
-  user2: Sequelize.INTEGER,
-  user1score: Sequelize.INTEGER,
-  user2Score: Sequelize.INTEGER,
-  numbers: Sequelize.INTEGER
+  user1: Sequelize.STRING,
+  user2: Sequelize.STRING,
+  questionRD1: Sequelize.INTEGER,
+  questionRD2: Sequelize.INTEGER,
+  questionRD3: Sequelize.INTEGER,
+  questionRD4: Sequelize.STRING,
+  user1RD1: Sequelize.INTEGER,
+  user2SRD1: Sequelize.INTEGER,
+  user1RD2: Sequelize.INTEGER,
+  user2RD2: Sequelize.INTEGER,
+  user1RD3: Sequelize.INTEGER,
+  user2RD3: Sequelize.INTEGER,
+  user1RD4: Sequelize.INTEGER,
+  user2RD4: Sequelize.INTEGER,
 })
 
 var Query = db.define('query', {
@@ -62,7 +71,7 @@ var Query = db.define('query', {
   response10: Sequelize.STRING,
 });
 
-db.sync()
+db.sync({force: false})
   .then(function(err) {
     console.log('created database')
   }, function (err) {
@@ -71,5 +80,6 @@ db.sync()
 
 module.exports = {
   Query: Query,
-  User: User
+  User: User,
+  RandomGame: RandomGame
 }
