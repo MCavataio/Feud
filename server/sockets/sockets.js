@@ -1,5 +1,6 @@
 var GC = require('../game/gameController.js');
 var HC = require('../home/homeController.js');
+var RC = require('../randomGame/randomGameController.js');
 var rooms = {};
 
 module.exports = function(io) {
@@ -7,10 +8,17 @@ module.exports = function(io) {
     
     console.log(socket.id, "connected")
     socket.on('userInfo', function(user) {
-      console.log(this.id, " ++++++++++++ ")
       user.socket = this.id
       user.io = io
       HC.user(user);
+    })
+
+    socket.on('playRandom', function() {
+      var user = {
+        socket: this.id,
+        io: io
+      }
+      RC.playGame(user);
     })
     // once both users are on game page send data
     socket.on('initGame', function(data) {
@@ -35,23 +43,17 @@ module.exports = function(io) {
     }
     // joins respective room
     if(!this.rooms[1]) {
-      
       socket.join(nRoom.value);
       // checks to see how many users are in current room;
       var room = io.sockets.adapter.rooms[nRoom.value];
       var length = Object.keys(room).length
       if (length === 2) {
         io.sockets.to(nRoom.value).emit('playRound', {room: nRoom.value})
-        // setTimeout(function() {
-        //   GC.getQueries(nRoom) 
-        // }, 2000)
       }
     }
     })
     socket.on('leaveRoom', function() {
-      console.log(this.rooms, "before+++++++++++++++++++++++")
       socket.leave(this.rooms[1]);
-      console.log(this.rooms, "++++++++++++++++++++++")
     })
     // sends scores to other individuals playing in the same room
     // this.rooms consists of connection id and room number

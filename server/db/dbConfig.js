@@ -43,7 +43,8 @@ var RandomGame = db.define('randomGame', {
   user1: Sequelize.INTEGER,
   user2: Sequelize.INTEGER,
   user1score: Sequelize.INTEGER,
-  user2Score: Sequelize.INTEGER
+  user2Score: Sequelize.INTEGER,
+  numbers: Sequelize.INTEGER
 })
 
 var Query = db.define('query', {

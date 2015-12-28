@@ -1,9 +1,34 @@
 var db = require('../db/dbConfig.js');
 var Query = db.Query;
 var User = db.User;
+var RandomGame = db.RandomGame;
 var Promise = require('bluebird')
 
 module.exports = {
+  createNumbers: function() {
+    return new Promise(function(resolve, reject) {
+      db.Query.findAll({where: {number: ids}})
+      .then(function (query) {
+        resolve(shuffle(query))
+      })
+      .catch(function(query) {
+        console.log(query, "error in retrieving numbers");
+      })
+    });
+  },
+  findRandomGame: function() {
+    return new Promise(function(resolve, reject) {
+      db.RandomGame.find({where: {user2: 'null'}})
+      .then(function (game) {
+        console.log(game, "in then for findRandomGame")
+        resolve(game)
+      })
+      .catch(function(game) {
+        console.log(game, "in catch for findRandomGame");
+        reject(game);
+      })
+    })
+  },
   findOrCreateQuery: function (newQuery) {
     return new Promise(function (resolve, reject) {
       db.Query.findOrCreate({
@@ -80,34 +105,6 @@ module.exports = {
 
     return numbers;
   },
-
-  // getGameQueries: function(cb) {
-  //  console.log('inside get Queries +++++++++++++++++++')
-  //  this.getCount(function(err, response) {
-  //     if (err) {
-  //       console.log(err);
-  //     } else {
-  //       this.getNumbers(response, function(err, response) {
-  //         if (err) {
-  //           console.log(err) 
-  //         } else {
-  //           this.getQueries(response, function(err, queries) {
-  //             if (queries) {
-  //               cb(null, queries)
-  //             } else {
-  //               // return response
-  //               cb(queries);
-  //               // queries.room = room.value
-  //               // room.io.to(room.value).emit('startRound', queries)
-  //               // res.json(queries);
-  //             }
-  //           });
-  //         }
-  //       })  
-  //     }
-  //   })
-  // },
-
   getQueries: function(ids) {
     return new Promise(function(resolve, reject) {
       db.Query.findAll({where: {number: ids}})
