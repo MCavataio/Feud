@@ -26,6 +26,14 @@ module.exports = function(io) {
     })
     // once both users are on game page send data
     socket.on('initGame', function(data) {
+      if (data.name) {
+        var user = {
+          user: data.name,
+          id: this.id,
+          io: io
+        }
+        RC.sendQuestion(user);
+      }
       var room = {
         value: this.rooms[1],
         io: io

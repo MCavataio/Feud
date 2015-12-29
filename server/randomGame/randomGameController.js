@@ -32,6 +32,9 @@ module.exports = {
     .catch(function(error) {
       console.log(error)
     })
+  },
+  sendQuestion: function(user) {
+    console.log(user, "here in send question++++++++++++")
   }
 }
   // player wants to play game
