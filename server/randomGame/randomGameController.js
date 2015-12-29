@@ -7,7 +7,7 @@ var natural = require('natural');
 
 
 module.exports = {
-  playGame: function(user) {
+  playGame: function(user, socket) {
     console.log('inside playGame');
     return helpers.findRandomGame(user)
     .then(function(game) {
@@ -25,7 +25,7 @@ module.exports = {
           return helpers.updateRandomGame(game, numbers, lightning)
         })
         .then(function(updated) {
-          console.log(updated)
+          socket.io.to(socket.id).emit('playRound')
         })
       }
     })

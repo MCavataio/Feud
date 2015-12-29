@@ -22,7 +22,11 @@ module.exports = function(io) {
     //************************************************
     socket.on('playRandom', function(user) {
       console.log('in playRandom')
-      RC.playGame(user)
+      var socket = {
+        id: this.id,
+        io:io
+      }
+      RC.playGame(user, socket)
     })
     // once both users are on game page send data
     socket.on('initGame', function(data) {
