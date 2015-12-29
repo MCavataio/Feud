@@ -50,7 +50,7 @@ module.exports = {
       userInfo.io.to(userInfo.socket).emit('userInfo', user);
     }).catch(function(error) {
       console.log(error)
-    }
+    })
   },
 
   createRoom: function(req, res, next) {
