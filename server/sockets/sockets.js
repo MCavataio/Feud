@@ -7,19 +7,23 @@ module.exports = function(io) {
   io.on('connection', function(socket) {
     
     console.log(socket.id, "connected")
-    socket.on('userInfo', function(user) {
-      user.socket = this.id
-      user.io = io
-      HC.user(user);
-    })
-
+    // fuzzy check call
     socket.on('fuzzyCheck', function(data) {
       console.log(data)
       data.id = this.id
       data.io = io
       GC.fuzzyCheck(data);
     })
+
+    // saves userInfo to database
+    socket.on('userInfo', function(user) {
+      user.socket = this.id
+      user.io = io
+      HC.user(user);
+    })
+
     //************************************************
+    // initializes games for playing Random Opponent
     socket.on('playRandom', function(user) {
       console.log('in playRandom')
       var socket = {
@@ -74,7 +78,8 @@ module.exports = function(io) {
     // sends scores to other individuals playing in the same room
     // this.rooms consists of connection id and room number
     socket.on('updateScore', function(data) {
-      socket.broadcast.to(this.rooms[1]).emit('updateScore', {score: data})
+      console.log(data, 'got that data')
+      // socket.broadcast.to(this.rooms[1]).emit('updateScore', {score: data})
       // console.log(this.rooms, this.id);
     })
     socket.on('addPotential', function(data) {

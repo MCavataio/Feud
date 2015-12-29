@@ -9,6 +9,8 @@ var roundOne;
 
 module.exports = {
   playGame: function(user, socket) {
+    var gameID;
+    var userCol;
     // finds game where there is an open slot or creates a new game
     return helpers.findRandomGame(user)
     .then(function(game) {
@@ -16,17 +18,10 @@ module.exports = {
       if (game[0].dataValues.user1 !== user) {
         roundOne = game[0].dataValues.questionRD1
         game = game[0].dataValues.id;
+        gameID = game
+        userCol = 'user2'
         // updates game to include reference to oppents namne in slot 2
         return helpers.updateOpponent(game, user)
-        .then(function(response) {
-        // retrieves the query from the database that was already sent to player 1
-          return helpers.getQuery({id: roundOne})
-        })
-        .then(function(question) {
-        // send question to player 1 or send signal to switch to game room where the question
-        // will then be sent
-          socket.io.to(socket.id).emit('playRandom', question)
-        })
       } else {
         // get counts of queries to determine how many random queries there are in database
         return helpers.getCount()
@@ -41,44 +36,32 @@ module.exports = {
           roundOne = numbers[0];
           lightning = lightning.join("A")
           game = game[0].dataValues.id
+          gameID = game;
+          userCol = 'user1'
           return helpers.updateRandomGame(game, numbers, lightning)
-        })
-        .then(function(updated) {
-          return helpers.getQuery({id: roundOne})
-        .then(function(question) {
-          socket.io.to(socket.id).emit('playRandom', question)
-        })
-
         })
       }
     })
-    .catch(function(error) {
-      console.log(error)
+    .then(function(response) {
+      // searches for first round question
+      return helpers.getQuery({id: roundOne})
     })
-  },
+    .then(function(question) {
+      // sends to respective user
+      console.log(gameID, "+++++++++++++++++++++++++++---------------------")
+      question = {
+        question: question,
+        game: gameID,
+        user: userCol
+      }
+      socket.io.to(socket.id).emit('playRandom', question)
+    })
+// })
+//     .catch(function(error) {
+//       console.log(error)
+//     })
+},
   sendQuestion: function(user) {
     console.log(user, "here in send question++++++++++++")
   }
 }
-  // player wants to play game
-  // find if there is an available room
-  // if there is available room
-    // send player questions that were stored in room and user
-    // send player question
-    // save question round
-    // info of opponent
-  // else create new game
-    // going to have to get numbers
-    // save user name to random game along with random numbers
-
-
-
-  //   helpers.getCount()
-  //   .then(function(size) {
-  //     return helpers.getQueries(helpers.getNumbers(size))
-  //   })
-  //   .then(function(ids) {
-  //     console.log(ids);
-  //   })
-
-  // })

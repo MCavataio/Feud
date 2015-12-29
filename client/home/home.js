@@ -1,6 +1,6 @@
 angular.module("feud.home", [])
 
-.controller("HomeController", function($scope, $location, Home, Socket) {
+.controller("HomeController", function($rootScope, $scope, $location, Home, Socket) {
   $scope.query = {};
   $scope.data = {};
   $scope.socket = 0;
@@ -11,10 +11,11 @@ angular.module("feud.home", [])
   /////// Login
   ///////////////////////////////////////////
   $scope.test = function() {
-    Socket.emit('playRandom', 'michael')
+    Socket.emit('playRandom', 'jackie')
   }
   Socket.on('playRandom', function(data) {
-    console.log(data)
+    $rootScope.dbQuestion = data
+    $location.path('/game');
   })
   $scope.login = function() {
     console.log('in login controlelr')

@@ -26,6 +26,12 @@
       </br>
     </div>
   </div>
-      <h3> Opponent Name: {{scoreBoard.opponentName}} </h3>
-      <h3> Opponent Score: {{scoreBoard.opponentScore}} </h3>
+  <div ng-if="resultBoard">
+     <h2> Your Score: {{scoreBoard.total}} <h2>
+      <h2> Opponent's Score: </h2>
+     <h2> Question: {{query.title}} <h2>
+    <div ng-repeat="response in query.choices track by $index">
+      <h4>{{$index}}. {{response}}</h4>
+    </div>
+  </div>
 </div>

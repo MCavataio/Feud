@@ -22,10 +22,16 @@ module.exports = {
     return new Promise(function(resolve, reject) {
       db.RandomGame.findOrCreate({ 
         where: {
-          user2: 'open'
+          user2: 'open',
+          $and: {
+          user1: {
+              $notLike: '%' + user
+            }
+          }
         }, defaults: {
         user1: user,
-        user2: 'open'
+        user2: 'open',
+        created: 0
         }
       })
       .then(function(game) {
@@ -40,7 +46,8 @@ module.exports = {
   updateOpponent: function(game, user) {
     return new Promise(function(resolve, reject) {
       db.RandomGame.update({
-        user2: user
+        user2: user,
+        created: 2
       }, {
         where:
           {id: game}
@@ -57,7 +64,8 @@ module.exports = {
           questionRD1: numbers[0],
           questionRD2: numbers[1],
           questionRD3: numbers[2],
-          questionRD4: lightning
+          questionRD4: lightning,
+          created: 1
         }, {
           where: {id: game}
         }

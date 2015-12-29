@@ -1,6 +1,6 @@
 angular.module('feud.game', [])
   // john pappas styling guide
-.controller('GameController', function($scope, $location, Game, Socket, $timeout){
+.controller('GameController', function($rootScope, $scope, $location, Game, Socket, $timeout){
   $scope.scoreBoard = {};
   $scope.query = {};
   $scope.questions = {};
@@ -10,26 +10,46 @@ angular.module('feud.game', [])
   $scope.scoreBoard.opponentScore = 0;
   $scope.queryAnswer = {};
   $scope.lightningRound = false;
-  var gameTimer = 30; 
+  var gameTimer = 5; 
   
+
   $scope.toLobby = function() {
     Socket.emit('leaveRoom')
     $location.path('/home')
   }
   var init = function() {
-    Socket.emit('initGame', "hello")
+    // Socket.emit('initGame', "hello")
+    console.log($rootScope.dbQuestion)
+    startRound($rootScope.dbQuestion.question)
   }
   /////////////////////////////////////////////////////
   ////////// Game Logic
   /////////////////////////////////////////////////////
   var startRound = function(query) {
     $scope.gameBoard = true;
-    $scope.questions = parsedResponses(query);
+    $scope.questions = parsedResponses(query, false);
     $scope.scoreBoard.round = 1;
     $scope.scoreBoard.total = 0;
     $scope.scoreBoard.roundScore = 0;
+    console.log($scope.questions)
     gameInfo($scope.questions, 1);
-    timer(gameTimer, nextRound);
+    timer(gameTimer, revealAnswers);
+  }
+
+  var revealAnswers = function() {
+    updateScore()
+    $scope.gameBoard = false;
+    gameInfo($scope.questions, $scope.scoreBoard.round, true)
+    $scope.resultBoard = true;
+  }
+
+  var updateScore = function() {
+    var score = {
+      gameID: $rootScope.dbQuestion.game,
+      userCol: $rootScope.dbQuestion.user,
+      score: $scope.scoreBoard.roundScore
+    }
+    Socket.emit('updateScore', score)
   }
 
   var nextRound = function() {
@@ -158,24 +178,38 @@ angular.module('feud.game', [])
       $scope.scoreBoard.total += scoreValues[index];
   }
 
-  var parsedResponses = function (data) {
+  var parsedResponses = function (data, isLightning) {
     // refactor to have constant time look up for score values
     var questions = {}
-    _.each(data, function(query, qNum) {
-    if(query) {
-      questions[qNum] = {
-        title: query.title,
+    if (!isLightning) {
+      questions[0] = {
+        title: data.title,
         responses: []
       }
       for (var i = 0; i < 5; i++) {
         var queryResponse = "response" + (i + 1);
-        if (query[queryResponse]) {
-          questions[qNum].responses.push(query[queryResponse])
+        if (data[queryResponse]) {
+        questions[0].responses.push(data[queryResponse])    
         }
       }
     }
+    if(isLightning) {
+      _.each(data, function(query, qNum) {
+        if(query) {
+          questions[qNum] = {
+            title: query.title,
+            responses: []
+        }
+        for (var i = 0; i < 5; i++) {
+          var queryResponse = "response" + (i + 1);
+          if (query[queryResponse]) {
+            questions[qNum].responses.push(query[queryResponse])
+          }
+        }
+      }
     })
-    return questions
+  }
+  return questions
   }
 
   var timer = function (time, cb) {
