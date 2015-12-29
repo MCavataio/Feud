@@ -48,7 +48,9 @@ module.exports = {
       // console.log(user, "before being send +++++++++++++++")
       // console.log(userInfo.socket);
       userInfo.io.to(userInfo.socket).emit('userInfo', user);
-    })
+    }).catch(function(error) {
+      console.log(error)
+    }
   },
 
   createRoom: function(req, res, next) {
