@@ -35,7 +35,7 @@ module.exports = {
         res.json(response)
       }
     }).catch(function(err) {
-      res.json(response);
+      res.json(err);
     })
   },
   addPotential: function(data) {
