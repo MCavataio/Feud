@@ -37,27 +37,35 @@ module.exports = {
       })
     })
   },
+  updateOpponent: function(game, user) {
+    return new Promise(function(resolve, reject) {
+      db.RandomGame.update({
+        user2: user
+      }, {
+        where:
+          {id: game}
+      })
+    .then(function(response) {
+      resolve(response)
+    })
+    .catch(reject)
+    })
+  },
   updateRandomGame: function(game, numbers, lightning) {
-    console.log(game, numbers, lightning)
-    var a = numbers[0];
-    var b = numbers [1];
-    var c = numbers [2];
     return new Promise(function(resolve, reject) {
       db.RandomGame.update({
           questionRD1: numbers[0],
           questionRD2: numbers[1],
           questionRD3: numbers[2],
           questionRD4: lightning
-        }, {where: {
-          user1: user
-        }}
-      })
+        }, {
+          where: {id: game}
+        }
+      )
       .then(function(response){
         console.log(response)
         resolve(response)
-      }).catch(function(error) {
-        reject(error)
-      })
+      }).catch(reject)
     })
   },
   findOrCreateQuery: function (newQuery, table) {

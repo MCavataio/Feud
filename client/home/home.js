@@ -11,10 +11,10 @@ angular.module("feud.home", [])
   /////// Login
   ///////////////////////////////////////////
   $scope.test = function() {
-    Socket.emit('playRandom', 'marshall')
+    Socket.emit('playRandom', 'michael')
   }
   Socket.on('playRandom', function(data) {
-    console.log('it worked')
+    console.log(data)
   })
   $scope.login = function() {
     console.log('in login controlelr')

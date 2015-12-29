@@ -4,30 +4,51 @@ var helpers = require('../config/helpers.js')
 var Promise = require('bluebird');
 var Query = db.RandomGame;
 var natural = require('natural');
+var roundOne;
 
 
 module.exports = {
   playGame: function(user, socket) {
-    console.log('inside playGame');
+    // finds game where there is an open slot or creates a new game
     return helpers.findRandomGame(user)
     .then(function(game) {
-      console.log(game)
-      if (game[0].dataValues.user2 === 'open') {
+      // checks whether it was a game with an open slot with different player
+      if (game[0].dataValues.user1 !== user) {
+        roundOne = game[0].dataValues.questionRD1
+        game = game[0].dataValues.id;
+        // updates game to include reference to oppents namne in slot 2
+        return helpers.updateOpponent(game, user)
+        .then(function(response) {
+        // retrieves the query from the database that was already sent to player 1
+          return helpers.getQuery({id: roundOne})
+        })
+        .then(function(question) {
+        // send question to player 1 or send signal to switch to game room where the question
+        // will then be sent
+          socket.io.to(socket.id).emit('playRandom', question)
+        })
+      } else {
+        // get counts of queries to determine how many random queries there are in database
         return helpers.getCount()
         .then(function(response) {
+          // returns 8 random numbers based off the count value
           return helpers.getNumbers(response)
         })
         .then(function(numbers) {
+          // parses information to be saved into database
+          // lightning round is saved as string with A in between each 
           var lightning = numbers.slice(3);
+          roundOne = numbers[0];
           lightning = lightning.join("A")
           game = game[0].dataValues.id
-
-          console.log(typeof(game), "+++++++")
-          return helpers.updateRandomGame(user, numbers, lightning)
+          return helpers.updateRandomGame(game, numbers, lightning)
         })
         .then(function(updated) {
-          console.log('in here+++++++++++++++')
-          socket.io.to(socket.id).emit('playRandom', 'fake')
+          return helpers.getQuery({id: roundOne})
+        .then(function(question) {
+          socket.io.to(socket.id).emit('playRandom', question)
+        })
+
         })
       }
     })

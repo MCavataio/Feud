@@ -19,6 +19,7 @@ helpers.getCount()
 
 module.exports = {
   addQuery: function (req, res, next) {
+    console.log('in hereeeeeeee')
     var query = req.body.query
     helpers.getQuery({title: query.title})
     .then(function(response) {
