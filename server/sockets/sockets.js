@@ -20,11 +20,11 @@ module.exports = function(io) {
       GC.fuzzyCheck(data);
     })
     //************************************************
-    // socket.on('playRandom', function(user) {
-    //   console.log('in playRandom')
-    //   RC.playGame(user)
-    // })
-    // once both users are on game page send data
+    socket.on('playRandom', function(user) {
+      console.log('in playRandom')
+      RC.playGame(user)
+    })
+    once both users are on game page send data
     socket.on('initGame', function(data) {
       var room = {
         value: this.rooms[1],
@@ -56,9 +56,9 @@ module.exports = function(io) {
       }
     }
     })
-    socket.on('leaveRoom', function() {
-      socket.leave(this.rooms[1]);
-    })
+    // socket.on('leaveRoom', function() {
+    //   socket.leave(this.rooms[1]);
+    // })
     // sends scores to other individuals playing in the same room
     // this.rooms consists of connection id and room number
     socket.on('updateScore', function(data) {
