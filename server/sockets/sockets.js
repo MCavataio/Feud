@@ -24,7 +24,7 @@ module.exports = function(io) {
       console.log('in playRandom')
       RC.playGame(user)
     })
-    once both users are on game page send data
+    // once both users are on game page send data
     socket.on('initGame', function(data) {
       var room = {
         value: this.rooms[1],
