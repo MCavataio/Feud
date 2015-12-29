@@ -11,6 +11,7 @@ module.exports = {
     console.log('inside playGame');
     return helpers.findRandomGame(user)
     .then(function(game) {
+      console.log(game)
       if (game[0].dataValues.user2 === 'null') {
         return helpers.getCount()
         .then(function(response) {
@@ -22,10 +23,11 @@ module.exports = {
           game = game[0].dataValues.id
 
           console.log(typeof(game), "+++++++")
-          return helpers.updateRandomGame(game, numbers, lightning)
+          return helpers.updateRandomGame(user, numbers, lightning)
         })
         .then(function(updated) {
-          socket.io.to(socket.id).emit('playRound')
+          console.log('in here+++++++++++++++')
+          socket.io.to(socket.id).emit('playRandom', 'fake')
         })
       }
     })

@@ -20,10 +20,16 @@ module.exports = {
   findRandomGame: function(user) {
     console.log(user, "++++++++++")
     return new Promise(function(resolve, reject) {
-      db.RandomGame.findOrCreate({where: {user2: 'null'},
-        defaults: {
-          user1: user
+      db.RandomGame.update({
+          user2: user
+        },
+        {where: {
+        user1: {
+          $notLike: '%null'
+        }, $and: {
+          user2: 'null'
         }
+      }
       })
       .then(function(game) {
         resolve(game)
@@ -40,15 +46,14 @@ module.exports = {
     var b = numbers [1];
     var c = numbers [2];
     return new Promise(function(resolve, reject) {
-      db.RandomGame.update({
+      db.RandomGame.findorCreate({
+          user1: user,
           questionRD1: numbers[0],
           questionRD2: numbers[1],
           questionRD3: numbers[2],
           questionRD4: lightning
-        }, {
-          where: {id: game}
-        }
-      ).then(function(response){
+      })
+      .then(function(response){
         console.log(response)
         resolve(response)
       }).catch(function(error) {
