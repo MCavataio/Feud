@@ -12,7 +12,7 @@ module.exports = {
     return helpers.findRandomGame(user)
     .then(function(game) {
       console.log(game)
-      if (game[0].dataValues.user2 === 'null') {
+      if (game[0].dataValues.user2 === 'open') {
         return helpers.getCount()
         .then(function(response) {
           return helpers.getNumbers(response)
