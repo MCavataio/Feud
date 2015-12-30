@@ -145,6 +145,7 @@ module.exports = {
   },
   
   getCount: function() {
+    console.log('this should be runnninnggg');
     return new Promise(function (resolve, reject) {
       db.Query.findAndCountAll({})
       .then(function(size) {

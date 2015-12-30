@@ -8,15 +8,15 @@ var number = [];
 var users = {};
 
 
-helpers.getCount()
-.then(function(response) {
-  count = response.count
-  count++
-  console.log(count, "++++++++++++++")
-  number.push(count);
-}).catch(function(err) {
-  console.log(err)
-})
+// helpers.getCount()
+// .then(function(response) {
+//   count = response.count
+//   count++
+//   console.log(count, "++++++++++++++")
+//   number.push(count);
+// }).catch(function(err) {
+//   console.log(err)
+// })
 
 
 module.exports = {
@@ -44,14 +44,16 @@ module.exports = {
     helpers.getQuery({title: query.title})
     .then(function(response) {
       if (response === null) {
-        query.number = number[0]
-        console.log(number, '++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-        return helpers.findOrCreateQuery(query, 'Query')
+        return helpers.getCount()
+        .then(function(size) {
+          console.log(size.count)
+          query.number = size.count++
+          return helpers.findOrCreateQuery(query, 'Query')
           .then(function(response) {
           console.log('successful')
           res.json(response);
-          number[0]++
         })
+        });
       } else {
         res.json(response)
       }
