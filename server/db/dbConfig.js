@@ -52,6 +52,8 @@ var FriendGame = db.define('game', {
 
 var RandomGame = db.define('randomGame', {
   user1: Sequelize.STRING,
+  user1ID: Sequelize.INTEGER,
+  user2ID: Sequelize.INTEGER,
   created: Sequelize.INTEGER,
   user2: Sequelize.STRING,
   questionRD1: Sequelize.INTEGER,
@@ -60,8 +62,6 @@ var RandomGame = db.define('randomGame', {
   questionRD4: Sequelize.STRING,
   turn: Sequelize.STRING,
   user1RD1: Sequelize.INTEGER,
-  user2RD1: Sequelize.INTEGER,
-  user1RD2: Sequelize.INTEGER,
   user2RD2: Sequelize.INTEGER,
   user1RD3: Sequelize.INTEGER,
   user2RD3: Sequelize.INTEGER,

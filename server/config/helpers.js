@@ -25,11 +25,12 @@ module.exports = {
           user2: 'open',
           $and: {
           user1: {
-              $notLike: '%' + user
+              $notLike: '%' + user.name
             }
           }
         }, defaults: {
-        user1: user,
+        user1: user.name,
+        user1ID: user.id,
         user2: 'open',
         created: 0
         }
@@ -46,7 +47,8 @@ module.exports = {
   updateOpponent: function(game, user) {
     return new Promise(function(resolve, reject) {
       db.RandomGame.update({
-        user2: user,
+        user2: user.name,
+        user2ID: user.id,
         created: 2
       }, {
         where:
