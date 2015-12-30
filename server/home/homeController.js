@@ -45,7 +45,7 @@ module.exports = {
     .then(function(response) {
       if (response === null) {
         query.number = number[0]
-        console.log(query.number, '++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+        console.log(number, '++++++++++++++++++++++++++++++++++++++++++++++++++++++')
         return helpers.findOrCreateQuery(query, 'Query')
           .then(function(response) {
           console.log('successful')
