@@ -30,6 +30,16 @@ module.exports = {
       games.forEach(function(game) {
         console.log(game.dataValues.turn)
         console.log(user.name)
+        if (game.dataValues.user1 === user.name ) {
+            console.log('user1 is true')
+            game.dataValues.opponentName = game.dataValues.user2;
+            game.dataValues.opponentID = game.dataValues.user2ID;
+          } else {
+            console.log('user2 is true')
+            game.dataValues.opponentName = game.dataValues.user1;
+            game.dataValues.opponentID = game.dataValues.user1ID;
+          }
+
         if (game.dataValues.turn === user.name || !game.dataValues.turn) {
           openGames.yourTurn.push(game)
         } else {
