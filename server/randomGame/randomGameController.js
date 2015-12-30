@@ -12,17 +12,18 @@ module.exports = {
     var gameID;
     var userCol;
     var rounds;
+    var opponent;
     // finds game where there is an open slot or creates a new game
     return helpers.findRandomGame(user)
     .then(function(game) {
       // checks whether it was a game with an open slot with different player
       if (game[0].dataValues.user1 !== user) {
         rounds = [game[0].dataValues.questionRD1,game[0].dataValues.questionRD2]
-        game = game[0].dataValues.id;
-        gameID = game
+        gameID = game[0].dataValues.id
         userCol = 'user2'
+        opponent = game[0].dataValues.user1
         // updates game to include reference to oppents namne in slot 2
-        return helpers.updateOpponent(game, user)
+        return helpers.updateOpponent(gameID, user)
       } else {
         // get counts of queries to determine how many random queries there are in database
         return helpers.getCount()
@@ -38,7 +39,8 @@ module.exports = {
           lightning = lightning.join("A")
           game = game[0].dataValues.id
           gameID = game;
-          userCol = 'user1'
+          userCol = 'user1';
+          opponent = null;
           return helpers.updateRandomGame(game, numbers, lightning)
         })
       }
@@ -53,7 +55,8 @@ module.exports = {
       question = {
         question: question,
         game: gameID,
-        user: userCol
+        user: userCol,
+        opponent: opponent
       }
       socket.io.to(socket.id).emit('playRandom', question)
     })
@@ -67,14 +70,20 @@ module.exports = {
   var round = data.round;
   var score = data.score;
   var game = data.gameID;
+  var opponent = data.opponent
   console.log(user, round)
   if(user === 'user1' && round == 1) {
     var update = {
       user1RD1: score,
-      turn: 'user2'
+      turn: opponent
     }
-    console.log('calling helpers +++++++')
-    helpers.updateScores(update, game)
   }
+  if(user === 'user2' && round == 2) {
+    var update = {
+      user2RD2: score,
+      turn: opponent
+    }
+  }
+  helpers.updateScores(update, game)
 }
 }

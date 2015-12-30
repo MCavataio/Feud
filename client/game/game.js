@@ -29,7 +29,6 @@ angular.module('feud.game', [])
   ///************************vvvvvvvvvvvvvvvvvvv
   var startRound = function(query) {
     $scope.gameBoard = true;
-   console.log(query.question)
     if (query.question.length === 2) {
       if (query.user === 'user2') {
         $scope.questions = parsedResponses(query.question, true)
@@ -39,14 +38,15 @@ angular.module('feud.game', [])
         $rootScope.double = true;
         timer(gameTimer, revealAnswers)
       } else {
-        $scope.questions = parsedResponses(query, true);
+        $scope.questions = parsedResponses(query.question, true);
         setScoreBoard(2, 0, 0)
         gameInfo($scope.questions, 1);
         $rootScope.double = true;
         timer(gameTimer, revealAnswers)
       }
     } else {
-      $scope.questions = parsedResponses(query, false);
+      $scope.questions = parsedResponses(query.question, false);
+      console.log($scope.questions, "+++++=")
       setScoreBoard(1, 0, 0);
       gameInfo($scope.questions, 1);
       $rootScope.double = false;
@@ -77,7 +77,8 @@ angular.module('feud.game', [])
       gameID: $rootScope.dbQuestion.game,
       userCol: $rootScope.dbQuestion.user,
       score: $scope.scoreBoard.roundScore,
-      round: $scope.scoreBoard.round
+      round: $scope.scoreBoard.round,
+      opponent: $rootScope.dbQuestion.opponent
     }
     Socket.emit('updateScore', score)
   }
@@ -224,16 +225,17 @@ angular.module('feud.game', [])
 //*************************VVVVVVVV
   var parsedResponses = function (data, isLightning) {
     // refactor to have constant time look up for score values
+    console.log(data, "before calllll")
     var questions = {}
     if (!isLightning) {
       questions[0] = {
-        title: data.title,
+        title: data[0].title,
         responses: []
       }
       for (var i = 0; i < 5; i++) {
         var queryResponse = "response" + (i + 1);
-        if (data[queryResponse]) {
-        questions[0].responses.push(data[queryResponse])    
+        if (data[0][queryResponse]) {
+        questions[0].responses.push(data[0][queryResponse])    
         }
       }
     }
