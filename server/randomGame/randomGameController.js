@@ -71,7 +71,6 @@ module.exports = {
   var score = data.score;
   var game = data.gameID;
   var opponent = data.opponent
-  console.log(user, round)
   if(user === 'user1' && round == 1) {
     var update = {
       user1RD1: score,

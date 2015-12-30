@@ -66,12 +66,9 @@ module.exports = {
             user1: user,
             user2: user,
           }, $and: {
-            $or: {
-              turn: 'user1',
-              turn: 'user2'
+              turn: {$notLike: '%final'},
             }
           }
-        }
       }).then(function(games){
         resolve(games)
       }).catch(reject)
