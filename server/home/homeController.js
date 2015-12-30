@@ -12,6 +12,7 @@ helpers.getCount()
 .then(function(response) {
   count = response.count
   count++
+  console.log(count, "++++++++++++++")
   number.push(count);
 }).catch(function(err) {
   console.log(err)

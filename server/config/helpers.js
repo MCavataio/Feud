@@ -107,6 +107,7 @@ module.exports = {
     // })
   },
   findOrCreateQuery: function (newQuery, table) {
+    console.log(newQuery)
     return new Promise(function (resolve, reject) {
       db[table].findOrCreate({
         where : {
