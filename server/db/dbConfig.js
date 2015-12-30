@@ -83,7 +83,7 @@ var Query = db.define('query', {
   response7: Sequelize.STRING,
   response8: Sequelize.STRING,
   response9: Sequelize.STRING,
-  response10: Sequelize.STRING,
+  response10: Sequelize.STRING
 });
 
 db.sync({force: true})
