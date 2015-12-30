@@ -40,7 +40,7 @@ module.exports = {
             game.dataValues.opponentID = game.dataValues.user1ID;
           }
 
-        if (game.dataValues.turn === user.name || !game.dataValues.turn) {
+        if (game.dataValues.turn === user.name) {
           openGames.yourTurn.push(game)
         } else {
           openGames.opponentTurn.push(game)
