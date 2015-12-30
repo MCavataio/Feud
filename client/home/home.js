@@ -11,10 +11,10 @@ angular.module("feud.home", [])
   /////// Login
   ///////////////////////////////////////////
   $scope.test = function() {
-    Socket.emit('playRandom', 'mike')
+    Socket.emit('playRandom', 'barney')
   }
   $scope.userInfoTest = function() {
-    Socket.emit('updateHome', 'mike')
+    Socket.emit('updateHome', 'barney')
   }
   $scope.init = function() {
     console.log($rootScope.update)

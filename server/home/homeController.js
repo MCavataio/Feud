@@ -22,7 +22,20 @@ module.exports = {
   updateHome: function(user) {
     return helpers.retrieveGames(user.name)
     .then(function(games) {
-      user.io.emit('updateHome', games)
+      var openGames = {
+        yourTurn: [],
+        opponentTurn: []
+      }
+      games.forEach(function(game) {
+        console.log(game.dataValues.turn)
+        console.log(user.name)
+        if (game.dataValues.turn === user.name || !game.dataValues.turn) {
+          openGames.yourTurn.push(game)
+        } else {
+          openGames.opponentTurn.push(game)
+        }
+      })
+      user.io.emit('updateHome', openGames)
     })
   },
   addQuery: function (req, res, next) {

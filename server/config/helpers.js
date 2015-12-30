@@ -64,11 +64,9 @@ module.exports = {
         where: {
           $or: {
             user1: user,
-            user2: user,
-          }, $and: {
-              turn: {$notLike: '%final'},
-            }
-          }
+            user2: user
+          } 
+        }
       }).then(function(games){
         resolve(games)
       }).catch(reject)
