@@ -5,6 +5,7 @@ var Promise = require('bluebird');
 var Query = db.Query;
 var rooms = [];
 var number = [];
+var users = {};
 
 
 helpers.getCount()
@@ -18,6 +19,12 @@ helpers.getCount()
 
 
 module.exports = {
+  updateHome: function(user) {
+    return helpers.retrieveGames(user.name)
+    .then(function(games) {
+      user.io.emit('updateHome', games)
+    })
+  },
   addQuery: function (req, res, next) {
     var query = req.body.query
     helpers.getQuery({title: query.title})

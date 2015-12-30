@@ -58,6 +58,25 @@ module.exports = {
     .catch(reject)
     })
   },
+  retrieveGames: function(user) {
+    return new Promise(function(resolve, reject) {
+      db.RandomGame.findAll({
+        where: {
+          $or: {
+            user1: user,
+            user2: user,
+          }, $and: {
+            $or: {
+              turn: 'user1',
+              turn: 'user2'
+            }
+          }
+        }
+      }).then(function(games){
+        resolve(games)
+      }).catch(reject)
+    })
+  },
   updateRandomGame: function(game, numbers, lightning) {
     return new Promise(function(resolve, reject) {
       db.RandomGame.update({
@@ -68,13 +87,27 @@ module.exports = {
           created: 1
         }, {
           where: {id: game}
-        }
-      )
+      })
       .then(function(response){
         console.log(response)
         resolve(response)
       }).catch(reject)
     })
+  },
+  updateScores: function(update, game) {
+    console.log('++++++++++++')
+    // return new Promise(function (resolve, reject) {
+      var round = update.round
+
+      db.RandomGame.update(
+            update
+      ,{
+        where: {id: game}
+      })
+    //   .then(function(response){
+    //     resolve(response)
+    //   }).catch(reject)
+    // })
   },
   findOrCreateQuery: function (newQuery, table) {
     return new Promise(function (resolve, reject) {
@@ -135,6 +168,7 @@ module.exports = {
       })
     })
   },
+
 
   getNumbers: function(response) {
     var numbers = [];

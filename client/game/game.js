@@ -10,7 +10,7 @@ angular.module('feud.game', [])
   $scope.scoreBoard.opponentScore = 0;
   $scope.queryAnswer = {};
   $scope.lightningRound = false;
-  var gameTimer = 5; 
+  var gameTimer = 15; 
   
 
   $scope.toLobby = function() {
@@ -39,7 +39,7 @@ angular.module('feud.game', [])
   var revealAnswers = function() {
     updateScore()
     $scope.gameBoard = false;
-    gameInfo($scope.questions, $scope.scoreBoard.round, true)
+    gameInfo($scope.questions, $scope.scoreBoard.round, "reveal")
     $scope.resultBoard = true;
   }
 
@@ -47,7 +47,8 @@ angular.module('feud.game', [])
     var score = {
       gameID: $rootScope.dbQuestion.game,
       userCol: $rootScope.dbQuestion.user,
-      score: $scope.scoreBoard.roundScore
+      score: $scope.scoreBoard.roundScore,
+      round: $scope.scoreBoard.round
     }
     Socket.emit('updateScore', score)
   }
@@ -83,15 +84,20 @@ angular.module('feud.game', [])
       }
     }
   }
-
-  var gameInfo = function(query, number, lightningRound) {
+  //^^^^^^^^^^^^^^^ make change on ionic
+  var gameInfo = function(query, number, round) {
     number = number - 1
     $scope.query.title = query[number].title;
-    if (!lightningRound) {
+    if (round === "lightning") {
       $scope.query.responses = query[number].responses;
       // $scope.guess = query[number].title + " ";
       $scope.queryAnswer = {};    
-    } else {
+    } 
+    if (round === "reveal") {
+      var temp = query[number].responses.slice(0)
+      $scope.query.choices = temp;
+    }
+      else {
       var temp = query[number].responses.slice(0)
       $scope.query.responses = query[number].responses
       $scope.query.choices = shuffle(temp)

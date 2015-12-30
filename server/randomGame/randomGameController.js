@@ -60,8 +60,20 @@ module.exports = {
 //     .catch(function(error) {
 //       console.log(error)
 //     })
-},
-  sendQuestion: function(user) {
-    console.log(user, "here in send question++++++++++++")
+}, updateScores: function(data) {
+  console.log(data, "get that dataaaaaaa")
+  var user = data.userCol;
+  var round = data.round;
+  var score = data.score;
+  var game = data.gameID;
+  console.log(user, round)
+  if(user === 'user1' && round == 1) {
+    var update = {
+      user1RD1: score,
+      turn: 'user2'
+    }
+    console.log('calling helpers +++++++')
+    helpers.updateScores(update, game)
   }
+}
 }

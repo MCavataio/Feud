@@ -13,6 +13,19 @@ angular.module("feud.home", [])
   $scope.test = function() {
     Socket.emit('playRandom', 'jackie')
   }
+  $scope.userInfoTest = function() {
+    Socket.emit('updateHome', 'jackie')
+  }
+  $scope.init = function() {
+    console.log($rootScope.update)
+    if (!$rootScope.update) {
+      Socket.on('updateHome', function(data) {
+        console.log(data)
+        $rootScope.update = true;
+      })
+    }
+
+  }
   Socket.on('playRandom', function(data) {
     $rootScope.dbQuestion = data
     $location.path('/game');

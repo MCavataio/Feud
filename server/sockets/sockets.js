@@ -2,6 +2,7 @@ var GC = require('../game/gameController.js');
 var HC = require('../home/homeController.js');
 var RC = require('../randomGame/randomGameController.js');
 var rooms = {};
+var users = {};
 
 module.exports = function(io) {
   io.on('connection', function(socket) {
@@ -53,32 +54,42 @@ module.exports = function(io) {
         rooms[room] = true;
       }
     })
+    socket.on('updateHome', function(user) {
+      user = {
+        name: user,
+        socket: this,
+        io: io
+      }
+      HC.updateHome(user)
+
+    })
 
     // pairs random users to play against one another
-    socket.on('changeRoom', function(data) {
-    // data is the room number received from emit from queryController
-    var nRoom = {
-      value: data.room.data.room,
-      io: io
-    }
-    // joins respective room
-    if(!this.rooms[1]) {
-      socket.join(nRoom.value);
-      // checks to see how many users are in current room;
-      var room = io.sockets.adapter.rooms[nRoom.value];
-      var length = Object.keys(room).length
-      if (length === 2) {
-        io.sockets.to(nRoom.value).emit('playRound', {room: nRoom.value})
-      }
-    }
-    })
+    // socket.on('changeRoom', function(data) {
+    // // data is the room number received from emit from queryController
+    // var nRoom = {
+    //   value: data.room.data.room,
+    //   io: io
+    // }
+    // // joins respective room
+    // if(!this.rooms[1]) {
+    //   socket.join(nRoom.value);
+    //   // checks to see how many users are in current room;
+    //   var room = io.sockets.adapter.rooms[nRoom.value];
+    //   var length = Object.keys(room).length
+    //   if (length === 2) {
+    //     io.sockets.to(nRoom.value).emit('playRound', {room: nRoom.value})
+    //   }
+    // }
+    // })
     // socket.on('leaveRoom', function() {
     //   socket.leave(this.rooms[1]);
     // })
     // sends scores to other individuals playing in the same room
     // this.rooms consists of connection id and room number
     socket.on('updateScore', function(data) {
-      console.log(data, 'got that data')
+      RC.updateScores(data)
+      // if want to go live
       // socket.broadcast.to(this.rooms[1]).emit('updateScore', {score: data})
       // console.log(this.rooms, this.id);
     })
