@@ -11,12 +11,13 @@ module.exports = {
   playGame: function(user, socket) {
     var gameID;
     var userCol;
+    var rounds;
     // finds game where there is an open slot or creates a new game
     return helpers.findRandomGame(user)
     .then(function(game) {
       // checks whether it was a game with an open slot with different player
       if (game[0].dataValues.user1 !== user) {
-        roundOne = game[0].dataValues.questionRD1
+        rounds = [game[0].dataValues.questionRD1,game[0].dataValues.questionRD2]
         game = game[0].dataValues.id;
         gameID = game
         userCol = 'user2'
@@ -33,7 +34,7 @@ module.exports = {
           // parses information to be saved into database
           // lightning round is saved as string with A in between each 
           var lightning = numbers.slice(3);
-          roundOne = numbers[0];
+          rounds = numbers[0];
           lightning = lightning.join("A")
           game = game[0].dataValues.id
           gameID = game;
@@ -44,7 +45,7 @@ module.exports = {
     })
     .then(function(response) {
       // searches for first round question
-      return helpers.getQuery({number: roundOne})
+      return helpers.getQueries(rounds)
     })
     .then(function(question) {
       // sends to respective user

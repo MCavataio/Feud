@@ -10,7 +10,7 @@ angular.module('feud.game', [])
   $scope.scoreBoard.opponentScore = 0;
   $scope.queryAnswer = {};
   $scope.lightningRound = false;
-  var gameTimer = 15; 
+  var gameTimer = 5; 
   
 
   $scope.toLobby = function() {
@@ -20,27 +20,56 @@ angular.module('feud.game', [])
   var init = function() {
     // Socket.emit('initGame', "hello")
     console.log($rootScope.dbQuestion)
-    startRound($rootScope.dbQuestion.question)
+    startRound($rootScope.dbQuestion)
   }
   /////////////////////////////////////////////////////
   ////////// Game Logic
   /////////////////////////////////////////////////////
+
+  ///************************vvvvvvvvvvvvvvvvvvv
   var startRound = function(query) {
     $scope.gameBoard = true;
-    $scope.questions = parsedResponses(query, false);
-    $scope.scoreBoard.round = 1;
-    $scope.scoreBoard.total = 0;
-    $scope.scoreBoard.roundScore = 0;
-    console.log($scope.questions)
-    gameInfo($scope.questions, 1);
-    timer(gameTimer, revealAnswers);
+   console.log(query.question)
+    if (query.question.length === 2) {
+      if (query.user === 'user2') {
+        $scope.questions = parsedResponses(query.question, true)
+        setScoreBoard(1, 0, 0)
+        console.log($scope.questions)
+        gameInfo($scope.questions, 1);
+        $rootScope.double = true;
+        timer(gameTimer, revealAnswers)
+      } else {
+        $scope.questions = parsedResponses(query, true);
+        setScoreBoard(2, 0, 0)
+        gameInfo($scope.questions, 1);
+        $rootScope.double = true;
+        timer(gameTimer, revealAnswers)
+      }
+    } else {
+      $scope.questions = parsedResponses(query, false);
+      setScoreBoard(1, 0, 0);
+      gameInfo($scope.questions, 1);
+      $rootScope.double = false;
+      timer(gameTimer, revealAnswers);
+    }
   }
 
+  var setScoreBoard = function(round, total, roundScore) {
+    $scope.scoreBoard.round = round;
+    $scope.scoreBoard.total = total;
+    $scope.scoreBoard.roundScore = roundScore;
+  }
+//////////////////************vvvvvvvv
   var revealAnswers = function() {
-    updateScore()
     $scope.gameBoard = false;
     gameInfo($scope.questions, $scope.scoreBoard.round, "reveal")
     $scope.resultBoard = true;
+    if($rootScope.double) {
+      timer(3, nextRound)
+    } else {
+      updateScore()
+    }
+
   }
 
   var updateScore = function() {
@@ -52,18 +81,27 @@ angular.module('feud.game', [])
     }
     Socket.emit('updateScore', score)
   }
-
+////// ***********vvvvvvv
   var nextRound = function() {
     
     // $scope.scoreBoard.total = $scope.scoreBoard.total + roundScore || 0;
-    Socket.emit('updateScore', $scope.scoreBoard.total);
+    $scope.resultBoard = false;
+    $scope.gameBoard = true;
+    // Socket.emit('updateScore', $scope.scoreBoard.total);
     $scope.scoreBoard.roundScore = 0;
-    if ($scope.scoreBoard.round < 3) {
+    if ($rootScope.double) {
+      $rootScope.double = false;
       $scope.scoreBoard.round++
-      console.log('in nextRound')
-      gameInfo($scope.questions, $scope.scoreBoard.round)
-      timer(gameTimer, nextRound)
-    } else {
+      gameInfo($scope.questions, 2)
+      timer(gameTimer, revealAnswers)
+    }
+    // if ($scope.scoreBoard.round < 3) {
+    //   $scope.scoreBoard.round++
+    //   console.log('in nextRound')
+    //   gameInfo($scope.questions, $scope.scoreBoard.round)
+    //   timer(gameTimer, nextRound)
+    // } 
+    else {
       $scope.lightningRound = true;
       $scope.gameBoard = false;
       lightningRound();
@@ -183,7 +221,7 @@ angular.module('feud.game', [])
       // add to total score
       $scope.scoreBoard.total += scoreValues[index];
   }
-
+//*************************VVVVVVVV
   var parsedResponses = function (data, isLightning) {
     // refactor to have constant time look up for score values
     var questions = {}
