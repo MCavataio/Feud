@@ -44,7 +44,7 @@ module.exports = {
     })
     .then(function(response) {
       // searches for first round question
-      return helpers.getQuery({id: roundOne})
+      return helpers.getQuery({number: roundOne})
     })
     .then(function(question) {
       // sends to respective user
