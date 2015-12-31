@@ -23,7 +23,7 @@ module.exports = {
   getQueries: function(data) {
     return helpers.getQueries(data.ids)
     .then(function(queries) {
-      data.io.to.(data.id).emit('getQueries', queries)
+      data.io.to(data.id).emit('getQueries', queries)
     })
   },
   updateHome: function(user) {
