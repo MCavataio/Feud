@@ -56,7 +56,7 @@ module.exports = {
       if (game[0].dataValues.user1 !== user.name) {
         rounds = [game[0].dataValues.questionRD1,game[0].dataValues.questionRD2]
         gameID = game[0].dataValues.id
-        userCol = 'user1'
+        userCol = 'user2'
         opponent = game[0].dataValues.user1
         // updates game to include reference to oppents namne in slot 2
         return helpers.updateOpponent(gameID, user)
