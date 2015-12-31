@@ -72,32 +72,40 @@ module.exports = {
   var game = data.gameID;
   var opponent = data.opponent
 
-  if(user === 'user1')
+  if(user === 'user1'){
     var update = {
       user1Total: score,
-      turn: opponent
-    }
-     if (round == 1) {
-      update.round = 1;
-     }
-     if (round == 3) {
-      console.log('in round 3', "+++++++++++++++++++++++++++++++++++++")
-      update.round = 3;
-     } if (round == 4) {
-      update.round = 5;
-     }
-  if(user === 'user2') {
+      turn: opponent,
+      round: data.round
+    } 
+  }else {
     var update = {
       user2Total: score,
-      turn: opponent
-    }
-    if (round == 2) {
-      update.round = 2;
-    }
-    if (round == 3) {
-      update.round = 4;
+      turn: opponent,
+      round: data.round
     }
   }
+     // if (round == 1) {
+     //  update.round = 1;
+     // }
+     // if (round == 3) {
+     //  console.log('in round 3', "+++++++++++++++++++++++++++++++++++++")
+     //  update.round = 3;
+     // } if (round == 4) {
+     //  update.round = 5;
+     // }
+  // if(user === 'user2') {
+  //   var update = {
+  //     user2Total: score,
+  //     turn: opponent
+  //   }
+  //   if (round == 2) {
+  //     update.round = 2;
+  //   }
+  //   if (round == 3) {
+  //     update.round = 4;
+  //   }
+  // }
   console.log(update, game, '++++++++++++++++++++++++++++++++')
   helpers.updateScores(update, game)
 }
