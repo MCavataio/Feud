@@ -22,25 +22,61 @@ angular.module("feud.home", [])
   }
   $scope.start = function(game) {
    var queries = [];
-    if (game.round === 2) {
-      queries.push(game.questionRD2);
-      queries.push(game.questionRD3);
+   var isUser1;
+   var test;
+   if (game.user1 === 'flito') {
+      var userColu = 'user1'
+      isUser1 = true;
+   } else {
+    var userColu = 'user2'
+      isUser1 = false;
+   }
+   console.log(userColu)
+   console.log(game.round)
+    if (isUser1) {
+      if (game.round == 2) {
+      test = {
+        round: 3,
+        userCol: userColu,
+        gameID: game.id,
+        score: 300,
+        opponent: game.opponentName
+      }
     }
-    if (game.round === 2) {
-      queries.push(game.questionRD2);
-      queries.push(game.questionRD3);
+      if (game.round == 4) {
+        test = { 
+        round: 4,
+        userCol: userColu,
+        gameID: game.id,
+        score: 3000,
+        opponent: game.opponentName
+        }
+      }
+    } else {
+    if (game.round == 3) {
+      console.log(' in here ')
+      test = {
+        round: 4,
+        userCol: userColu,
+        gameID: game.id,
+        score: 300,
+        opponent: game.opponentName
+      }
     }
-    if (game.round === 3) {
-      queries.push(game.questionRD4);
+    if (game.round == 4) {
+      test = {
+        round: 5,
+        userCol: userColu,
+        gameID: game.id,
+        score: 300,
+        opponent: game.opponentName
+      }
     }
-    Socket.emit('getQueries', queries)
   }
-  Socket.on('getQueries', function(data) {
-    console.log(data)
-    $rootScope.dbQuestion = 
-    {question:data}
-    $location.path('/game')
-  })
+    console.log(test)
+    Socket.emit('updateScore', test)
+  
+  }
   $scope.init = function() {
     console.log($rootScope.update)
     if (!$rootScope.update) {
