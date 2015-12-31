@@ -17,6 +17,17 @@ module.exports = {
       })
     });
   },
+  friendGame: function(gameInfo) {
+    return new Promise(function(resolve,reject) {
+      db.RandomGame.create(
+        gameInfo
+      )
+    }).then(function (game) {
+      resolve(game)
+    }).catch(function(game){
+      reject(game)
+    })
+  },
   findRandomGame: function(user) {
     console.log(user, "++++++++++")
     return new Promise(function(resolve, reject) {

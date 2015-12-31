@@ -34,27 +34,34 @@ module.exports = function(io) {
       }
       RC.playGame(user, socket)
     })
-    // once both users are on game page send data
-    socket.on('initGame', function(data) {
-      if (data.name) {
-        var user = {
-          user: data.name,
-          id: this.id,
-          io: io
-        }
-        RC.sendQuestion(user);
-      }
-      var room = {
-        value: this.rooms[1],
+    socket.on('playFriend', function(info) {
+      var socket = {
+        id: this.id,
         io: io
       }
-      if (rooms[room]) {
-        GC.getQueries(room)
-        delete rooms[room]
-      } else {
-        rooms[room] = true;
-      }
+      RC.playFriend(info, socket);
     })
+    // once both users are on game page send data
+    // socket.on('initGame', function(data) {
+    //   if (data.name) {
+    //     var user = {
+    //       user: data.name,
+    //       id: this.id,
+    //       io: io
+    //     }
+    //     RC.sendQuestion(user);
+    //   }
+    //   var room = {
+    //     value: this.rooms[1],
+    //     io: io
+    //   }
+    //   if (rooms[room]) {
+    //     GC.getQueries(room)
+    //     delete rooms[room]
+    //   } else {
+    //     rooms[room] = true;
+    //   }
+    // })
     socket.on('updateHome', function(user) {
       user = {
         name: user,

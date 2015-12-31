@@ -12,10 +12,10 @@ angular.module("feud.home", [])
   /////// Login
   ///////////////////////////////////////////
   $scope.test = function() {
-    Socket.emit('playRandom', {name: 'flito', id: 555})
+    Socket.emit('playRandom', {name: 'mark', id: 5555})
   }
   $scope.userInfoTest = function() {
-    Socket.emit('updateHome', 'flito')
+    Socket.emit('updateHome', 'mark')
   }
   $scope.getQueries = function(queries) {
     Socket.emit('getQueries', queries)

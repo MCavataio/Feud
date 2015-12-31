@@ -8,6 +8,42 @@ var roundOne;
 
 
 module.exports = {
+  playFriend: function(info, socket) {
+    var rounds;
+    var userCol;
+    return helpers.getCount()
+        .then(function(response) {
+          // returns 8 random numbers based off the count value
+          return helpers.getNumbers(response)
+        })
+        .then(function(numbers) {
+          // parses information to be saved into database
+          // lightning round is saved as string with A in between each 
+          var lightning = numbers.slice(3);
+          rounds = numbers[0];
+          info.questionRD1 = rounds[0];
+          info.questionRD2 = rounds[1];
+          info.questionRD3 = rounds[2];
+          info.questionRD4 = lightning.join("A")
+          return helpers.friendGame(gameInfo)
+        })
+        .then(function(response) {
+            // searches for first round question
+          gameID = response[0].dataValues.id;
+          return helpers.getQueries(rounds)
+        })
+        .then(function(question) {
+      // sends to respective user
+      console.log(gameID, "+++++++++++++++++++++++++++---------------------")
+      question = {
+        question: question,
+        game: gameID,
+        user: 'user1',
+        opponent: info.opponentName
+      }
+      socket.io.to(socket.id).emit('playFriend', question)
+    })
+  },
   playGame: function(user, socket) {
     var gameID;
     var userCol;
@@ -20,7 +56,7 @@ module.exports = {
       if (game[0].dataValues.user1 !== user.name) {
         rounds = [game[0].dataValues.questionRD1,game[0].dataValues.questionRD2]
         gameID = game[0].dataValues.id
-        userCol = 'user2'
+        userCol = 'user1'
         opponent = game[0].dataValues.user1
         // updates game to include reference to oppents namne in slot 2
         return helpers.updateOpponent(gameID, user)
@@ -40,7 +76,7 @@ module.exports = {
           game = game[0].dataValues.id
           gameID = game;
           userCol = 'user1';
-          opponent = null;
+          opponent = 'null';
           return helpers.updateRandomGame(game, numbers, lightning)
         })
       }
