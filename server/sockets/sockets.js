@@ -58,7 +58,7 @@ module.exports = function(io) {
     socket.on('updateHome', function(user) {
       user = {
         name: user,
-        socket: this,
+        socket: this.id,
         io: io
       }
       HC.updateHome(user)
