@@ -52,7 +52,7 @@ module.exports = {
           openGames.opponentTurn.push(game)
         }
       })
-      user.io.to(user.id).emit('updateHome', openGames)
+      user.io.emit('updateHome', openGames)
     })
   },
   addQuery: function (req, res, next) {
