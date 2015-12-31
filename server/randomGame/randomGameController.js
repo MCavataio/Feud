@@ -81,6 +81,7 @@ module.exports = {
       update.round = 1;
      }
      if (round == 3) {
+      console.log('in round 3')
       update.round = 3;
      } if (round == 4) {
       update.round = 5;
