@@ -81,7 +81,7 @@ module.exports = {
       update.round = 1;
      }
      if (round == 3) {
-      console.log('in round 3')
+      console.log('in round 3', "+++++++++++++++++++++++++++++++++++++")
       update.round = 3;
      } if (round == 4) {
       update.round = 5;
@@ -98,6 +98,7 @@ module.exports = {
       update.round = 4;
     }
   }
+  console.log(update, game, '++++++++++++++++++++++++++++++++')
   helpers.updateScores(update, game)
 }
 }
