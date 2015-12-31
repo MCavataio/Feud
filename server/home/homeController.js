@@ -34,8 +34,6 @@ module.exports = {
         opponentTurn: []
       }
       games.forEach(function(game) {
-        console.log(game.dataValues.turn)
-        console.log(user.name)
         if (game.dataValues.user1 === user.name ) {
             console.log('user1 is true')
             game.dataValues.opponentName = game.dataValues.user2;
