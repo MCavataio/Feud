@@ -23,7 +23,7 @@ module.exports = {
   getQueries: function(data) {
     return helpers.getQueries(data.ids)
     .then(function(queries) {
-      data.io.emit('getQueries', queries)
+      data.io.to.(data.id).emit('getQueries', queries)
     })
   },
   updateHome: function(user) {
@@ -52,7 +52,7 @@ module.exports = {
           openGames.opponentTurn.push(game)
         }
       })
-      user.io.emit('updateHome', openGames)
+      user.io.to(user.id).emit('updateHome', openGames)
     })
   },
   addQuery: function (req, res, next) {
