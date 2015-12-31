@@ -11,7 +11,7 @@ angular.module('feud.game', [])
   $scope.queryAnswer = {};
   $scope.lightningRound = false;
   var gameTimer = 1; 
-  
+
 
   $scope.toLobby = function() {
     Socket.emit('leaveRoom')
@@ -19,7 +19,7 @@ angular.module('feud.game', [])
   }
   var init = function() {
     // Socket.emit('initGame', "hello")
-    console.log($rootScope.dbQuestion)
+    console.log($rootScope.dbQuestion.question, "i'm called firstttt")
     startRound($rootScope.dbQuestion)
   }
   /////////////////////////////////////////////////////
@@ -29,7 +29,7 @@ angular.module('feud.game', [])
   ///************************vvvvvvvvvvvvvvvvvvv
   var startRound = function(query) {
     $scope.gameBoard = true;
-    console.log(query);
+    console.log(query.question, "i'm the qeustion");
     if (query.question.length === 2) {
       if (query.user === 'user2') {
         $scope.questions = parsedResponses(query.question, true)

@@ -15,7 +15,7 @@ angular.module("feud.home", [])
     Socket.emit('playRandom', {name: 'flito', id: 555})
   }
   $scope.userInfoTest = function() {
-    Socket.emit('updateHome', 'michael')
+    Socket.emit('updateHome', 'flito')
   }
   $scope.getQueries = function(queries) {
     Socket.emit('getQueries', queries)
@@ -36,7 +36,9 @@ angular.module("feud.home", [])
     Socket.emit('getQueries', queries)
   }
   Socket.on('getQueries', function(data) {
-    $rootScope.dbQuestion.question = data;
+    console.log(data)
+    $rootScope.dbQuestion = 
+    {question:data}
     $location.path('/game')
   })
   $scope.init = function() {
