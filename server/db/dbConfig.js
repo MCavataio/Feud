@@ -35,7 +35,7 @@ var PotentialQuery = db.define('potentialQuery', {
   response7: Sequelize.STRING,
   response8: Sequelize.STRING,
   response9: Sequelize.STRING,
-  response10: Sequelize.STRING,
+  response10: Sequelize.STRING
 })
 
 var User = db.define('user', {
@@ -56,6 +56,7 @@ var RandomGame = db.define('randomGame', {
   user2ID: Sequelize.INTEGER,
   created: Sequelize.INTEGER,
   user2: Sequelize.STRING,
+  round: Sequelize.INTEGER,
   questionRD1: Sequelize.INTEGER,
   questionRD2: Sequelize.INTEGER,
   questionRD3: Sequelize.INTEGER,
@@ -86,7 +87,7 @@ var Query = db.define('query', {
   response10: Sequelize.STRING
 });
 
-db.sync({force: true})
+db.sync({force: false})
   .then(function(err) {
     console.log('created database')
   }, function (err) {

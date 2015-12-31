@@ -29,6 +29,7 @@ angular.module('feud.game', [])
   ///************************vvvvvvvvvvvvvvvvvvv
   var startRound = function(query) {
     $scope.gameBoard = true;
+    console.log(query);
     if (query.question.length === 2) {
       if (query.user === 'user2') {
         $scope.questions = parsedResponses(query.question, true)

@@ -20,6 +20,12 @@ var users = {};
 
 
 module.exports = {
+  getQueries: function(data) {
+    return helpers.getQueries(data.ids)
+    .then(function(queries) {
+      data.io.emit('getQueries', queries)
+    })
+  },
   updateHome: function(user) {
     return helpers.retrieveGames(user.name)
     .then(function(games) {
@@ -56,8 +62,9 @@ module.exports = {
       if (response === null) {
         return helpers.getCount()
         .then(function(size) {
-          console.log(size.count)
-          query.number = size.count++
+          size = size.count + 1;
+          query.number = size;
+          console.log(query.number, "hereeee weee g----------------------ogooo")
           return helpers.findOrCreateQuery(query, 'Query')
           .then(function(response) {
           console.log('successful')

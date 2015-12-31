@@ -1,6 +1,7 @@
 var GC = require('../game/gameController.js');
 var HC = require('../home/homeController.js');
 var RC = require('../randomGame/randomGameController.js');
+var helpers = require('../config/helpers.js');
 var rooms = {};
 var users = {};
 
@@ -61,7 +62,14 @@ module.exports = function(io) {
         io: io
       }
       HC.updateHome(user)
-
+    })
+    socket.on('getQueries', function(ids) {
+      var ids = {
+        ids: ids,
+        socket: this.id,
+        io: io
+      }
+      HC.getQueries(ids)
     })
 
     // pairs random users to play against one another

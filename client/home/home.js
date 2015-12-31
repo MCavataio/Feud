@@ -4,23 +4,48 @@ angular.module("feud.home", [])
   $scope.query = {};
   $scope.data = {};
   $scope.socket = 0;
-  $scope.status = true;;
+  $scope.status = true;
+  $scope.turn = {};
   var room;
 
   ///////////////////////////////////////////
   /////// Login
   ///////////////////////////////////////////
   $scope.test = function() {
-    Socket.emit('playRandom', {name: 'ricky', id: 555})
+    Socket.emit('playRandom', {name: 'flito', id: 555})
   }
   $scope.userInfoTest = function() {
-    Socket.emit('updateHome', 'ricky')
+    Socket.emit('updateHome', 'michael')
   }
+  $scope.getQueries = function(queries) {
+    Socket.emit('getQueries', queries)
+  }
+  $scope.start = function(game) {
+   var queries = [];
+    if (game.round === 2) {
+      queries.push(game.questionRD2);
+      queries.push(game.questionRD3);
+    }
+    if (game.round === 2) {
+      queries.push(game.questionRD2);
+      queries.push(game.questionRD3);
+    }
+    if (game.round === 3) {
+      queries.push(game.questionRD4);
+    }
+    Socket.emit('getQueries', queries)
+  }
+  Socket.on('getQueries', function(data) {
+    $rootScope.dbQuestion.question = data;
+    $location.path('/game')
+  })
   $scope.init = function() {
     console.log($rootScope.update)
     if (!$rootScope.update) {
       Socket.on('updateHome', function(data) {
-        console.log(data)
+        console.log(data.yourTurn)
+        $scope.data.yourTurn = data.yourTurn
+
         $rootScope.update = true;
       })
     }

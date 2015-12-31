@@ -71,16 +71,30 @@ module.exports = {
   var score = data.score;
   var game = data.gameID;
   var opponent = data.opponent
-  if(user === 'user1' && round == 1) {
+
+  if(user === 'user1')
     var update = {
-      user1RD1: score,
+      user1Total: score,
       turn: opponent
     }
-  }
-  if(user === 'user2' && round == 2) {
+     if (round == 1) {
+      update.round = 1;
+     }
+     if (round == 3) {
+      update.round = 3;
+     } if (round == 4) {
+      update.round = 5;
+     }
+  if(user === 'user2') {
     var update = {
-      user2RD2: score,
+      user2Total: score,
       turn: opponent
+    }
+    if (round == 2) {
+      update.round = 2;
+    }
+    if (round == 3) {
+      update.round = 4;
     }
   }
   helpers.updateScores(update, game)

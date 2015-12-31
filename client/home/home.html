@@ -1,5 +1,7 @@
 <div ng-controller="HomeController" ng-init='init()'>
 <button type="button" ng-click="userInfoTest()">info Test</button>
+<button type="button" ng-click="getQueries()">queryTest</button>
+<div ng-repeat="game in data.yourTurn" ng-click="start(game)"> {{game}} </div>
 <form name="signIn" ng-submit="login()">
   <input type="text" placeholder="Enter UserName" ng-model="data.username">
   <input type="text" placeholder="Enter Password" ng-model="data.password">
