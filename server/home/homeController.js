@@ -44,6 +44,7 @@ module.exports = {
     })
   },
   updateHome: function(user) {
+    var usersOnline = usersOnline
     if (user.isPlayer) {
       usersOnline[user.name] = user.socket;
       usersOnline[user.socket] = user.name;
