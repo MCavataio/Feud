@@ -44,7 +44,10 @@ module.exports = {
     })
   },
   updateHome: function(user) {
-    console.log('in updateHome')
+    if (user.isPlayer) {
+      usersOnline[user.name] = user.socket;
+      usersOnline[user.socket] = user.name;
+    }
     if (user.isOpponent) { 
       console.log('should be here')
       if (usersOnline[user.name]) {
