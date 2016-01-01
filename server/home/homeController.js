@@ -45,10 +45,12 @@ module.exports = {
   },
   updateHome: function(user) {
     console.log('in updateHome')
-    if (user.isOpponent) { 
+    if (user.isOpponent && usersOnline[user.name]) { 
       if (usersOnline[user.name]) {
         user.socket = usersOnline[user.name];
       }
+    } else {
+      return
     }
     console.log('about to call retrieve', user.name)
     return helpers.retrieveGames(user.name)
