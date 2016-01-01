@@ -31,7 +31,8 @@ module.exports = {
     .then(function(games) {
       var openGames = {
         yourTurn: [],
-        opponentTurn: []
+        opponentTurn: [],
+        finishedGames: []
       }
       games.forEach(function(game) {
         if (game.dataValues.user1 === user.name ) {
@@ -46,7 +47,10 @@ module.exports = {
 
         if (game.dataValues.turn === user.name) {
           openGames.yourTurn.push(game)
-        } else {
+        } else if (game.dataValues.round == 8 && openGames.finished.length < 5) {
+          openGames.finished.push(game);
+        } 
+        else {
           openGames.opponentTurn.push(game)
         }
       })
