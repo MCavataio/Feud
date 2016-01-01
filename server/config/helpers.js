@@ -106,7 +106,6 @@ module.exports = {
     })
   },
   updateScores: function(update, game) {
-    console.log('++++++++++++')
     return new Promise(function (resolve, reject) {
       var round = update.round
 

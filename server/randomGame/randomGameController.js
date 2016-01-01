@@ -138,7 +138,6 @@ module.exports = {
   }
   return helpers.updateScores(update, game)
   .then(function(game) {
-    console.log('in then trying to call socket', socket.io)
     var oppInfo = {
       name: opponent,
       isOpponent: true,
