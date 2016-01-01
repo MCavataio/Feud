@@ -103,13 +103,23 @@ module.exports = function(io) {
     // sends scores to other individuals playing in the same room
     // this.rooms consists of connection id and room number
     socket.on('updateScore', function(data) {
-      RC.updateScores(data)
+      var socket = {
+        id: this.id,
+        io: io
+      }
+      RC.updateScores(data, socket)
       // if want to go live
       // socket.broadcast.to(this.rooms[1]).emit('updateScore', {score: data})
       // console.log(this.rooms, this.id);
     })
     socket.on('addPotential', function(data) {
       HC.addPotential(data);
+    })
+    socket.on('disconnect', function(socket) {
+      var info = {
+        id: this.id
+      }
+      HC.logout(info)
     })
   })
 }

@@ -5,7 +5,7 @@ var Promise = require('bluebird');
 var Query = db.Query;
 var rooms = [];
 var number = [];
-var users = {};
+var usersOnline = {};
 
 
 // helpers.getCount()
@@ -20,6 +20,23 @@ var users = {};
 
 
 module.exports = {
+  logout: function(socket) {
+    var username = usersOnline[socket.id]
+    delete usersOnline[socket.id];
+    delete usersOnline[username];
+  },
+  updateUser: function(opponent) {
+    if (usersOnline[opponent]) {
+      var user = {
+        name: opponent.name,
+        id: usersOnline[opponent],
+        io: opponent.io,
+        game: opponent.game,
+        fromUpdate: true
+      }
+    }
+    updateHome(user)
+  },
   getQueries: function(data) {
     return helpers.getQueries(data.ids)
     .then(function(queries) {
@@ -27,6 +44,10 @@ module.exports = {
     })
   },
   updateHome: function(user) {
+    if (!user.fromUpdate) { 
+      usersOnline[user.name] = user.socket;
+      usersOnline[user.socket] = user.name;
+    }
     return helpers.retrieveGames(user.name)
     .then(function(games) {
       var openGames = {

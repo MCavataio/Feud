@@ -129,28 +129,12 @@ module.exports = {
       round: data.round
     }
   }
-     // if (round == 1) {
-     //  update.round = 1;
-     // }
-     // if (round == 3) {
-     //  console.log('in round 3', "+++++++++++++++++++++++++++++++++++++")
-     //  update.round = 3;
-     // } if (round == 4) {
-     //  update.round = 5;
-     // }
-  // if(user === 'user2') {
-  //   var update = {
-  //     user2Total: score,
-  //     turn: opponent
-  //   }
-  //   if (round == 2) {
-  //     update.round = 2;
-  //   }
-  //   if (round == 3) {
-  //     update.round = 4;
-  //   }
-  // }
-  console.log(update, game, '++++++++++++++++++++++++++++++++')
   helpers.updateScores(update, game)
+  var opponent = {
+    opponent: opponent,
+    io: data.io,
+    game: game
+  }
+  HC.updateUser(opponent);
 }
 }
