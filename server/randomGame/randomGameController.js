@@ -11,6 +11,7 @@ module.exports = {
   playFriend: function(info, socket) {
     var rounds;
     var userCol;
+    var gameID;
     return helpers.getCount()
         .then(function(response) {
           // returns 8 random numbers based off the count value
