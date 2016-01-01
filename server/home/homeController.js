@@ -44,7 +44,7 @@ module.exports = {
     })
   },
   updateHome: function(user) {
-    var usersOnline = usersOnline
+    var online =  usersOnline
     if (user.isPlayer) {
       usersOnline[user.name] = user.socket;
       usersOnline[user.socket] = user.name;
@@ -58,7 +58,6 @@ module.exports = {
         return;
       }
     } 
-    console.log(user.socket, '+++++++++++++++++++++++++')
     console.log(user.name)
     return helpers.retrieveGames(user.name)
     .then(function(games) {

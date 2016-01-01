@@ -11,7 +11,6 @@ module.exports = function(io) {
     console.log(socket.id, "connected")
     // fuzzy check call
     socket.on('fuzzyCheck', function(data) {
-      console.log(data)
       data.id = this.id
       data.io = io
       GC.fuzzyCheck(data);
