@@ -110,7 +110,6 @@ module.exports = {
 //       console.log(error)
 //     })
 }, updateScores: function(data) {
-  console.log(data, "get that dataaaaaaa")
   var user = data.userCol;
   var round = data.round;
   var score = data.score;
