@@ -47,11 +47,14 @@ module.exports = {
     console.log('in updateHome')
     if (user.isOpponent) { 
       if (usersOnline[user.name]) {
+        console.log('in oppponent')
         user.socket = usersOnline[user.name];
       } else {
         return;
       }
     } 
+    console.log(user.socket, '+++++++++++++++++++++++++')
+    console.log(user.name)
     return helpers.retrieveGames(user.name)
     .then(function(games) {
       var openGames = {
@@ -79,7 +82,7 @@ module.exports = {
           openGames.opponentTurn.push(game)
         }
       })
-      console.log('in here')
+    
       user.io.to(user.socket).emit('updateHome', openGames)
     })
   },
