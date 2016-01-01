@@ -32,7 +32,7 @@ module.exports = {
       var openGames = {
         yourTurn: [],
         opponentTurn: [],
-        finishedGames: []
+        finished: []
       }
       games.forEach(function(game) {
         if (game.dataValues.user1 === user.name ) {
