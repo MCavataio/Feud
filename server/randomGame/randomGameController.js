@@ -12,6 +12,8 @@ module.exports = {
     var rounds;
     var userCol;
     var gameID;
+    var opponent;
+    var opponentID;
     return helpers.getCount()
         .then(function(response) {
           // returns 8 random numbers based off the count value
@@ -33,6 +35,8 @@ module.exports = {
             // searches for first round question
             console.log('in responseeeee')
           gameID = response.dataValues.id;
+          opponent = response.dataValues.user2;
+          opponentID = response.dataValues.user2ID;
           return helpers.getQueries(rounds)
         })
         .then(function(question) {
@@ -42,7 +46,8 @@ module.exports = {
         question: question,
         game: gameID,
         user: 'user1',
-        opponent: info.opponentName
+        opponent: opponent,
+        opponentID: opponentID
       }
       console.log('should send')
       socket.io.to(socket.id).emit('playFriend', gameInfo)
