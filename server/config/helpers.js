@@ -22,11 +22,13 @@ module.exports = {
       db.RandomGame.create(
         gameInfo
       )
-    }).then(function (game) {
+    .then(function (game) {
+      console.log('in hereeeeee --------------------', game)
       resolve(game)
     }).catch(function(game){
       reject(game)
     })
+  })
   },
   findRandomGame: function(user) {
     console.log(user, "++++++++++")

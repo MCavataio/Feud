@@ -22,27 +22,30 @@ module.exports = {
           // lightning round is saved as string with A in between each 
           var lightning = numbers.slice(3);
           rounds = numbers[0];
-          info.questionRD1 = rounds[0];
-          info.questionRD2 = rounds[1];
-          info.questionRD3 = rounds[2];
-          info.questionRD4 = lightning.join("A")
-          return helpers.friendGame(gameInfo)
+          lightning = lightning.join('A');
+          info.questionRD1 = numbers[0];
+          info.questionRD2 = numbers[1];
+          info.questionRD3 = numbers[2];
+          info.questionRD4 = lightning
+          return helpers.friendGame(info)
         })
         .then(function(response) {
             // searches for first round question
-          gameID = response[0].dataValues.id;
+            console.log('in responseeeee')
+          gameID = response.dataValues.id;
           return helpers.getQueries(rounds)
         })
         .then(function(question) {
       // sends to respective user
       console.log(gameID, "+++++++++++++++++++++++++++---------------------")
-      question = {
+      var gameInfo = {
         question: question,
         game: gameID,
         user: 'user1',
         opponent: info.opponentName
       }
-      socket.io.to(socket.id).emit('playFriend', question)
+      console.log('should send')
+      socket.io.to(socket.id).emit('playFriend', gameInfo)
     })
   },
   playGame: function(user, socket) {

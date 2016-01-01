@@ -10,7 +10,20 @@ angular.module("feud.home", [])
 
   ///////////////////////////////////////////
   /////// Login
-  ///////////////////////////////////////////
+  //////////////////////////////////////////
+
+       var gameInfo = {
+            user2: 'Sandro Anthony',
+            user2ID: 5555555,
+            user1: 'Michael Vincent',
+            user1ID: 33333333
+        }
+  $scope.playFriends = function() {
+    Socket.emit('playFriend', gameInfo)
+  }
+  Socket.on('playFriend', function(data) {
+    console.log(data)
+  })
   $scope.test = function() {
     Socket.emit('playRandom', {name: 'mark', id: 5555})
   }
