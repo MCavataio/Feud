@@ -25,18 +25,18 @@ module.exports = {
     delete usersOnline[socket.id];
     delete usersOnline[username];
   },
-  updateUser: function(opponent) {
-    if (usersOnline[opponent]) {
-      var user = {
-        name: opponent,
-        id: usersOnline[opponent],
-        io: opponent.io,
-        game: opponent.game,
-        fromUpdate: true
-      }
-    }
-    updateHome(user)
-  },
+  // updateUser: function(opponent) {
+  //   if (usersOnline[opponent]) {
+  //     var user = {
+  //       name: opponent,
+  //       id: usersOnline[opponent],
+  //       io: opponent.io,
+  //       game: opponent.game,
+  //       fromUpdate: true
+  //     }
+  //   }
+  //   updateHome(user)
+  // },
   getQueries: function(data) {
     return helpers.getQueries(data.ids)
     .then(function(queries) {
@@ -44,12 +44,14 @@ module.exports = {
     })
   },
   updateHome: function(user) {
-    if (user.isOpponent) { 
-      if (usersOnline[opponent]) {
-        usersOnline[user.name] = user.socket;
-        usersOnline[user.socket] = user.name;
-      }
-    }
+    console.log('in updateHome')
+    // if (user.isOpponent) { 
+    //   if (usersOnline[opponent]) {
+    //     usersOnline[user.name] = user.socket;
+    //     usersOnline[user.socket] = user.name;
+    //   }
+    // }
+    console.log('about to call retrieve', user.name)
     return helpers.retrieveGames(user.name)
     .then(function(games) {
       var openGames = {
@@ -77,6 +79,7 @@ module.exports = {
           openGames.opponentTurn.push(game)
         }
       })
+      console.log('in here')
       user.io.to(user.socket).emit('updateHome', openGames)
     })
   },

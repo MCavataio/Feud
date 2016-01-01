@@ -1,21 +1,21 @@
 var db = require('../db/dbConfig.js');
 var Query = db.Query;
 var User = db.User;
-var PotentialQuery = db.PotentialQuery
+var PotentialQuery = db.PotentialQuery;
 var RandomGame = db.RandomGame;
-var HC = require('../home/homeController.js')
-var Promise = require('bluebird')
+var HC = require('../home/homeController.js');
+var Promise = require('bluebird');
 
 module.exports = {
   createNumbers: function() {
     return new Promise(function(resolve, reject) {
       db.Query.findAll({where: {number: ids}})
       .then(function (query) {
-        resolve(shuffle(query))
+        resolve(shuffle(query));
       })
       .catch(function(query) {
         console.log(query, "error in retrieving numbers");
-      })
+      });
     });
   },
   friendGame: function(gameInfo) {
@@ -24,17 +24,16 @@ module.exports = {
         gameInfo
       )
     .then(function (game) {
-      console.log('in hereeeeee --------------------', game)
-      resolve(game)
+      resolve(game);
     }).catch(function(game){
-      reject(game)
-    })
+      reject(game);
+    });
   })
   },
   findRandomGame: function(user) {
     console.log(user, "++++++++++")
     return new Promise(function(resolve, reject) {
-      db.RandomGame.findOrCreate({ 
+      db.RandomGame.findOrCreate({
         where: {
           user2: 'open',
           $and: {
@@ -70,20 +69,21 @@ module.exports = {
       })
     .then(function(response) {
       resolve(response)
-    })
-    .catch(reject)
+    }).catch(reject)
     })
   },
   retrieveGames: function(user) {
+    console.log('whatttttuppp')
     return new Promise(function(resolve, reject) {
       db.RandomGame.findAll({
         where: {
           $or: {
             user1: user,
             user2: user
-          } 
+          }
         }
       }).then(function(games){
+        console.log(games)
         resolve(games)
       }).catch(reject)
     })
@@ -114,8 +114,6 @@ module.exports = {
             update
       ,{
         where: {id: game}
-      }).then(function() {
-        HC.updateHome(opponent)
       })
     //   .then(function(response){
     //     resolve(response)
@@ -159,7 +157,6 @@ module.exports = {
       }).catch(reject)
     })
   },
-  
   getCount: function() {
     console.log('this should be runnninnggg');
     return new Promise(function (resolve, reject) {
@@ -171,11 +168,11 @@ module.exports = {
         reject(err);
       })
     })
-  },  
+  },
 
   getQuery: function(value, cb) {
     return new Promise(function (resolve, reject) {
-      db.Query.findOne({where: value})  
+      db.Query.findOne({where: value})
       .then(function (query) {
         resolve(query)
       }).catch(function (err) {
@@ -195,7 +192,7 @@ module.exports = {
           if(numbers.indexOf(randomIndex) === -1) {
             count++
             numbers.push(randomIndex);
-          } 
+          }
         }
       }
 
@@ -212,7 +209,7 @@ module.exports = {
     })
   }
 }
-  
+
 function shuffle(array) {
   console.log(array.length)
   var counter = array.length, temp, index;

@@ -28,7 +28,7 @@ angular.module("feud.home", [])
     Socket.emit('playRandom', {name: 'mark', id: 5555})
   }
   $scope.userInfoTest = function() {
-    Socket.emit('updateHome', 'mark')
+    Socket.emit('updateHome', 'Sandro Anthony')
   }
   $scope.getQueries = function(queries) {
     Socket.emit('getQueries', queries)
