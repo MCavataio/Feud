@@ -1,6 +1,7 @@
 var db = require('../db/dbConfig.js');
 var Q = require('q');
 var helpers = require('../config/helpers.js')
+var HC = require('../home/homeController.js')
 var Promise = require('bluebird');
 var Query = db.RandomGame;
 var natural = require('natural');
