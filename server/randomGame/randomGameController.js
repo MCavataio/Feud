@@ -110,7 +110,7 @@ module.exports = {
 //     .catch(function(error) {
 //       console.log(error)
 //     })
-}, updateScores: function(data) {
+}, updateScores: function(data, socket) {
   var user = data.userCol;
   var round = data.round;
   var score = data.score;
@@ -136,7 +136,17 @@ module.exports = {
     io: data.io,
     game: game
   }
-  helpers.updateScores(update, game, data.io)
+  return helpers.updateScores(update, game)
+  .then(function(game) {
+    var oppInfo = {
+      name: opponent,
+      isOpponent: true,
+      io: socket.io
+    }
+      HC.updateHome(oppInfo)
+  }).catch(function(err) {
+    reject(err)
+  })
 
 }
 }

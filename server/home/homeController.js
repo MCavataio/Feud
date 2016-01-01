@@ -21,7 +21,7 @@ var usersOnline = {};
 
 module.exports = {
   logout: function(socket) {
-    var username = usersOnline[socket.id]
+    var username = usersOnline[socket.id];
     delete usersOnline[socket.id];
     delete usersOnline[username];
   },
@@ -45,12 +45,11 @@ module.exports = {
   },
   updateHome: function(user) {
     console.log('in updateHome')
-    // if (user.isOpponent) { 
-    //   if (usersOnline[opponent]) {
-    //     usersOnline[user.name] = user.socket;
-    //     usersOnline[user.socket] = user.name;
-    //   }
-    // }
+    if (user.isOpponent) { 
+      if (usersOnline[user.name]) {
+        user.socket = usersOnline[user.name];
+      }
+    }
     console.log('about to call retrieve', user.name)
     return helpers.retrieveGames(user.name)
     .then(function(games) {
