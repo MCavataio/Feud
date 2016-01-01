@@ -28,7 +28,7 @@ module.exports = {
   updateUser: function(opponent) {
     if (usersOnline[opponent]) {
       var user = {
-        name: opponent.name,
+        name: opponent,
         id: usersOnline[opponent],
         io: opponent.io,
         game: opponent.game,
@@ -44,9 +44,11 @@ module.exports = {
     })
   },
   updateHome: function(user) {
-    if (!user.fromUpdate) { 
-      usersOnline[user.name] = user.socket;
-      usersOnline[user.socket] = user.name;
+    if (user.isOpponent) { 
+      if (usersOnline[opponent]) {
+        usersOnline[user.name] = user.socket;
+        usersOnline[user.socket] = user.name;
+      }
     }
     return helpers.retrieveGames(user.name)
     .then(function(games) {

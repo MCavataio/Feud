@@ -3,6 +3,7 @@ var Query = db.Query;
 var User = db.User;
 var PotentialQuery = db.PotentialQuery
 var RandomGame = db.RandomGame;
+var HC = require('../home/homeController.js')
 var Promise = require('bluebird')
 
 module.exports = {
@@ -104,7 +105,7 @@ module.exports = {
       }).catch(reject)
     })
   },
-  updateScores: function(update, game) {
+  updateScores: function(update, game, opponent) {
     console.log('++++++++++++')
     // return new Promise(function (resolve, reject) {
       var round = update.round
@@ -113,6 +114,8 @@ module.exports = {
             update
       ,{
         where: {id: game}
+      }).then(function() {
+        HC.updateHome(opponent)
       })
     //   .then(function(response){
     //     resolve(response)

@@ -130,12 +130,13 @@ module.exports = {
       round: data.round
     }
   }
-  helpers.updateScores(update, game)
   var opponent = {
     opponent: opponent,
+    isOpponent: true,
     io: data.io,
     game: game
   }
-  HC.updateUser(opponent);
+  helpers.updateScores(update, game, data.io)
+
 }
 }
