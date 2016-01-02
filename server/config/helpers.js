@@ -31,7 +31,7 @@ module.exports = {
     })
   })
   },
-  findUser: funciton(user) {
+  findUser: function(user) {
     return new Promise(function(resolve, reject) {
       db.User.findOne({
         where: {
@@ -43,7 +43,7 @@ module.exports = {
     }).catch(function(err) {
       reject(err)
     })
-  }
+  },
   findRandomGame: function(user) {
     console.log(user, "++++++++++")
     return new Promise(function(resolve, reject) {
