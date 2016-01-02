@@ -53,6 +53,7 @@ module.exports = {
           }
         })
     }
+    console.log('calling helpers retrieveGames for opponent----------------------------------', user);
     return helpers.retrieveGames(user.name)
     .then(function(games) {
       console.log(games)
