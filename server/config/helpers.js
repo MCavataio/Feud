@@ -14,7 +14,7 @@ module.exports = {
         resolve(shuffle(query))
       })
       .catch(function(err) {
-        console.log(err)
+        reject(err)
       })
     });
   },
@@ -27,7 +27,7 @@ module.exports = {
       console.log('in hereeeeee --------------------', game)
       resolve(game)
     }).catch(function(err) {
-        console.log(err)
+        reject(err)
       })
   })
   },
@@ -53,7 +53,7 @@ module.exports = {
         resolve(game)
       })
       .catch(function(err) {
-        console.log(err)
+        reject(err)
       })
       })
   },
@@ -71,7 +71,7 @@ module.exports = {
       resolve(response)
     })
     .catch(function(err) {
-        console.log(err)
+        reject(err)
       })
     })
   },
@@ -87,7 +87,7 @@ module.exports = {
       }).then(function(games){
         resolve(games)
       }).catch(function(err) {
-        console.log(err)
+        reject(err)
       })
     })
   },
@@ -106,7 +106,7 @@ module.exports = {
         console.log(response)
         resolve(response)
       }).catch(function(err) {
-        console.log(err)
+        reject(err)
       })
     })
   },
@@ -122,7 +122,7 @@ module.exports = {
     .then(function(response){
         resolve(response)
       }).catch(function(err) {
-        console.log(err)
+        reject(err)
       })
     })
   },
@@ -149,7 +149,7 @@ module.exports = {
       }).spread(function (query, created) {
         resolve(query, created)
       }).catch(function(err) {
-        console.log(err)
+        reject(err)
       })
     })
   },
@@ -162,7 +162,7 @@ module.exports = {
       }).then(function(isFound) {
         resolve(isFound)
       }).catch(function(err) {
-        console.log(err)
+        reject(err)
       })
     })
   },
@@ -181,7 +181,7 @@ module.exports = {
         console.log(user)
         resolve(user)
       }).catch(function(err) {
-        console.log(err)
+        reject(err)
       })
     })
   },
@@ -198,7 +198,7 @@ module.exports = {
       }).then(function (user) {
         resolve(user)
       }).catch(function(err) {
-        console.log(err)
+        reject(err)
       })
     })
   },
@@ -213,8 +213,8 @@ module.exports = {
     }).then(function(log) {
       console.log(log)
     }).catch(function(err) {
-      console.log(err)
-    })
+        reject(err)
+      })
   })
 },
   
@@ -226,8 +226,8 @@ module.exports = {
         resolve(size)
       })
      .catch(function(err) {
-      console.log(err)
-    })
+        reject(err)
+      })
     })
   },  
 
@@ -237,8 +237,8 @@ module.exports = {
       .then(function (query) {
         resolve(query)
       }).catch(function(err) {
-      console.log(err)
-    })
+        reject(err)
+      })
     })
   },
 
@@ -265,8 +265,8 @@ module.exports = {
       .then(function (query) {
         resolve(shuffle(query))
       }).catch(function(err) {
-      console.log(err)
-    })
+        reject(err)
+      })
     })
   }
 }
