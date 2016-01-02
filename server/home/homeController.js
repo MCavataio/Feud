@@ -46,6 +46,7 @@ module.exports = {
     if (user.isOpponent) { 
       console.log(' about to call this findOrCreate user for opponent')
         helpers.findUser(user.name)
+        console.log(user.name,'i should be printtttingnggnsomethigngngng')
         .then(function(userInfo) {
           console.log(userInfo, "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
           if (userInfo[0].dataValues.online){
