@@ -35,7 +35,7 @@ module.exports = {
     return new Promise(function(resolve, reject) {
       db.User.findOne({
         where: {
-          name: user.name
+          name: user
         }
       })
     }).then(function(user) {
