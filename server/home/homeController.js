@@ -117,6 +117,8 @@ module.exports = {
         else {
           openGames.opponentTurn.push(game)
         }
+      }).catch(function(err) {
+        console.log(err);
       })
 
     
