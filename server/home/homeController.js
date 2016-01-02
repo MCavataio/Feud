@@ -44,18 +44,15 @@ module.exports = {
   updateOpponentHome: function(user) {
     return helpers.findUser(user.name)
         .then(function(userInfo) {
-          console.log(userInfo[0].dataValues, "step 1 ============================")
           if (userInfo[0].dataValues.online){
             user.socket = userInfo[0].dataValues.socket
             return helpers.retrieveGames(user.name)
               .then(function(games) {
-                console.log(games, 'step 2 ===========================')
                 var openGames = {
                   yourTurn: [],
                   opponentTurn: [],
                   finished: []
                 }
-                console.log('step 3 ====================================')
                 games.forEach(function(game) {
                   if (game.dataValues.user1 === user.name ) {
                       console.log('user is user 1 ;;;;;;;;;;;;;;;;;;;;;;')
@@ -77,15 +74,10 @@ module.exports = {
                   }
                 })
 
-                console.log(user.socket, 'step 5 ================================')
-                console.log(user.io, "step with 5")
-                console.log(openGames.length "stepwith 5")
                 user.io.to(user.socket).emit('updateHome', openGames)
               })
 
-          } else {
-            console.log('in else somehow===========================')
-          }
+          } 
         })
 
   },
