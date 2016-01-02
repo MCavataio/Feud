@@ -13,8 +13,8 @@ module.exports = {
       .then(function (query) {
         resolve(shuffle(query))
       })
-      .catch(function(query) {
-        console.log(query, "error in retrieving numbers");
+      .catch(function(err) {
+        console.log(err)
       })
     });
   },
@@ -26,9 +26,9 @@ module.exports = {
     .then(function (game) {
       console.log('in hereeeeee --------------------', game)
       resolve(game)
-    }).catch(function(game){
-      reject(game)
-    })
+    }).catch(function(err) {
+        console.log(err)
+      })
   })
   },
   findRandomGame: function(user) {
@@ -52,11 +52,10 @@ module.exports = {
       .then(function(game) {
         resolve(game)
       })
-      .catch(function(game) {
-        console.log(game, "in catch for findRandomGame");
-        reject(game);
+      .catch(function(err) {
+        console.log(err)
       })
-    })
+      })
   },
   updateOpponent: function(game, user) {
     return new Promise(function(resolve, reject) {
@@ -71,7 +70,9 @@ module.exports = {
     .then(function(response) {
       resolve(response)
     })
-    .catch(reject)
+    .catch(function(err) {
+        console.log(err)
+      })
     })
   },
   retrieveGames: function(user) {
@@ -85,7 +86,9 @@ module.exports = {
         }
       }).then(function(games){
         resolve(games)
-      }).catch(reject)
+      }).catch(function(err) {
+        console.log(err)
+      })
     })
   },
   updateRandomGame: function(game, numbers, lightning) {
@@ -102,7 +105,9 @@ module.exports = {
       .then(function(response){
         console.log(response)
         resolve(response)
-      }).catch(reject)
+      }).catch(function(err) {
+        console.log(err)
+      })
     })
   },
   updateScores: function(update, game) {
@@ -117,7 +122,7 @@ module.exports = {
     .then(function(response){
         resolve(response)
       }).catch(function(err) {
-        reject(err)
+        console.log(err)
       })
     })
   },
@@ -143,7 +148,9 @@ module.exports = {
 
       }).spread(function (query, created) {
         resolve(query, created)
-      }).catch(reject);
+      }).catch(function(err) {
+        console.log(err)
+      })
     })
   },
   findUser: function(user) {
@@ -155,7 +162,7 @@ module.exports = {
       }).then(function(isFound) {
         resolve(isFound)
       }).catch(function(err) {
-        reject(err)
+        console.log(err)
       })
     })
   },
@@ -174,7 +181,7 @@ module.exports = {
         console.log(user)
         resolve(user)
       }).catch(function(err) {
-        reject(err)
+        console.log(err)
       })
     })
   },
@@ -190,19 +197,26 @@ module.exports = {
         }
       }).then(function (user) {
         resolve(user)
-      }).catch(reject)
+      }).catch(function(err) {
+        console.log(err)
+      })
     })
   },
   logout: function(user) {
-    // return new Promise()
+  return new Promise(function(resolve, reject) {
     db.User.update({
       online: false,
       socket: null
     }, { where: {
       id: user
       }
+    }).then(function(log) {
+      console.log(log)
+    }).catch(function(err) {
+      console.log(err)
     })
-  },
+  })
+},
   
   getCount: function() {
     console.log('this should be runnninnggg');
@@ -211,9 +225,9 @@ module.exports = {
       .then(function(size) {
         resolve(size)
       })
-      .catch(function(err) {
-        reject(err);
-      })
+     .catch(function(err) {
+      console.log(err)
+    })
     })
   },  
 
@@ -222,9 +236,9 @@ module.exports = {
       db.Query.findOne({where: value})  
       .then(function (query) {
         resolve(query)
-      }).catch(function (err) {
-        reject(err)
-      })
+      }).catch(function(err) {
+      console.log(err)
+    })
     })
   },
 
@@ -250,9 +264,9 @@ module.exports = {
       db.Query.findAll({where: {number: ids}})
       .then(function (query) {
         resolve(shuffle(query))
-      }).catch(function (err) {
-        reject(err)
-      })
+      }).catch(function(err) {
+      console.log(err)
+    })
     })
   }
 }
