@@ -71,8 +71,8 @@ module.exports = function(io) {
       if (!socket.clientID) {
         console.log('should be here ++++++')
         return helpers.findOrCreateUser(user)
-        .then(function(user) {
-          if (!user || !user[0].dataValues.online) {
+        .then(function(userInfo) {
+          if (!user || !userInfo[0].dataValues.online) {
             return helpers.updateUser(user)
             .then(function(userData) {
               console.log(userData)
@@ -80,7 +80,7 @@ module.exports = function(io) {
             });
           } 
           else {
-            socket.clientID = user[0].dataValues.id;   
+            socket.clientID = userInfo[0].dataValues.id;   
           }
         })
       }
