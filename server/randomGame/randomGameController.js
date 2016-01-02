@@ -123,7 +123,6 @@ module.exports = {
       turn: opponent,
       round: data.round
     } 
-    console.log(update)
   }else {
     var update = {
       user2Total: score,
@@ -142,7 +141,10 @@ module.exports = {
   return helpers.updateScores(update, game)
   .then(function(game) {
     if (opponent.name) {
-      HC.updateOpponentHome(opponent)
+     return HC.updateOpponentHome(opponent)
+     .then(function() {
+      console.log('success')
+     })
     }
   })
 
