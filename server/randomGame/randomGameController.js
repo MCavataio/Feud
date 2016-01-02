@@ -130,20 +130,18 @@ module.exports = {
       round: data.round
     }
   }
-  if (opponent !== 'open') {
     var opponent = {
       name: opponent,
       isOpponent: true,
       io: socket.io,
       game: game
     }
-  }
+  if (opponent.name !== 'open') {
   return helpers.updateScores(update, game)
   .then(function(game) {
-    if (opponent.name) {
      HC.updateOpponentHome(opponent)
-    }
   })
 
+}
 }
 }
