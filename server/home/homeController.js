@@ -91,15 +91,21 @@ module.exports = {
 
   },
   updateHome: function(user) {
+    var gamesList;
     console.log('in here')
     return helpers.retrieveGames(user.name)
     .then(function(games) {
+      gamesList = games;
+    }).catch(function(err) {
+      console.log(err)
+    })
+
       var openGames = {
         yourTurn: [],
         opponentTurn: [],
         finished: []
       }
-      games.forEach(function(game) {
+      gamesList.forEach(function(game) {
         if (game.dataValues.user1 === user.name ) {
             game.dataValues.opponentName = game.dataValues.user2;
             game.dataValues.opponentID = game.dataValues.user2ID;
@@ -117,8 +123,6 @@ module.exports = {
         else {
           openGames.opponentTurn.push(game)
         }
-      }).catch(function(err) {
-        console.log(err);
       })
 
     
