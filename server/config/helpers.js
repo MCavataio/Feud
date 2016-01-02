@@ -82,7 +82,7 @@ module.exports = {
       }, {
         where:
           {id: game}
-      })
+      }) 
     .then(function(response) {
       resolve(response)
     })
