@@ -89,7 +89,7 @@ var Query = db.define('query', {
   response10: Sequelize.STRING
 });
 
-db.sync({force: true})
+db.sync({force: false})
   .then(function(err) {
     console.log('created database')
   }, function (err) {

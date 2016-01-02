@@ -44,7 +44,7 @@ module.exports = {
   updateHome: function(user) {
     console.log('should be here nowwwwww')
     if (user.isOpponent) { 
-      console.log(' about to call this findOrCreate user for opponent')
+      console.log(user, ' about to call this findOrCreate user for opponent')
         return helpers.findUser(user.name)
         .then(function(userInfo) {
           console.log(userInfo, "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
