@@ -172,6 +172,7 @@ module.exports = {
     })
   },
   findOrCreateUser: function(user) {
+    console.log('in find or create')
     return new Promise(function(resolve, reject) {
       db.User.findOrCreate({
         where: {
