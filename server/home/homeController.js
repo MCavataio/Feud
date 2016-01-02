@@ -55,10 +55,8 @@ module.exports = {
           }
         })
     }
-    console.log(user.name)
     return helpers.retrieveGames(user.name)
     .then(function(games) {
-      console.log(games)
       var openGames = {
         yourTurn: [],
         opponentTurn: [],
@@ -66,11 +64,9 @@ module.exports = {
       }
       games.forEach(function(game) {
         if (game.dataValues.user1 === user.name ) {
-            console.log('user1 is true')
             game.dataValues.opponentName = game.dataValues.user2;
             game.dataValues.opponentID = game.dataValues.user2ID;
           } else {
-            console.log('user2 is true')
             game.dataValues.opponentName = game.dataValues.user1;
             game.dataValues.opponentID = game.dataValues.user1ID;
           }
