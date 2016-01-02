@@ -8,7 +8,7 @@ var users = {};
 module.exports = function(io) {
   io.on('connection', function(socket) {
     
-    socket.on('checkingIn', funciton(data) {
+    socket.on('checkingIn', function(data) {
       users[socket.id] = data.name
       users[data.name] = socket.id
       console.log(users)
