@@ -77,7 +77,7 @@ module.exports = {
                     openGames.opponentTurn.push(game)
                   }
                 })
-
+                console.log('about to send +++++++++++++++_==========================')
                 user.io.to(user.socket).emit('updateHome', openGames)
               })
 
