@@ -42,8 +42,8 @@ module.exports = {
     })
   },
   updateOpponentHome: function(user) {
-    console.log(user)
-    console.log('-----------------------')
+    console.log(user.name)
+    console.log('--------------------+++++++++++++++++++++++++++---')
     return helpers.findUser(user.name)
         .then(function(userInfo) {
           console.log(userInfo)
