@@ -75,7 +75,7 @@ module.exports = function(io) {
             return helpers.updateUser(user)
             .then(function(userData) {
               socket.clientID = userData.dataValues.id;
-              HC.updateHome(user);
+              HC.updateHome(user)
               .then(function() {
                 console.log('success')
               })
