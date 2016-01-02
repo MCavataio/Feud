@@ -46,8 +46,6 @@ module.exports = {
     console.log('--------------------+++++++++++++++++++++++++++---line 46')
     return helpers.findUser(user)
         .then(function(userInfo) {
-          console.log(userInfo)
-          console.log('11111111111111111in hereeee--------------------------line 50')
           if (userInfo.dataValues.online){
             console.log('oppponent online!!!!!!!!!!!')
             user.socket = userInfo.dataValues.socket
@@ -58,7 +56,7 @@ module.exports = {
                   opponentTurn: [],
                   finished: []
                 }
-                games.forEach(function(game) {
+                return Promise.all(games.forEach(function(game) {
                   if (game.dataValues.user1 === user.name ) {
                       console.log('user is user 1 ;;;;;;;;;;;;;;;;;;;;;;')
                       game.dataValues.opponentName = game.dataValues.user2;
@@ -78,8 +76,13 @@ module.exports = {
                     openGames.opponentTurn.push(game)
                   }
                 })
+                ).then(function(games) {
+                  console.log(games)
+                  user.io.to(user.socket).emit('updateHome', openGames)
+                  
+                })
+
                 console.log('about to send +++++++++++++++_==========================')
-                user.io.to(user.socket).emit('updateHome', openGames)
               }).catch(function(err){
                 console.log(err)
               })
