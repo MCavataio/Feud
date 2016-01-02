@@ -79,6 +79,8 @@ module.exports = {
                 })
                 console.log('about to send +++++++++++++++_==========================')
                 user.io.to(user.socket).emit('updateHome', openGames)
+              }).catch(function(err){
+                console.log(err)
               })
 
           } 

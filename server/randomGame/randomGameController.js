@@ -138,13 +138,11 @@ module.exports = {
     }
   return helpers.updateScores(update, game)
   .then(function(game) {
-    console.log(opponent.name, "line 141-----------------------------------------")
-  if (opponent.name !== 'open') {
+    console.log(opponent.name, "line 141-------------------------")
+    if (opponent.name !== 'open') {
       console.log('calling updateScores with *********************', opponent.name)
-     HC.updateOpponentHome(opponent)
-   }
+      HC.updateOpponentHome(opponent)
+    }
   })
-
-}
-}
+  }
 }
