@@ -69,7 +69,6 @@ module.exports = function(io) {
         io: io
       }
       if (!socket.clientID) {
-        console.log('should be here ++++++')
         return helpers.findOrCreateUser(user)
         .then(function(userInfo) {
           if (!user) {
@@ -78,6 +77,7 @@ module.exports = function(io) {
               socket.clientID = userData.dataValues.id;
             });
           } if (!userInfo[0].dataValues.online) {
+            console.log('hereeeeeeeeeeeeeeeeee')
             return helpers.updateUser(user)
             .then(function(userData) {
               console.log(userInfo[0].dataValues.id)
@@ -87,9 +87,9 @@ module.exports = function(io) {
           else {
             socket.clientID = userInfo[0].dataValues.id;   
           }
+          HC.updateHome(user);
         })
       }
-      HC.updateHome(user);
     })
 
     socket.on('getQueries', function(ids) {
