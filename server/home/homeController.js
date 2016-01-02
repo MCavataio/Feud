@@ -49,7 +49,6 @@ module.exports = {
             user.socket = userInfo[0].dataValues.socket
           } else {
             console.log('in else somehow')
-            return;
           }
         })
     }
