@@ -115,7 +115,7 @@ module.exports = {
   var round = data.round;
   var score = data.score;
   var game = data.gameID;
-  var opponent = data.opponent
+  var opponent = data.opponent;
 
   if(user === 'user1'){
     var update = {
@@ -123,6 +123,7 @@ module.exports = {
       turn: opponent,
       round: data.round
     } 
+    console.log(update)
   }else {
     var update = {
       user2Total: score,
@@ -130,20 +131,22 @@ module.exports = {
       round: data.round
     }
   }
-  var opponent = {
-    opponent: opponent,
-    isOpponent: true,
-    io: data.io,
-    game: game
+  if (opponent !== 'open') {
+    var opponent = {
+      opponent: opponent,
+      isOpponent: true,
+      io: data.io,
+      game: game
+    }
   }
   return helpers.updateScores(update, game)
   .then(function(game) {
-    if (opponent) {
-    var oppInfo = {
-      name: opponent,
-      isOpponent: true,
-      io: socket.io
-    }
+    if (opponent.opponent) {
+      var oppInfo = {
+        name: opponent,
+        isOpponent: true,
+        io: socket.io
+      }
       HC.updateHome(oppInfo)
     }
   }).catch(function(err) {

@@ -44,6 +44,7 @@ module.exports = {
   updateHome: function(user) {
     console.log('should be here nowwwwww')
     if (user.isOpponent) { 
+      console.log(' about to call this ')
         helpers.findOrCreateUser(user.name)
         .then(function(userInfo) {
           if (userInfo[0].dataValues.online){
