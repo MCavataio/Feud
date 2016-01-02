@@ -144,8 +144,6 @@ module.exports = {
     if (opponent.name) {
       HC.updateHome(opponent)
     }
-  }).catch(function(err) {
-    reject(err)
   })
 
 }
