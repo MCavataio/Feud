@@ -85,7 +85,9 @@ module.exports = {
     .then(function(response) {
       resolve(response)
     })
-    .catch(reject)
+    .catch(function(err) {
+      reject(err)
+    })
     })
   },
   retrieveGames: function(user) {
@@ -99,7 +101,9 @@ module.exports = {
         }
       }).then(function(games){
         resolve(games)
-      }).catch(reject)
+      }).catch(function(err) {
+      reject(err)
+    })
     })
   },
   updateRandomGame: function(game, numbers, lightning) {
@@ -116,7 +120,9 @@ module.exports = {
       .then(function(response){
         console.log(response)
         resolve(response)
-      }).catch(reject)
+      }).catch(function(err) {
+      reject(err)
+    })
     })
   },
   updateScores: function(update, game) {
@@ -130,7 +136,9 @@ module.exports = {
       })
     .then(function(response){
         resolve(response)
-      }).catch(reject)
+      }).catch(function(err) {
+      reject(err)
+    })
     })
   },
   findOrCreateQuery: function (newQuery, table) {
@@ -155,7 +163,9 @@ module.exports = {
 
       }).spread(function (query, created) {
         resolve(query, created)
-      }).catch(reject);
+      }).catch(function(err) {
+      reject(err)
+    })
     })
   },
   findOrCreateUser: function(user) {
@@ -187,7 +197,9 @@ module.exports = {
         }
       }).then(function (user) {
         resolve(user)
-      }).catch(reject)
+      }).catch(function(err) {
+      reject(err)
+    })
     })
   },
   logout: function(user) {
