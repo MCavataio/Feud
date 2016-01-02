@@ -49,6 +49,7 @@ module.exports = {
         .then(function(userInfo) {
           if (userInfo[0].dataValues.online){
             user.socket = userInfo[0].dataValues.socket
+            console.log(user)
           } else {
             return;
           }

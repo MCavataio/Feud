@@ -133,21 +133,16 @@ module.exports = {
   }
   if (opponent !== 'open') {
     var opponent = {
-      opponent: opponent,
+      name: opponent,
       isOpponent: true,
-      io: data.io,
+      io: socket.io,
       game: game
     }
   }
   return helpers.updateScores(update, game)
   .then(function(game) {
     if (opponent.opponent) {
-      var oppInfo = {
-        name: opponent,
-        isOpponent: true,
-        io: socket.io
-      }
-      HC.updateHome(oppInfo)
+      HC.updateHome(opponent)
     }
   }).catch(function(err) {
     reject(err)
