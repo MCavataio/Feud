@@ -137,6 +137,7 @@ module.exports = {
       game: game
     }
   if (opponent.name !== 'open') {
+  console.log('calling updateScores with *********************', opponent.name)
   return helpers.updateScores(update, game)
   .then(function(game) {
      HC.updateOpponentHome(opponent)
