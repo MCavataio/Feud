@@ -42,52 +42,53 @@ module.exports = {
     })
   },
   updateOpponentHome: function(opponent) {
-      helpers.findUser(user.name)
+    return helpers.findUser(user.name)
         .then(function(userInfo) {
           console.log('step 2 ==================')
           if (userInfo[0].dataValues.online){
             console.log('step 3')
             user.socket = userInfo[0].dataValues.socket
+            return helpers.retrieveGames(user.name)
+              .then(function(games) {
+                console.log('step 3 ===========================')
+                var openGames = {
+                  yourTurn: [],
+                  opponentTurn: [],
+                  finished: []
+                }
+                games.forEach(function(game) {
+                  if (game.dataValues.user1 === user.name ) {
+                      game.dataValues.opponentName = game.dataValues.user2;
+                      game.dataValues.opponentID = game.dataValues.user2ID;
+                    } else {
+                      game.dataValues.opponentName = game.dataValues.user1;
+                      game.dataValues.opponentID = game.dataValues.user1ID;
+                    }
+
+                  if (game.dataValues.turn === user.name) {
+                    openGames.yourTurn.push(game)
+                  } else if (game.dataValues.round == 8 && openGames.finished.length < 5) {
+                    openGames.finished.push(game);
+                  } 
+                  else {
+                    openGames.opponentTurn.push(game)
+                  }
+                })
+
+              
+                user.io.to(user.socket).emit('updateHome', openGames)
+              })
+
           } else {
             console.log('in else somehow===========================')
           }
         })
-  return helpers.retrieveGames(user.name)
-    .then(function(games) {
-      console.log('step 3 ===========================')
-      var openGames = {
-        yourTurn: [],
-        opponentTurn: [],
-        finished: []
-      }
-      games.forEach(function(game) {
-        if (game.dataValues.user1 === user.name ) {
-            game.dataValues.opponentName = game.dataValues.user2;
-            game.dataValues.opponentID = game.dataValues.user2ID;
-          } else {
-            game.dataValues.opponentName = game.dataValues.user1;
-            game.dataValues.opponentID = game.dataValues.user1ID;
-          }
 
-        if (game.dataValues.turn === user.name) {
-          openGames.yourTurn.push(game)
-        } else if (game.dataValues.round == 8 && openGames.finished.length < 5) {
-          openGames.finished.push(game);
-        } 
-        else {
-          openGames.opponentTurn.push(game)
-        }
-      })
-
-    
-      user.io.to(user.socket).emit('updateHome', openGames)
-    })
   },
   updateHome: function(user) {
 
     return helpers.retrieveGames(user.name)
     .then(function(games) {
-      console.log('step 3 ===========================')
       var openGames = {
         yourTurn: [],
         opponentTurn: [],
