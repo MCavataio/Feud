@@ -71,11 +71,13 @@ module.exports = function(io) {
       }
       if (!socket.clientID) {
         console.log('73 -------------------', user)
+        console.log('1111111111111111')
         return helpers.findUser(user)
         .then(function(userInfo) {
           console.log('76 +++++++++++++++++++++++++++', userInfo)
           if (!userInfo) {
             console.log('calling find or create user')
+            console.log('2222222222222222222')
             return helpers.findOrCreateUser(user)
             .then(function(userData) {
               socket.clientID = userData[0].dataValues.id;
@@ -87,6 +89,7 @@ module.exports = function(io) {
             });
           } if (!userInfo.dataValues.online) {
             console.log('hereeeeeeeeeeeeeeeeee')
+            console.log('333333333333333333333')
             return helpers.updateUser(user)
             .then(function(userData) {
               console.log(userInfo.dataValues.id)
@@ -99,6 +102,7 @@ module.exports = function(io) {
             })
           }
           else {
+            console.log('44444444444444444')
             socket.clientID = userInfo.dataValues.id;  
               if(user.updatedUser) {
                 io.to(socket.id).emit('updateHome', "true")
