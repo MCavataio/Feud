@@ -44,18 +44,18 @@ module.exports = {
   updateOpponentHome: function(user) {
     return helpers.findUser(user.name)
         .then(function(userInfo) {
-          console.log('step 2 ==================')
+          console.log(userInfo, "step 1 ============================")
           if (userInfo[0].dataValues.online){
-            console.log('step 3')
             user.socket = userInfo[0].dataValues.socket
             return helpers.retrieveGames(user.name)
               .then(function(games) {
-                console.log('step 3 ===========================')
+                console.log(games, 'step 2 ===========================')
                 var openGames = {
                   yourTurn: [],
                   opponentTurn: [],
                   finished: []
                 }
+                console.log('step 3 ====================================')
                 games.forEach(function(game) {
                   if (game.dataValues.user1 === user.name ) {
                       game.dataValues.opponentName = game.dataValues.user2;
@@ -75,7 +75,7 @@ module.exports = {
                   }
                 })
 
-              
+                console.log(user.socket, 'step 5 ================================')
                 user.io.to(user.socket).emit('updateHome', openGames)
               })
 
@@ -126,7 +126,6 @@ module.exports = {
         .then(function(size) {
           size = size.count + 1;
           query.number = size;
-          console.log(query.number, "hereeee weee g----------------------ogooo")
           return helpers.findOrCreateQuery(query, 'Query')
           .then(function(response) {
           console.log('successful')
