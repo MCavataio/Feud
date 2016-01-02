@@ -4,7 +4,7 @@
   "description": "Google Game",
   "main": "./server/server.js",
   "engines": {
-    "node": "v0.12.7"
+    "node": "4.2.3"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
