@@ -75,7 +75,7 @@ module.exports = function(io) {
           if (!user || !user[0].dataValues.online) {
             helpers.updateUser(user)
             .then(function(userData) {
-              socket.clientID = userData.dataValues.id;
+              socket.clientID = userData.dataValues.socket;
             });
           } 
           else {
