@@ -129,7 +129,6 @@ module.exports = {
         where: {id: game}
       })
     .then(function(response){
-      console.log(response, "&7&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
         resolve(response)
       }).catch(reject)
     })
