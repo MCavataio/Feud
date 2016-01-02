@@ -71,11 +71,11 @@ module.exports = function(io) {
       }
       if (!socket.clientID) {
         console.log('calling find or create user')
-        return helpers.findOrCreateUser(user)
+        return helpers.findUser(user)
         .then(function(userInfo) {
           console.log(userInfo);
-          if (userInfo) {
-            return helpers.updateUser(user)
+          if (!userInfo) {
+            return helpers.findOrCreateUser(user)
             .then(function(userData) {
               socket.clientID = userData.dataValues.id;
               HC.updateHome(user);
