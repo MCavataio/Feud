@@ -70,9 +70,10 @@ module.exports = function(io) {
         io: io
       }
       if (!socket.clientID) {
+        console.log('73 -------------------', user)
         return helpers.findUser(user)
         .then(function(userInfo) {
-          console.log(userInfo);
+          console.log('76 +++++++++++++++++++++++++++', userInfo)
           if (!userInfo) {
             console.log('calling find or create user')
             return helpers.findOrCreateUser(user)
