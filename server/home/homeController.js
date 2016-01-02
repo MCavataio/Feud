@@ -85,6 +85,7 @@ module.exports = {
     console.log('in here')
     return helpers.retrieveGames(user.name)
     .then(function(games) {
+      if (games) 
       var openGames = {
         yourTurn: [],
         opponentTurn: [],
@@ -110,8 +111,8 @@ module.exports = {
         }
       })
 
-    
       user.io.to(user.socket).emit('updateHome', openGames)
+    }
     }).catch(function(err) {
       console.log(err)
     })
