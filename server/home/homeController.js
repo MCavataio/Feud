@@ -49,7 +49,7 @@ module.exports = {
           console.log(userInfo)
           console.log('in hereeee--------------------------line 50')
           if (userInfo.dataValues.online){
-            user.socket = userInfo[0].dataValues.socket
+            user.socket = userInfo.dataValues.socket
             return helpers.retrieveGames(user.name)
               .then(function(games) {
                 var openGames = {
