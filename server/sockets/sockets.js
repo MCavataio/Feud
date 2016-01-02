@@ -76,6 +76,9 @@ module.exports = function(io) {
             .then(function(userData) {
               socket.clientID = userData.dataValues.id;
               HC.updateHome(user);
+              .then(function() {
+                console.log('success')
+              })
             });
           } if (!userInfo[0].dataValues.online) {
             console.log('hereeeeeeeeeeeeeeeeee')
@@ -83,12 +86,18 @@ module.exports = function(io) {
             .then(function(userData) {
               console.log(userInfo[0].dataValues.id)
               socket.clientID = userInfo[0].dataValues.id;
-              HC.updateHome(user);
+              HC.updateHome(user)
+              .then(function() {
+                console.log('success')
+              })
             })
           }
           else {
             socket.clientID = userInfo[0].dataValues.id;  
-            HC.updateHome(user); 
+            HC.updateHome(user)
+            .then(function() {
+              console.log('success')
+            })
           }
         })
       }
