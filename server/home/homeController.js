@@ -44,6 +44,8 @@ module.exports = {
   updateOpponentHome: function(user) {
     return helpers.findUser(user.name)
         .then(function(userInfo) {
+          console.log(userInfo)
+          console.log('in hereeee--------------------------')
           if (userInfo[0].dataValues.online){
             user.socket = userInfo[0].dataValues.socket
             return helpers.retrieveGames(user.name)
