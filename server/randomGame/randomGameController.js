@@ -138,12 +138,14 @@ module.exports = {
   }
   return helpers.updateScores(update, game)
   .then(function(game) {
+    if (opponent) {
     var oppInfo = {
       name: opponent,
       isOpponent: true,
       io: socket.io
     }
       HC.updateHome(oppInfo)
+    }
   }).catch(function(err) {
     reject(err)
   })
