@@ -5,6 +5,11 @@ var mysql = require('mysql');
 
 if (process.env.NODE_ENV === 'production') {
   console.log('PRODUCTION MODE');
+  var options = {
+    pool: {
+      minConnections: 1
+    }
+  }
   var db = new Sequelize(process.env.CLEARDB_DATABASE_URL);
 } else {
   // vadr secret = require('../lib/secrets').sql || "blue";
@@ -89,7 +94,7 @@ var Query = db.define('query', {
   response10: Sequelize.STRING
 });
 
-db.sync({force: false})
+db.sync({force: true})
   .then(function(err) {
     console.log('created database')
   }, function (err) {
