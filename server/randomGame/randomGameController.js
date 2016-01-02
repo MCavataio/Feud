@@ -64,7 +64,7 @@ module.exports = {
     .then(function(game) {
       // checks whether it was a game with an open slot with different player
       if (game[0].dataValues.user1 !== user.name) {
-        rounds = [game[0].dataValues.questionRD1,game[0].dataValues.questionRD2]
+        rounds = [game[0].dataValues.questionRD2, game[0].dataValues.questionRD1]
         gameID = game[0].dataValues.id
         userCol = 'user2'
         opponent = game[0].dataValues.user1

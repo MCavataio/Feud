@@ -73,6 +73,7 @@ module.exports = {
     })
   },
   updateOpponent: function(game, user) {
+    console.log('before update ', user.id)
     return new Promise(function(resolve, reject) {
       db.RandomGame.update({
         user2: user.name,
