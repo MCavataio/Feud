@@ -33,7 +33,7 @@ module.exports = {
   },
   findUser: function(user) {
     return new Promise(function(resolve, reject) {
-      db.User.findAll({
+      db.User.findOne({
         where: {
           name: user
         }
@@ -93,13 +93,12 @@ module.exports = {
   retrieveGames: function(user) {
     return new Promise(function(resolve, reject) {
       db.RandomGame.findAll({
-        where: { 
-          $or: [{
+        where: {
+          $or: {
             user1: user,
             user2: user
-            }]
           } 
-      
+        }
       }).then(function(games){
         resolve(games)
       }).catch(function(err) {
