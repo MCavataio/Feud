@@ -73,7 +73,7 @@ var RandomGame = db.define('randomGame', {
   user1Total: Sequelize.INTEGER,
   user2Total: Sequelize.INTEGER
 })
-
+ 
 var Query = db.define('query', {
   number: Sequelize.INTEGER,
   title: Sequelize.STRING,
