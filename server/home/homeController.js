@@ -49,10 +49,10 @@ module.exports = {
         .then(function(userInfo) {
           if (userInfo[0].dataValues.online){
             user.socket = userInfo[0].dataValues.socket
+          } else {
+            return;
           }
         })
-    } else {
-      return;
     }
     console.log(user.name)
     return helpers.retrieveGames(user.name)
