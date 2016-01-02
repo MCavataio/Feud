@@ -72,7 +72,7 @@ module.exports = function(io) {
         console.log('calling find or create user')
         return helpers.findOrCreateUser(user)
         .then(function(userInfo) {
-          console.log(userInfo, "++++++++++++++++++++++++++++++")
+          console.log(userInfo);
           if (userInfo) {
             return helpers.updateUser(user)
             .then(function(userData) {

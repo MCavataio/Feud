@@ -182,6 +182,7 @@ module.exports = {
         }
       })
       .then(function(user) {
+        console.log(user)
         resolve(user)
       }).catch(function(err) {
         reject(err)
