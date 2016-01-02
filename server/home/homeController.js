@@ -84,7 +84,9 @@ module.exports = {
                 console.log(err)
               })
 
-          } 
+          } else {
+            return 
+          }
         })
 
   },
