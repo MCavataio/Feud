@@ -127,9 +127,6 @@ module.exports = {
 
     
       user.io.to(user.socket).emit('updateHome', openGames)
-    }).catch(function(err) {
-      console.log(err)
-    })
   },
   addQuery: function (req, res, next) {
     var query = req.body.query
