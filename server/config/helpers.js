@@ -93,9 +93,9 @@ module.exports = {
   retrieveGames: function(user) {
     return new Promise(function(resolve, reject) {
       db.RandomGame.findAll({
-        where: {
+        where: { 
+          user1: user,
           $or: {
-            user1: user,
             user2: user
           } 
         }
