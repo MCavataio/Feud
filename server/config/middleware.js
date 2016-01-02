@@ -15,7 +15,7 @@ module.exports = function(app, express, io) {
   app.use('/', function(req, res, next) {
     req.io = io;
     next();
-  });
+  }); 
 
 
   app.use('/api/home', homeRouter);
