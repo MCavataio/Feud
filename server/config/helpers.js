@@ -94,11 +94,12 @@ module.exports = {
     return new Promise(function(resolve, reject) {
       db.RandomGame.findAll({
         where: { 
-          user1: user,
-          $or: {
+          $or: [{
+            user1: user,
             user2: user
+            }]
           } 
-        }
+      
       }).then(function(games){
         resolve(games)
       }).catch(function(err) {
