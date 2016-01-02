@@ -32,7 +32,7 @@ module.exports = {
   })
   },
   findUser: function(user) {
-    console.log(user,"+++++++++++++++++++++++++++++++")
+    console.log(user,"++++++$$$$$$$$$$$$$$$$$$+++++++++++++++++++++++++")
     return new Promise(function(resolve, reject) {
       db.User.findOrCreate({
         where: {

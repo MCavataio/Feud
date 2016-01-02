@@ -42,12 +42,12 @@ module.exports = {
     })
   },
   updateOpponentHome: function(user) {
-    console.log(user.name)
-    console.log('--------------------+++++++++++++++++++++++++++---')
+    console.log(user.name, 'line 45')
+    console.log('--------------------+++++++++++++++++++++++++++---line 46')
     return helpers.findUser(user.name)
         .then(function(userInfo) {
           console.log(userInfo)
-          console.log('in hereeee--------------------------')
+          console.log('in hereeee--------------------------line 50')
           if (userInfo[0].dataValues.online){
             user.socket = userInfo[0].dataValues.socket
             return helpers.retrieveGames(user.name)
