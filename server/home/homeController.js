@@ -82,7 +82,7 @@ module.exports = {
 
   },
   updateHome: function(user) {
-
+    console.log('in here')
     return helpers.retrieveGames(user.name)
     .then(function(games) {
       var openGames = {
@@ -102,6 +102,7 @@ module.exports = {
         if (game.dataValues.turn === user.name) {
           openGames.yourTurn.push(game)
         } else if (game.dataValues.round == 8 && openGames.finished.length < 5) {
+          game.dataValues.round = 'Finished';
           openGames.finished.push(game);
         } 
         else {
