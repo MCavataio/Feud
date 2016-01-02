@@ -33,13 +33,13 @@ module.exports = {
   },
   findUser: function(user) {
     return new Promise(function(resolve, reject) {
-      db.User.findOne({
+      db.User.findAll({
         where: {
           name: user
         }
       })
-    }).then(function(user) {
-      resolve(user)
+    }).then(function(response) {
+      resolve(response)
     }).catch(function(err) {
       reject(err)
     })
