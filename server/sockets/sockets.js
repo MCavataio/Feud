@@ -84,8 +84,8 @@ module.exports = function(io) {
             console.log('hereeeeeeeeeeeeeeeeee')
             return helpers.updateUser(user)
             .then(function(userData) {
-              console.log(userInfo[0].dataValues.id)
-              socket.clientID = userInfo[0].dataValues.id;
+              console.log(userInfo.dataValues.id)
+              socket.clientID = userInfo.dataValues.id;
               HC.updateHome(user);
             })
           }
