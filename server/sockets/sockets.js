@@ -97,6 +97,7 @@ module.exports = function(io) {
               console.log(userInfo.dataValues.id)
               socket.clientID = userInfo.dataValues.id;
               if(user.updatedUser) {
+                console.log('in hereeee updated user')
                 io.to(socket.id).emit('updateHome', "true")
               } else {
                 HC.updateHome(user);
