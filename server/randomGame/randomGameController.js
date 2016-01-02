@@ -70,27 +70,13 @@ module.exports = {
         opponent = game[0].dataValues.user1
         // updates game to include reference to oppents namne in slot 2
         return helpers.updateOpponent(gameID, user)
-        .then(function(response) {
-          // searches for first round question
-          return helpers.getQueries(rounds)
-          .then(function(question) {
-            // sends to respective user
-            console.log(gameID, "+++++++++++++++++++++++++++---------------------")
-            question = {
-              question: question,
-              game: gameID,
-              user: userCol,
-              opponent: opponent
-            }
-          socket.io.to(socket.id).emit('playRandom', question)
-          })
-        })
       } else {
         // get counts of queries to determine how many random queries there are in database
         return helpers.getCount()
         .then(function(response) {
           // returns 8 random numbers based off the count value
-        return helpers.getNumbers(response)
+          return helpers.getNumbers(response)
+        })
         .then(function(numbers) {
           // parses information to be saved into database
           // lightning round is saved as string with A in between each 
@@ -102,25 +88,23 @@ module.exports = {
           userCol = 'user1';
           opponent = 'null';
           return helpers.updateRandomGame(game, numbers, lightning)
-          .then(function(response) {
-            // searches for first round question
-            return helpers.getQueries(rounds)
-            .then(function(question) {
-              // sends to respective user
-              console.log(gameID, "+++++++++++++++++++++++++++---------------------")
-              question = {
-                question: question,
-                game: gameID,
-                user: userCol,
-                opponent: opponent
-              }
-              socket.io.to(socket.id).emit('playRandom', question)
-            })
-           })
-          })
         })
-        }
-      })
+      }
+    })
+    .then(function(response) {
+      // searches for first round question
+      return helpers.getQueries(rounds)
+    .then(function(question) {
+      // sends to respective user
+      console.log(gameID, "+++++++++++++++++++++++++++---------------------")
+      question = {
+        question: question,
+        game: gameID,
+        user: userCol,
+        opponent: opponent
+      }
+      socket.io.to(socket.id).emit('playRandom', question)
+    })
 // })
 //     .catch(function(error) {
 //       console.log(error)
