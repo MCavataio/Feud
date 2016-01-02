@@ -33,16 +33,17 @@ module.exports = {
   },
   findUser: function(user) {
     return new Promise(function(resolve, reject) {
-      db.User.findAll({
+      db.User.findOne({
         where: {
           name: user
         }
       })
-    }).then(function(response) {
+    .then(function(response) {
       resolve(response)
     }).catch(function(err) {
       reject(err)
     })
+  })
   },
   findRandomGame: function(user) {
     console.log(user, "++++++++++")
