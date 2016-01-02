@@ -158,6 +158,19 @@ module.exports = {
       }).catch(reject);
     })
   },
+  findUser: function(user) {
+    return newPromise(function(resolve, reject) {
+      db.User.findOne({
+        where: {
+          name: user.name
+        }
+      }).then(function(isFound) {
+        resolve(isFound)
+      }).catch(function(err) {
+        reject(err)
+      })
+    })
+  },
   findOrCreateUser: function(user) {
     return new Promise(function(resolve, reject) {
       db.User.findOrCreate({
