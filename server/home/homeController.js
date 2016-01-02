@@ -47,20 +47,20 @@ module.exports = {
         .then(function(userInfo) {
           if (userInfo[0].dataValues.online){
             user.socket = userInfo[0].dataValues.socket
-            console.log(user.socket, '+++++++++++++++++++++++++++++++++')
+            console.log(user.socket, '++++++++++++++-------------------++++++++++++++++++')
           } else {
             return;
           }
         })
     }
     return helpers.retrieveGames(user.name)
-    console.log(' in retrieve')
     .then(function(games) {
       var openGames = {
         yourTurn: [],
         opponentTurn: [],
         finished: []
       }
+      console.log('made it here')
       games.forEach(function(game) {
         if (game.dataValues.user1 === user.name ) {
             game.dataValues.opponentName = game.dataValues.user2;
