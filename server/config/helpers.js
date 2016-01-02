@@ -116,7 +116,9 @@ module.exports = {
       })
     .then(function(response){
         resolve(response)
-      }).catch(reject)
+      }).catch(function(err) {
+        reject(err)
+      })
     })
   },
   findOrCreateQuery: function (newQuery, table) {
