@@ -41,7 +41,7 @@ module.exports = {
       data.io.to(data.socket).emit('getQueries', queries)
     })
   },
-  updateOpponentHome: function(opponent) {
+  updateOpponentHome: function(user) {
     return helpers.findUser(user.name)
         .then(function(userInfo) {
           console.log('step 2 ==================')
