@@ -178,7 +178,6 @@ module.exports = {
         }
       })
       .then(function(user) {
-        console.log(user)
         resolve(user)
       }).catch(function(err) {
         reject(err)
@@ -186,7 +185,6 @@ module.exports = {
     })
   },
   updateUser: function (user) {
-    console.log(user)
     return new Promise(function (resolve, reject) {
       db.User.update({
           online: true,
