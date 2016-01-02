@@ -45,7 +45,7 @@ module.exports = {
     console.log('should be here nowwwwww')
     if (user.isOpponent) { 
       console.log(' about to call this findOrCreate user for opponent')
-        helpers.findUser(user)
+        return helpers.findUser(user)
         console.log(user.name,'i should be printtttingnggnsomethigngngng')
         .then(function(userInfo) {
           console.log(userInfo, "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
