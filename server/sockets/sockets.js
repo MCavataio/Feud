@@ -8,7 +8,11 @@ var users = {};
 module.exports = function(io) {
   io.on('connection', function(socket) {
     
-    console.log(socket.id, "connected")
+    socket.on('checkingIn', funciton(data) {
+      users[socket.id] = data.name
+      users[data.name] = socket.id
+      console.log(users)
+    })
     // fuzzy check call
     socket.on('fuzzyCheck', function(data) {
       data.id = this.id
