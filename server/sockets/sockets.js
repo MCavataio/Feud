@@ -68,7 +68,21 @@ module.exports = function(io) {
         socket: this.id,
         io: io
       }
-      HC.updateHome(user)
+      console.log(socket.clientID)
+      if (!socket.clientID) {
+        helpers.findOrCreateUser(user)
+        .then(function(user) {
+          if (!user) {
+            helpers.updateUser(user)
+            .then(function(userData) {
+              socket.clientID = userData.dataValues.id;
+            });
+          } else {
+            socket.clientID = user[0].dataValues.id;   
+          }
+        })
+      }
+      HC.updateHome(user);
     })
     socket.on('getQueries', function(ids) {
       var ids = {
@@ -115,11 +129,9 @@ module.exports = function(io) {
     socket.on('addPotential', function(data) {
       HC.addPotential(data);
     })
-    socket.on('disconnect', function(socket) {
-      var info = {
-        id: this.id
-      }
-      HC.logout(info)
+    socket.on('disconnect', function() {
+      console.log(socket.clientID, '++++++++++++++++')
+      helpers.logout(socket.clientID)
     })
   })
 }

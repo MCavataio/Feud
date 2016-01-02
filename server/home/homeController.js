@@ -17,8 +17,6 @@ var usersOnline = {};
 // }).catch(function(err) {
 //   console.log(err)
 // })
-
-
 module.exports = {
   logout: function(socket) {
     var username = usersOnline[socket.id];
@@ -50,15 +48,15 @@ module.exports = {
       usersOnline[user.socket] = user.name;
     }
     if (user.isOpponent) { 
-      console.log('should be here')
-      if (usersOnline[user.name]) {
-        console.log('in oppponent')
-        user.socket = usersOnline[user.name];
-      } else {
-        return;
-      }
-    } 
-    console.log(user.name)
+        helpers.findOrCreateUser(user.name)
+        .then(function(userInfo) {
+          if (userInfo[0].dataValues.online){
+            user.socket = userInfo[0].dataValues.socket
+          }
+        })
+    } else {
+      return;
+    }
     return helpers.retrieveGames(user.name)
     .then(function(games) {
       var openGames = {

@@ -40,6 +40,8 @@ var PotentialQuery = db.define('potentialQuery', {
 
 var User = db.define('user', {
   name: Sequelize.STRING,
+  online: Sequelize.BOOLEAN,
+  socket: Sequelize.STRING,
   wins: Sequelize.INTEGER,
   losses: Sequelize.INTEGER
 })
@@ -87,7 +89,7 @@ var Query = db.define('query', {
   response10: Sequelize.STRING
 });
 
-db.sync({force: false})
+db.sync({force: true})
   .then(function(err) {
     console.log('created database')
   }, function (err) {

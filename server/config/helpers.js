@@ -144,16 +144,46 @@ module.exports = {
       }).catch(reject);
     })
   },
-  findOrCreateUser: function (user) {
-    console.log(user)
-    return new Promise(function (resolve, reject) {
+  findOrCreateUser: function(user) {
+    return new Promise(function(resolve, reject) {
       db.User.findOrCreate({
         where: {
           name: user.name,
+        }, defaults: {
+          online: true,
+          socket: user.socket
+        }
+      })
+      .then(function(user) {
+        resolve(user)
+      }).catch(function(err) {
+        reject(err)
+      })
+    })
+  },
+  updateUser: function (user) {
+    console.log(user)
+    return new Promise(function (resolve, reject) {
+      db.User.update({
+          online: true,
+          socket: user.socket
+        },{
+        where: {
+          name: user.name
         }
       }).spread(function (user, created) {
         resolve(user, created)
       }).catch(reject)
+    })
+  },
+  logout: function(user) {
+    // return new Promise()
+    db.User.update({
+      online: false,
+      socket: null
+    }, { where: {
+      id: user
+      }
     })
   },
   
