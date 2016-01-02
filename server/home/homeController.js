@@ -54,6 +54,7 @@ module.exports = {
         })
     }
     return helpers.retrieveGames(user.name)
+    console.log(' in retrieve')
     .then(function(games) {
       var openGames = {
         yourTurn: [],
@@ -78,6 +79,8 @@ module.exports = {
           openGames.opponentTurn.push(game)
         }
       })
+
+      console.log(user.name, user.socket "****************************")
     
       user.io.to(user.socket).emit('updateHome', openGames)
     })
