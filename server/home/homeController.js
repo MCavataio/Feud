@@ -111,11 +111,11 @@ module.exports = {
         }
       })
 
-      user.io.to(user.socket).emit('updateHome', openGames)
     }
     }).catch(function(err) {
       console.log(err)
     })
+      user.io.to(user.socket).emit('updateHome', openGames)
   },
   addQuery: function (req, res, next) {
     var query = req.body.query
