@@ -48,7 +48,7 @@ module.exports = {
         .then(function(userInfo) {
           console.log(userInfo)
           console.log('in hereeee--------------------------line 50')
-          if (userInfo[0].dataValues.online){
+          if (userInfo.dataValues.online){
             user.socket = userInfo[0].dataValues.socket
             return helpers.retrieveGames(user.name)
               .then(function(games) {
