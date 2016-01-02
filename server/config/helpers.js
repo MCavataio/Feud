@@ -33,7 +33,7 @@ module.exports = {
   },
   findUser: function(user) {
     return new Promise(function(resolve, reject) {
-      db.User.findOrCreate({
+      db.User.findAll({
         where: {
           name: user
         }
