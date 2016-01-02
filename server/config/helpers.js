@@ -31,21 +31,6 @@ module.exports = {
     })
   })
   },
-  findUser: function(user) {
-    console.log(user,"++++++$$$$$$$$$$$$$$$$$$+++++++++++++++++++++++++")
-    return new Promise(function(resolve, reject) {
-      db.User.findOrCreate({
-        where: {
-          name: user
-        }
-      })
-    .then(function(response) {
-      resolve(response)
-    }).catch(function(err) {
-      reject(err)
-    })
-  })
-  },
   findRandomGame: function(user) {
     console.log(user, "++++++++++")
     return new Promise(function(resolve, reject) {

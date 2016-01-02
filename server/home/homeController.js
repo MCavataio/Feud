@@ -44,7 +44,7 @@ module.exports = {
   updateOpponentHome: function(user) {
     console.log(user.name, 'line 45')
     console.log('--------------------+++++++++++++++++++++++++++---line 46')
-    return helpers.findUser(user.name)
+    return helpers.findUser(user)
         .then(function(userInfo) {
           console.log(userInfo)
           console.log('in hereeee--------------------------line 50')
