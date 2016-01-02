@@ -70,10 +70,10 @@ module.exports = function(io) {
       }
       if (!socket.clientID) {
         console.log('should be here ++++++')
-        helpers.findOrCreateUser(user)
+        return helpers.findOrCreateUser(user)
         .then(function(user) {
           if (!user || !user[0].dataValues.online) {
-            helpers.updateUser(user)
+            return helpers.updateUser(user)
             .then(function(userData) {
               socket.clientID = userData.dataValues.socket;
             });

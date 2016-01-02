@@ -186,8 +186,8 @@ module.exports = {
         where: {
           name: user.name
         }
-      }).spread(function (user, created) {
-        resolve(user, created)
+      }).then(function (user) {
+        resolve(user)
       }).catch(reject)
     })
   },
