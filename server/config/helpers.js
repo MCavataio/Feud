@@ -159,7 +159,7 @@ module.exports = {
     })
   },
   findUser: function(user) {
-    return newPromise(function(resolve, reject) {
+    return new  Promise(function(resolve, reject) {
       db.User.findOne({
         where: {
           name: user.name
