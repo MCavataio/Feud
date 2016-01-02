@@ -62,7 +62,6 @@ module.exports = function(io) {
     //   }
     // })
     socket.on('updateHome', function(user) {
-      console.log('user')
       user = {
         name: user.name,
         isPlayer: true,
