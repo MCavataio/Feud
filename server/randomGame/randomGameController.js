@@ -52,6 +52,8 @@ module.exports = {
       }
       console.log('should send')
       socket.io.to(socket.id).emit('playFriend', gameInfo)
+    }).catch(function(err) {
+      console.log(err)
     })
   },
   playGame: function(user, socket) {
@@ -105,6 +107,8 @@ module.exports = {
         opponent: opponent
       }
       socket.io.to(socket.id).emit('playRandom', question)
+    }).catch(function(err) {
+      console.log(err);
     })
 // })
 //     .catch(function(error) {
@@ -143,6 +147,8 @@ module.exports = {
       console.log('calling updateScores with *********************', opponent.name)
       HC.updateOpponentHome(opponent)
     }
+  }).catch(function(err) {
+    console.log(err)
   })
   }
 }

@@ -84,10 +84,10 @@ module.exports = {
                 console.log(err)
               })
 
-          } else {
-            return 
-          }
-        })
+          } 
+        }).catch(function(err) {
+            console.log(err)
+          })
 
   },
   updateHome: function(user) {
@@ -121,6 +121,8 @@ module.exports = {
 
     
       user.io.to(user.socket).emit('updateHome', openGames)
+    }).catch(function(err) {
+      console.log(err)
     })
   },
   addQuery: function (req, res, next) {
@@ -142,7 +144,7 @@ module.exports = {
         res.json(response)
       }
     }).catch(function(err) {
-      res.json(response);
+      console.log(err)
     })
   },
   addPotential: function(data) {
