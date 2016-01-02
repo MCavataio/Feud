@@ -142,6 +142,7 @@ module.exports = {
   return helpers.updateScores(update, game)
   .then(function(game) {
     if (opponent.name) {
+      console.log(opponent.name)
       HC.updateHome(opponent)
     }
   })
