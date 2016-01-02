@@ -44,19 +44,21 @@ module.exports = {
   updateHome: function(user) {
 
     if (user.isOpponent) { 
-      console.log('getttitnggg hereeeeeee')
+      console.log('getttitnggg hereeeeeee 1')
         return helpers.findUser(user.name)
         .then(function(userInfo) {
+          console.log('step 2 ==================')
           if (userInfo[0].dataValues.online){
             user.socket = userInfo[0].dataValues.socket
           } else {
-            console.log('in else somehow')
+            console.log('in else somehow===========================')
           }
         })
     }
     console.log('calling helpers retrieveGames for opponent----------------------------------', user);
     return helpers.retrieveGames(user.name)
     .then(function(games) {
+      console.log('step 3 ===========================')
       var openGames = {
         yourTurn: [],
         opponentTurn: [],
