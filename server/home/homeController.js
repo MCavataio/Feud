@@ -47,14 +47,44 @@ module.exports = {
         .then(function(userInfo) {
           if (userInfo[0].dataValues.online){
             user.socket = userInfo[0].dataValues.socket
-            console.log(user.socket, '++++++++++++++-------------------++++++++++++++++++')
+               return helpers.retrieveGames(user.name)
+    .then(function(games) {
+      var openGames = {
+        yourTurn: [],
+        opponentTurn: [],
+        finished: []
+      }
+      console.log('made it here')
+      games.forEach(function(game) {
+        if (game.dataValues.user1 === user.name ) {
+            game.dataValues.opponentName = game.dataValues.user2;
+            game.dataValues.opponentID = game.dataValues.user2ID;
+          } else {
+            game.dataValues.opponentName = game.dataValues.user1;
+            game.dataValues.opponentID = game.dataValues.user1ID;
+          }
+
+        if (game.dataValues.turn === user.name) {
+          openGames.yourTurn.push(game)
+        } else if (game.dataValues.round == 8 && openGames.finished.length < 5) {
+          openGames.finished.push(game);
+        } 
+        else {
+          openGames.opponentTurn.push(game)
+        }
+      })
+
+      console.log(user.name, user.socket, "****************************")
+    
+      user.io.to(user.socket).emit('updateHome', openGames)
+    })
+
           } else {
             console.log('in else somehow')
             return;
           }
         })
     }
-    console.log('name: ', user.name, "socket:", user.socket)
     return helpers.retrieveGames(user.name)
     .then(function(games) {
       var openGames = {
