@@ -80,7 +80,7 @@ module.exports = {
         }
       })
 
-      console.log(user.name, user.socket "****************************")
+      console.log(user.name, user.socket, "****************************")
     
       user.io.to(user.socket).emit('updateHome', openGames)
     })
