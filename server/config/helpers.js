@@ -61,7 +61,7 @@ module.exports = {
     return new Promise(function(resolve, reject) {
       db.RandomGame.update({
         user2: user.name,
-        user2ID: user.id,
+        user2ID: game,
         created: 2
       }, {
         where:

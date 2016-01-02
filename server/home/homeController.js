@@ -69,12 +69,12 @@ module.exports = {
                       game.dataValues.opponentID = game.dataValues.user1ID;
                     }
 
-                  if (game.dataValues.turn === user.name) {
+                  if (game.dataValues.turn === user.name && game.dataValues.round !== 8) {
                     openGames.yourTurn.push(game)
                   } else if (game.dataValues.round == 8 && openGames.finished.length < 5) {
                     openGames.finished.push(game);
                   } 
-                  else {
+                  else if (game.dataValues.round !== 8){
                     openGames.opponentTurn.push(game)
                   }
                 })
