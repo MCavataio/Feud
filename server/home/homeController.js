@@ -47,6 +47,7 @@ module.exports = {
       console.log(' about to call this findOrCreate user for opponent')
         helpers.findOrCreateUser(user.name)
         .then(function(userInfo) {
+          console.log(userInfo, "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
           if (userInfo[0].dataValues.online){
             user.socket = userInfo[0].dataValues.socket
             console.log(user)
