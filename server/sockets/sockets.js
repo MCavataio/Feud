@@ -68,8 +68,9 @@ module.exports = function(io) {
         socket: this.id,
         io: io
       }
-      console.log(socket.clientID)
+      console.log(user.name)
       if (!socket.clientID) {
+        console.log('should be here ++++++')
         helpers.findOrCreateUser(user)
         .then(function(user) {
           if (!user) {

@@ -43,10 +43,7 @@ module.exports = {
   },
   updateHome: function(user) {
     var online =  usersOnline
-    if (user.isPlayer) {
-      usersOnline[user.name] = user.socket;
-      usersOnline[user.socket] = user.name;
-    }
+
     if (user.isOpponent) { 
         helpers.findOrCreateUser(user.name)
         .then(function(userInfo) {
