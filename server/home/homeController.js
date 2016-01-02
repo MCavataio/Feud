@@ -44,7 +44,7 @@ module.exports = {
   updateOpponentHome: function(user) {
     return helpers.findUser(user.name)
         .then(function(userInfo) {
-          console.log(userInfo, "step 1 ============================")
+          console.log(userInfo[0].dataValues, "step 1 ============================")
           if (userInfo[0].dataValues.online){
             user.socket = userInfo[0].dataValues.socket
             return helpers.retrieveGames(user.name)
@@ -58,9 +58,11 @@ module.exports = {
                 console.log('step 3 ====================================')
                 games.forEach(function(game) {
                   if (game.dataValues.user1 === user.name ) {
+                      console.log('user is user 1 ;;;;;;;;;;;;;;;;;;;;;;')
                       game.dataValues.opponentName = game.dataValues.user2;
                       game.dataValues.opponentID = game.dataValues.user2ID;
                     } else {
+                      console.log('user is player 2 ______________________')
                       game.dataValues.opponentName = game.dataValues.user1;
                       game.dataValues.opponentID = game.dataValues.user1ID;
                     }
