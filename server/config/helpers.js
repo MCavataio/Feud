@@ -33,7 +33,7 @@ module.exports = {
   },
   findUser: function(user) {
     return new Promise(function(resolve, reject) {
-      db.User.findOne({
+      db.User.findOrCreate({
         where: {
           name: user
         }
