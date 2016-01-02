@@ -70,17 +70,17 @@ module.exports = function(io) {
         io: io
       }
       if (!socket.clientID) {
-        console.log('calling find or create user')
         return helpers.findUser(user)
         .then(function(userInfo) {
           console.log(userInfo);
           if (!userInfo) {
+            console.log('calling find or create user')
             return helpers.findOrCreateUser(user)
             .then(function(userData) {
               socket.clientID = userData.dataValues.id;
               HC.updateHome(user);
             });
-          } if (!userInfo[0].dataValues.online) {
+          } if (!userInfo.dataValues.online) {
             console.log('hereeeeeeeeeeeeeeeeee')
             return helpers.updateUser(user)
             .then(function(userData) {
