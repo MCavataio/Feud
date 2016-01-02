@@ -86,7 +86,9 @@ module.exports = function(io) {
               } else {
                 HC.updateHome(user);
               }
-            });
+            }).catch(function(err) {
+              console.log(err)
+            })
           } if (!userInfo.dataValues.online) {
             console.log('hereeeeeeeeeeeeeeeeee')
             console.log('333333333333333333333')
@@ -99,6 +101,8 @@ module.exports = function(io) {
               } else {
                 HC.updateHome(user);
               }
+            }).catch(function(err) {
+              console.log(err)
             })
           }
           else {
@@ -110,6 +114,8 @@ module.exports = function(io) {
                 HC.updateHome(user);
               }
           }
+        }).catch(function(err) {
+          console.log(err)
         })
       }
     })
