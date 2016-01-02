@@ -78,6 +78,8 @@ module.exports = {
                 })
 
                 console.log(user.socket, 'step 5 ================================')
+                console.log(user.io, "step with 5")
+                console.log(openGames.length "stepwith 5")
                 user.io.to(user.socket).emit('updateHome', openGames)
               })
 

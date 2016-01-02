@@ -77,7 +77,7 @@ module.exports = function(io) {
             .then(function(userData) {
               console.log('updated')
               console.log(userData, "+++++++=++")
-              socket.clientID = userData.dataValues.id;
+              socket.clientID = userData[0].dataValues.id;
             });
           } 
           else {
@@ -87,6 +87,7 @@ module.exports = function(io) {
       }
       HC.updateHome(user);
     })
+
     socket.on('getQueries', function(ids) {
       var ids = {
         ids: ids,
@@ -96,29 +97,6 @@ module.exports = function(io) {
       HC.getQueries(ids)
     })
 
-    // pairs random users to play against one another
-    // socket.on('changeRoom', function(data) {
-    // // data is the room number received from emit from queryController
-    // var nRoom = {
-    //   value: data.room.data.room,
-    //   io: io
-    // }
-    // // joins respective room
-    // if(!this.rooms[1]) {
-    //   socket.join(nRoom.value);
-    //   // checks to see how many users are in current room;
-    //   var room = io.sockets.adapter.rooms[nRoom.value];
-    //   var length = Object.keys(room).length
-    //   if (length === 2) {
-    //     io.sockets.to(nRoom.value).emit('playRound', {room: nRoom.value})
-    //   }
-    // }
-    // })
-    // socket.on('leaveRoom', function() {
-    //   socket.leave(this.rooms[1]);
-    // })
-    // sends scores to other individuals playing in the same room
-    // this.rooms consists of connection id and room number
     socket.on('updateScore', function(data) {
       var socket = {
         id: this.id,
