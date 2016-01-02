@@ -41,17 +41,18 @@ module.exports = {
       data.io.to(data.socket).emit('getQueries', queries)
     })
   },
-  updateHome: function(user) {
-
-    if (user.isOpponent ) { 
-      console.log('getttitnggg hereeeeeee 1')
-        return helpers.findUser(user.name)
+  updateOpponentHome: function(opponent) {
+      helpers.findUser(user.name)
         .then(function(userInfo) {
           console.log('step 2 ==================')
           if (userInfo[0].dataValues.online){
-            console.log('step 3 =====================')
+            console.log('step 3')
             user.socket = userInfo[0].dataValues.socket
-            return helpers.retrieveGames(user.name)
+          } else {
+            console.log('in else somehow===========================')
+          }
+        })
+  return helpers.retrieveGames(user.name)
     .then(function(games) {
       console.log('step 3 ===========================')
       var openGames = {
@@ -81,12 +82,9 @@ module.exports = {
     
       user.io.to(user.socket).emit('updateHome', openGames)
     })
-          } else {
-            console.log('in else somehow===========================')
-          }
-        })
-    }
-    console.log('calling helpers retrieveGames for opponent----------------------------------', user);
+  },
+  updateHome: function(user) {
+
     return helpers.retrieveGames(user.name)
     .then(function(games) {
       console.log('step 3 ===========================')
