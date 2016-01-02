@@ -53,6 +53,7 @@ module.exports = {
           }
         })
     }
+    console.log('name: ', user.name, "socket:", user.socket)
     return helpers.retrieveGames(user.name)
     .then(function(games) {
       var openGames = {
