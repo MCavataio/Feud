@@ -31,6 +31,19 @@ module.exports = {
     })
   })
   },
+  findUser: funciton(user) {
+    return new Promise(function(resolve, reject) {
+      db.User.findOne({
+        where: {
+          name: user.name
+        }
+      })
+    }).then(function(user) {
+      resolve(user)
+    }).catch(function(err) {
+      reject(err)
+    })
+  }
   findRandomGame: function(user) {
     console.log(user, "++++++++++")
     return new Promise(function(resolve, reject) {
