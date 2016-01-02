@@ -85,7 +85,7 @@ module.exports = {
     console.log('in here')
     return helpers.retrieveGames(user.name)
     .then(function(games) {
-      if (games) 
+      if (games) {
       var openGames = {
         yourTurn: [],
         opponentTurn: [],
