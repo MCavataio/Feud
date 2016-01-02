@@ -42,8 +42,7 @@ module.exports = {
     })
   },
   updateHome: function(user) {
-    var online =  usersOnline
-
+    console.log('should be here nowwwwww')
     if (user.isOpponent) { 
         helpers.findOrCreateUser(user.name)
         .then(function(userInfo) {
@@ -56,6 +55,7 @@ module.exports = {
     }
     return helpers.retrieveGames(user.name)
     .then(function(games) {
+      console.log(games)
       var openGames = {
         yourTurn: [],
         opponentTurn: [],

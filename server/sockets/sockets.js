@@ -65,10 +65,11 @@ module.exports = function(io) {
       user = {
         name: user,
         isPlayer: true,
-        socket: this.id,
+        socket: socket.id,
         io: io
       }
       console.log(user.name)
+      console.log(user.socket)
       if (!socket.clientID) {
         console.log('should be here ++++++')
         helpers.findOrCreateUser(user)
