@@ -72,14 +72,18 @@ module.exports = function(io) {
         console.log('should be here ++++++')
         return helpers.findOrCreateUser(user)
         .then(function(userInfo) {
-          if (!user || !userInfo[0].dataValues.online) {
+          if (!user) {
             return helpers.updateUser(user)
             .then(function(userData) {
-              console.log('updated')
-              console.log(userData, "+++++++=++")
-              socket.clientID = userData[0].dataValues.id;
+              socket.clientID = userData.dataValues.id;
             });
-          } 
+          } if (!userInfo[0].dataValues.online) {
+            return helpers.updateUser(user)
+            .then(function(userData) {
+              console.log(userInfo[0].dataValues.id)
+              socket.clientID = userInfo[0].dataValues.id;
+            })
+          }
           else {
             socket.clientID = userInfo[0].dataValues.id;   
           }
