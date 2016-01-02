@@ -44,7 +44,7 @@ module.exports = {
   updateHome: function(user) {
     console.log('should be here nowwwwww')
     if (user.isOpponent) { 
-      console.log(' about to call this ')
+      console.log(' about to call this findOrCreate user for opponent')
         helpers.findOrCreateUser(user.name)
         .then(function(userInfo) {
           if (userInfo[0].dataValues.online){
@@ -54,6 +54,7 @@ module.exports = {
     } else {
       return;
     }
+    console.log(user.name)
     return helpers.retrieveGames(user.name)
     .then(function(games) {
       console.log(games)
