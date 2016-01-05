@@ -63,6 +63,7 @@ module.exports = function(io) {
               } else {
                 HC.updateHome(user);
               }
+              console.log('find or create from update home end ======================================')
             })
           } else if (!userInfo.dataValues.online) {
             return helpers.updateUser(user)
@@ -84,7 +85,7 @@ module.exports = function(io) {
                 HC.updateHome(user);
               }
           }
-          console.log('find or create from update home end----------------------------------')
+          console.log('find user from update home end----------------------------------')
         })
       }
     })
