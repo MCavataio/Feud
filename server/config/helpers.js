@@ -185,12 +185,12 @@ module.exports = {
     })
   },
   updateUser: function (user) {
-    console.log(user)
+    console.log(user, "inside updateUser---------")
     return new Promise(function (resolve, reject) {
       db.User.update({
           online: true,
           socket: user.socket
-        },{
+        }, {
         where: {
           name: user.name
         }

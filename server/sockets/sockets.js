@@ -65,6 +65,7 @@ module.exports = function(io) {
           } else if (!userInfo.dataValues.online) {
             return helpers.updateUser(user)
             .then(function(userData) {
+              console.log(userData, '----------------------')
               socket.clientID = userInfo.dataValues.id;
               if(user.updatedUser) {
                 io.to(socket.id).emit('updateHome', "true")

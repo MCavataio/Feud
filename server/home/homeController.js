@@ -42,58 +42,56 @@ module.exports = {
     })
   },
   updateOpponentHome: function(user) {
-    console.log(user.name, 'line 45')
-    console.log('--------------------+++++++++++++++++++++++++++---line 46')
+    console.log('updateOpponentHome ')
+    var userInfo;
     return helpers.findUser(user)
-        .then(function(userInfo) {
-          console.log(userInfo)
-          console.log('11111111111111111in hereeee--------------------------line 50')
-          if (userInfo.dataValues.online){
-            console.log('oppponent online!!!!!!!!!!!')
-            user.socket = userInfo.dataValues.socket
-            return helpers.retrieveGames(user.name)
-              .then(function(games) {
-                var openGames = {
-                  yourTurn: [],
-                  opponentTurn: [],
-                  finished: []
+      .then(function(userInfo) {
+        console.log('FindUser Begin ------------------------------')
+        if (userInfo.dataValues.online){
+          user.socket = userInfo.dataValues.socket
+          return helpers.retrieveGames(user.name)
+          .then(function(games) {
+            console.log('retrieveGames Begin --------------------------')
+            var openGames = {
+              yourTurn: [],
+              opponentTurn: [],
+              finished: []
+            }
+            games.forEach(function(game) {
+              if (game.dataValues.user1 === user.name ) {
+                  game.dataValues.opponentName = game.dataValues.user2;
+                  game.dataValues.opponentID = game.dataValues.user2ID;
+                } else {
+                  game.dataValues.opponentName = game.dataValues.user1;
+                  game.dataValues.opponentID = game.dataValues.user1ID;
                 }
-                games.forEach(function(game) {
-                  if (game.dataValues.user1 === user.name ) {
-                      console.log('user is user 1 ;;;;;;;;;;;;;;;;;;;;;;')
-                      game.dataValues.opponentName = game.dataValues.user2;
-                      game.dataValues.opponentID = game.dataValues.user2ID;
-                    } else {
-                      console.log('user is player 2 ______________________')
-                      game.dataValues.opponentName = game.dataValues.user1;
-                      game.dataValues.opponentID = game.dataValues.user1ID;
-                    }
 
-                  if (game.dataValues.turn === user.name && game.dataValues.round !== 8) {
-                    openGames.yourTurn.push(game)
-                  } else if (game.dataValues.round == 8 && openGames.finished.length < 5) {
-                    openGames.finished.push(game);
-                  } 
-                  else if (game.dataValues.round !== 8){
-                    openGames.opponentTurn.push(game)
-                  }
-                })
-                console.log('about to send +++++++++++++++_==========================')
-                user.io.to(user.socket).emit('updateHome', openGames)
-              }).catch(function(err){
-                console.log(err)
-              })
-
-          } 
-        }).catch(function(err) {
+              if (game.dataValues.turn === user.name && game.dataValues.round !== 8) {
+                openGames.yourTurn.push(game)
+              } else if (game.dataValues.round == 8 && openGames.finished.length < 5) {
+                openGames.finished.push(game);
+              } 
+              else if (game.dataValues.round !== 8){
+                openGames.opponentTurn.push(game)
+              }
+            })
+            user.io.to(user.socket).emit('updateHome', openGames)
+            console.log('retrieve games end----------------------')
+          }).catch(function(err){
             console.log(err)
           })
 
+      } 
+      console.log('findUser endddd ================================')
+    }).catch(function(err) {
+        console.log(err)
+      })
+
   },
   updateHome: function(user) {
-    console.log('in here')
     return helpers.retrieveGames(user.name)
     .then(function(games) {
+      console.log('retrieveGames updateHome begin --------------')
       var openGames = {
         yourTurn: [],
         opponentTurn: [],
@@ -121,6 +119,7 @@ module.exports = {
 
     
       user.io.to(user.socket).emit('updateHome', openGames)
+      console.log('retrieveGames updateHome end -----------------------')
     }).catch(function(err) {
       console.log(err)
     })
