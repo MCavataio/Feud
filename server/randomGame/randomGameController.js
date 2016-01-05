@@ -167,7 +167,7 @@ module.exports = {
     console.log(opponent.name, "line 141-------------------------")
     if (opponent.name !== 'open') {
       console.log('calling updateScores with *********************', opponent.name)
-      HC.updateeOpponentHome(opponent)
+      HC.updateOpponentHome(opponent)
     }
   }).catch(function(err) {
     console.log(err)
