@@ -164,11 +164,12 @@ module.exports = {
     }
   return helpers.updateScores(update, game)
   .then(function(game) {
-    console.log(opponent.name, "line 141-------------------------")
+    console.log('update scores begin ----------------------------------------')
     if (opponent.name !== 'null') {
       console.log('calling updateScores with *********************', opponent.name)
       HC.updateOpponentHome(opponent)
     }
+    console.log('update score ends ------------------------------------------')
   }).catch(function(err) {
     console.log(err)
   })

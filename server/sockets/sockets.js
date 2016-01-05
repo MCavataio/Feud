@@ -52,9 +52,11 @@ module.exports = function(io) {
 
         return helpers.findUser(user)
         .then(function(userInfo) {
+          console.log('find user begin from updaate home ----------------------------')
           if (!userInfo) {
             return helpers.findOrCreateUser(user)
             .then(function(userData) {
+              console.log('find or create from update home begin ==============================')
               socket.clientID = userData[0].dataValues.id;
                 if(user.updatedUser) {
                 io.to(socket.id).emit('updateHome', "true")
@@ -65,13 +67,14 @@ module.exports = function(io) {
           } else if (!userInfo.dataValues.online) {
             return helpers.updateUser(user)
             .then(function(userData) {
-              console.log(userData, '----------------------')
+              console.log('update user begin in update home -------------------------------------')
               socket.clientID = userInfo.dataValues.id;
               if(user.updatedUser) {
                 io.to(socket.id).emit('updateHome', "true")
               } else {
                 HC.updateHome(user);
               }
+              console.log('update user end in update home ----------------------------------')
             })
           } else {
             socket.clientID = userInfo.dataValues.id;  
@@ -81,6 +84,7 @@ module.exports = function(io) {
                 HC.updateHome(user);
               }
           }
+          console.log('find or create from update home end----------------------------------')
         })
       }
     })
