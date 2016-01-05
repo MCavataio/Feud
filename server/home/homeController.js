@@ -44,6 +44,7 @@ module.exports = {
   updateOpponentHome: function(user) {
     console.log('updateOpponentHome ')
     var userInfo;
+    console.log(user, '-------------------------------user before calling findUser')
     return helpers.findUser(user)
       .then(function(userInfo) {
         console.log('FindUser Begin ------------------------------')
