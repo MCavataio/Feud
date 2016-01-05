@@ -40,27 +40,7 @@ module.exports = function(io) {
       }
       RC.playFriend(info, socket);
     })
-    // once both users are on game page send data
-    // socket.on('initGame', function(data) {
-    //   if (data.name) {
-    //     var user = {
-    //       user: data.name,
-    //       id: this.id,
-    //       io: io
-    //     }
-    //     RC.sendQuestion(user);
-    //   }
-    //   var room = {
-    //     value: this.rooms[1],
-    //     io: io
-    //   }
-    //   if (rooms[room]) {
-    //     GC.getQueries(room)
-    //     delete rooms[room]
-    //   } else {
-    //     rooms[room] = true;
-    //   }
-    // })
+
     socket.on('updateHome', function(user) {
       user = {
         name: user.name,
@@ -69,14 +49,10 @@ module.exports = function(io) {
         io: io
       }
       if (!socket.clientID) {
-        console.log('73 -------------------', user)
-        console.log('1111111111111111')
+
         return helpers.findUser(user)
         .then(function(userInfo) {
-          console.log('76 +++++++++++++++++++++++++++', userInfo)
           if (!userInfo) {
-            console.log('calling find or create user')
-            console.log('2222222222222222222')
             return helpers.findOrCreateUser(user)
             .then(function(userData) {
               socket.clientID = userData[0].dataValues.id;
@@ -85,28 +61,18 @@ module.exports = function(io) {
               } else {
                 HC.updateHome(user);
               }
-            }).catch(function(err) {
-              console.log(err)
             })
-          } if (!userInfo.dataValues.online) {
-            console.log('hereeeeeeeeeeeeeeeeee')
-            console.log('333333333333333333333')
+          } else if (!userInfo.dataValues.online) {
             return helpers.updateUser(user)
             .then(function(userData) {
-              console.log(userInfo.dataValues.id)
               socket.clientID = userInfo.dataValues.id;
               if(user.updatedUser) {
-                console.log('in hereeee updated user')
                 io.to(socket.id).emit('updateHome', "true")
               } else {
                 HC.updateHome(user);
               }
-            }).catch(function(err) {
-              console.log(err)
             })
-          }
-          else {
-            console.log('44444444444444444')
+          } else {
             socket.clientID = userInfo.dataValues.id;  
               if(user.updatedUser) {
                 io.to(socket.id).emit('updateHome', "true")
@@ -114,8 +80,6 @@ module.exports = function(io) {
                 HC.updateHome(user);
               }
           }
-        }).catch(function(err) {
-          console.log(err)
         })
       }
     })
@@ -135,13 +99,12 @@ module.exports = function(io) {
         io: io
       }
       RC.updateScores(data, socket)
-      // if want to go live
-      // socket.broadcast.to(this.rooms[1]).emit('updateScore', {score: data})
-      // console.log(this.rooms, this.id);
     })
+
     socket.on('addPotential', function(data) {
       HC.addPotential(data);
     })
+
     socket.on('disconnect', function() {
       console.log(socket.clientID, '++++++++++++++++')
       helpers.logout(socket.clientID)

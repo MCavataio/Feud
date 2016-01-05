@@ -24,7 +24,6 @@ module.exports = {
         gameInfo
       )
     .then(function (game) {
-      console.log('in hereeeeee --------------------', game)
       resolve(game)
     }).catch(function(err) {
         reject(err)

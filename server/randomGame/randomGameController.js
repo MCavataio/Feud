@@ -33,8 +33,7 @@ module.exports = {
           return helpers.friendGame(info)
         })
         .then(function(response) {
-            // searches for first round question
-            console.log('in responseeeee')
+          // searches for first round question
           gameID = response.dataValues.id;
           opponent = response.dataValues.user2;
           opponentID = response.dataValues.user2ID;
@@ -42,7 +41,6 @@ module.exports = {
         })
         .then(function(question) {
       // sends to respective user
-      console.log(gameID, "+++++++++++++++++++++++++++---------------------")
       var gameInfo = {
         question: question,
         game: gameID,
@@ -50,10 +48,7 @@ module.exports = {
         opponent: opponent,
         opponentID: opponentID
       }
-      console.log('should send')
       socket.io.to(socket.id).emit('playFriend', gameInfo)
-    }).catch(function(err) {
-      console.log(err)
     })
   },
   playGame: function(user, socket) {
@@ -72,6 +67,21 @@ module.exports = {
         opponent = game[0].dataValues.user1
         // updates game to include reference to oppents namne in slot 2
         return helpers.updateOpponent(gameID, user)
+        .then(function(response) {
+          // searches for first round question
+          return helpers.getQueries(rounds)
+        })
+        .then(function(question) {
+          // sends to respective user
+          question = {
+            question: question,
+            game: gameID,
+            user: userCol,
+            opponent: opponent
+          }
+          socket.io.to(socket.id).emit('playRandom', question)
+        })
+
       } else {
         // get counts of queries to determine how many random queries there are in database
         return helpers.getCount()
@@ -90,30 +100,42 @@ module.exports = {
           userCol = 'user1';
           opponent = 'null';
           return helpers.updateRandomGame(game, numbers, lightning)
+          .then(function(response) {
+            // searches for first round question
+            return helpers.getQueries(rounds)
+          })
         })
-      }
-    })
-    .then(function(response) {
-      // searches for first round question
-      return helpers.getQueries(rounds)
-    })
-    .then(function(question) {
-      // sends to respective user
-      console.log(gameID, "+++++++++++++++++++++++++++---------------------")
-      question = {
-        question: question,
-        game: gameID,
-        user: userCol,
-        opponent: opponent
-      }
-      socket.io.to(socket.id).emit('playRandom', question)
-    }).catch(function(err) {
-      console.log(err);
-    })
+          .then(function(question) {
+            // sends to respective user
+            question = {
+              question: question,
+              game: gameID,
+              user: userCol,
+              opponent: opponent
+            }
+            socket.io.to(socket.id).emit('playRandom', question)
+          })
+  //   .then(function(response) {
+  //     // searches for first round question
+  //     return helpers.getQueries(rounds)
+  //   })
+  //   .then(function(question) {
+  //     // sends to respective user
+  //     question = {
+  //       question: question,
+  //       game: gameID,
+  //       user: userCol,
+  //       opponent: opponent
+  //     }
+  //     socket.io.to(socket.id).emit('playRandom', question)
+  //   })
+  // })
 // })
 //     .catch(function(error) {
 //       console.log(error)
 //     })
+}
+})
 }, updateScores: function(data, socket) {
   var user = data.userCol;
   var round = data.round;
@@ -145,7 +167,7 @@ module.exports = {
     console.log(opponent.name, "line 141-------------------------")
     if (opponent.name !== 'open') {
       console.log('calling updateScores with *********************', opponent.name)
-      // HC.updateOpponentHome(opponent)
+      HC.updateeOpponentHome(opponent)
     }
   }).catch(function(err) {
     console.log(err)
