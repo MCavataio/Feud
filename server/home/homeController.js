@@ -48,7 +48,6 @@ module.exports = {
         .then(function(userInfo) {
           console.log(userInfo)
           console.log('11111111111111111in hereeee--------------------------line 50')
-          console.log(userInfo, 'userinfooooooooooo')
           if (userInfo.dataValues.online){
             console.log('oppponent online!!!!!!!!!!!')
             user.socket = userInfo.dataValues.socket
