@@ -52,7 +52,7 @@ module.exports = function(io) {
 
         return helpers.findUser(user)
         .then(function(userInfo) {
-          console.log('find user begin from updaate home ----------------------------')
+          console.log(userInfo, 'find user begin from updaate home ----------------------------')
           if (!userInfo) {
             return helpers.findOrCreateUser(user)
             .then(function(userData) {
