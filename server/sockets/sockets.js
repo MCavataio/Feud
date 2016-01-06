@@ -59,6 +59,7 @@ module.exports = function(io) {
               HC.updateHome(user)
             })
           } else if (!userInfo.dataValues.online) {
+            console.log(' in users not online =-------------')
             return helpers.updateUser(user)
             .then(function(userData) {
               console.log(userData, 'if user is not online')
@@ -68,6 +69,7 @@ module.exports = function(io) {
           } 
         })
       } else {
+        console.log(' userr is online -------------')
             socket.clientID = userInfo.dataValues.id;  
             HC.updateHome(user);
       }

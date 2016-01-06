@@ -42,8 +42,7 @@ module.exports = {
           user.socket = userInfo.dataValues.socket
           return helpers.retrieveGames(user)
           .then(function(games) {
-            var openGames = helpers.parseGames(games, user.name)
-            user.io.to(user.socket).emit('updateHome', openGames)
+            user.io.to(user.socket).emit('updateHome', helpers.parseGames(games, user.name))
           })
       } 
     }).catch(function(err) {
@@ -54,8 +53,7 @@ module.exports = {
   updateHome: function(user) {
     return helpers.retrieveGames(user.name)
     .then(function(games) {
-      var openGames = helpers.parseGames(games, user.name)
-      user.io.to(user.socket).emit('updateHome', openGames)
+      user.io.to(user.socket).emit('updateHome', helpers.parseGames(games, user.name))
     }).catch(function(err) {
       console.log(err)
     })
