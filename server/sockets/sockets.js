@@ -49,7 +49,7 @@ module.exports = function(io) {
         io: io
       }
       if (!socket.clientID) {
-        return helpers.findUser(user)
+        helpers.findUser(user)
         .then(function(userInfo) {
           console.log(userInfo, 'find user begin from updaate home ----------------------------')
           if (!userInfo) {
