@@ -8,15 +8,6 @@ var number = [];
 var usersOnline = {};
 
 
-// helpers.getCount()
-// .then(function(response) {
-//   count = response.count
-//   count++
-//   console.log(count, "++++++++++++++")
-//   number.push(count);
-// }).catch(function(err) {
-//   console.log(err)
-// })
 module.exports = {
   logout: function(socket) {
     var username = usersOnline[socket.id];
@@ -63,10 +54,8 @@ module.exports = {
   updateHome: function(user) {
     return helpers.retrieveGames(user.name)
     .then(function(games) {
-      console.log('retrieveGames updateHome begin --------------')
-      parseGames(games, user.name)
+      helpers.parseGames(games, user.name)
       user.io.to(user.socket).emit('updateHome', openGames)
-      console.log('retrieveGames updateHome end -----------------------')
     }).catch(function(err) {
       console.log(err)
     })
@@ -93,6 +82,7 @@ module.exports = {
       console.log(err)
     })
   },
+
   addPotential: function(data) {
     helpers.findOrCreateQuery(data, 'PotentialQuery')
   },
