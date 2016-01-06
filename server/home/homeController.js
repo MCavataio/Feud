@@ -51,8 +51,12 @@ module.exports = {
   },
 
   updateHome: function(user) {
+    console.log('in updateHome');
     return helpers.retrieveGames(user.name)
     .then(function(games) {
+      var games = helpers.parseGames(games, user.name)
+      console.log(games[0], "games ===========================")
+      console.log(user.socket, "++++++++++++++++++++++++++");
       user.io.to(user.socket).emit('updateHome', helpers.parseGames(games, user.name))
     }).catch(function(err) {
       console.log(err)
