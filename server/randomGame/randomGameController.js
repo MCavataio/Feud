@@ -165,7 +165,7 @@ module.exports = {
   return helpers.updateScores(update, game)
   .then(function(game) {
     if (opponent.name !== 'null') {
-      // HC.updateOpponentHome(opponent)
+      HC.updateOpponentHome(opponent)
     }
   }).catch(function(err) {
     console.log(err)

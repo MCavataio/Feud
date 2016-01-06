@@ -152,17 +152,21 @@ module.exports = {
       })
     })
   },
-  parseGames: function(games) {
+  parseGames: function(games, user) {
     var openGames = {
       yourTurn: [],
       opponentTurn: [],
       finished: []
     }
     games.forEach(function(game) {
-      if (game.dataValues.user1 === user ) {
+      console.log(user, 'user:::::', game.dataValues.user1, 'user1')
+      console.log(user === game.dataValues.user1)
+      if (game.dataValues.user1 == user ) {
+        console.log('in here')
           game.dataValues.opponentName = game.dataValues.user2;
           game.dataValues.opponentID = game.dataValues.user2ID;
         } else {
+          console.log('in else')
           game.dataValues.opponentName = game.dataValues.user1;
           game.dataValues.opponentID = game.dataValues.user1ID;
         }

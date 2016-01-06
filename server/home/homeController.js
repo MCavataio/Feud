@@ -42,7 +42,8 @@ module.exports = {
           user.socket = userInfo.dataValues.socket
           return helpers.retrieveGames(user)
           .then(function(games) {
-            user.io.to(user.socket).emit('updateHome', helpers.parseGames(games, user.name))
+            var openGames = helpers.parseGames(games, user.name)
+            user.io.to(user.socket).emit('updateHome', openGames)
           })
       } 
     }).catch(function(err) {
@@ -51,13 +52,10 @@ module.exports = {
   },
 
   updateHome: function(user) {
-    console.log('in updateHome');
     return helpers.retrieveGames(user.name)
     .then(function(games) {
-      var games = helpers.parseGames(games, user.name)
-      console.log(games[0], "games ===========================")
-      console.log(user.socket, "++++++++++++++++++++++++++");
-      user.io.to(user.socket).emit('updateHome', helpers.parseGames(games, user.name))
+      var openGames = helpers.parseGames(games, user.name)
+      user.io.to(user.socket).emit('updateHome', openGames)
     }).catch(function(err) {
       console.log(err)
     })

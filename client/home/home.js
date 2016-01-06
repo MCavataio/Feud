@@ -25,10 +25,13 @@ angular.module("feud.home", [])
     console.log(data)
   })
   $scope.test = function() {
-    Socket.emit('playRandom', {name: 'mark', id: 5555})
+    Socket.emit('playRandom', {name: 'Mark', id: 5555})
+  }
+  var infoTest = {
+    name: 'Mark'
   }
   $scope.userInfoTest = function() {
-    Socket.emit('updateHome', 'Sandro Anthony')
+    Socket.emit('updateHome', infoTest)
   }
   $scope.getQueries = function(queries) {
     Socket.emit('getQueries', queries)
@@ -94,6 +97,7 @@ angular.module("feud.home", [])
     console.log($rootScope.update)
     if (!$rootScope.update) {
       Socket.on('updateHome', function(data) {
+        console.log(data)
         console.log(data.yourTurn)
         $scope.data.yourTurn = data.yourTurn
 

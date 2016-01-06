@@ -41,37 +41,40 @@ module.exports = function(io) {
       RC.playFriend(info, socket);
     })
 
-    socket.on('updateHome', function(user) {
-      user = {
-        name: user.name,
+    socket.on('updateHome', function(data) {
+      console.log(data)
+      var user = {
+        name: data.name,
         isPlayer: true,
         socket: socket.id,
         io: io
       }
       if (!socket.clientID) {
-        helpers.findUser(user)
+        return helpers.findUser(user)
         .then(function(userInfo) {
-          console.log(userInfo, 'find user begin from updaate home ----------------------------')
           if (!userInfo) {
+            console.log('here')
             return helpers.findOrCreateUser(user)
             .then(function(userData) {
+              console.log('in find or create')
               socket.clientID = userData[0].dataValues.id;
               HC.updateHome(user)
             })
           } else if (!userInfo.dataValues.online) {
-            console.log(' in users not online =-------------')
+            console.log('about to update')
             return helpers.updateUser(user)
             .then(function(userData) {
-              console.log(userData, 'if user is not online')
               socket.clientID = userInfo.dataValues.id;
               HC.updateHome(user);
             })
-          } 
-        })
-      } else {
-        console.log(' userr is online -------------')
+          } else {
+            console.log(' in else')
             socket.clientID = userInfo.dataValues.id;  
             HC.updateHome(user);
+          }
+        })
+      } else {
+        HC.updateHome(user);
       }
     })
 
