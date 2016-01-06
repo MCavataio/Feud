@@ -149,27 +149,24 @@ module.exports = {
       turn: opponent,
       round: data.round
     } 
-  }else {
+  } else {
     var update = {
       user2Total: score,
       turn: opponent,
       round: data.round
     }
   }
-    var opponent = {
-      name: opponent,
-      isOpponent: true,
-      io: socket.io,
-      game: game
-    }
+  var opponent = {
+    name: opponent,
+    isOpponent: true,
+    io: socket.io,
+    game: game
+  }
   return helpers.updateScores(update, game)
   .then(function(game) {
-    console.log('update scores begin ----------------------------------------')
     if (opponent.name !== 'null') {
-      console.log('calling updateScores with *********************', opponent.name)
       HC.updateOpponentHome(opponent)
     }
-    console.log('update score ends ------------------------------------------')
   }).catch(function(err) {
     console.log(err)
   })

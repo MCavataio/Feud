@@ -41,85 +41,30 @@ module.exports = {
       data.io.to(data.socket).emit('getQueries', queries)
     })
   },
+
   updateOpponentHome: function(user) {
     console.log('updateOpponentHome ')
     var userInfo;
-    console.log('-------------------------------user before calling findUser')
     return helpers.findUser(user)
       .then(function(userInfo) {
-        console.log('FindUser Begin ------------------------------')
         if (userInfo.dataValues.online){
           user.socket = userInfo.dataValues.socket
-          return helpers.retrieveGames(user.name)
+          return helpers.retrieveGames(user)
           .then(function(games) {
-            console.log('retrieveGames Begin --------------------------')
-            var openGames = {
-              yourTurn: [],
-              opponentTurn: [],
-              finished: []
-            }
-            games.forEach(function(game) {
-              if (game.dataValues.user1 === user.name ) {
-                  game.dataValues.opponentName = game.dataValues.user2;
-                  game.dataValues.opponentID = game.dataValues.user2ID;
-                } else {
-                  game.dataValues.opponentName = game.dataValues.user1;
-                  game.dataValues.opponentID = game.dataValues.user1ID;
-                }
-
-              if (game.dataValues.turn === user.name && game.dataValues.round !== 8) {
-                openGames.yourTurn.push(game)
-              } else if (game.dataValues.round == 8 && openGames.finished.length < 5) {
-                openGames.finished.push(game);
-              } 
-              else if (game.dataValues.round !== 8){
-                openGames.opponentTurn.push(game)
-              }
-            })
-            console.log(openGames, '------------------')
+            helpers.parseGames(games, user)
             user.io.to(user.socket).emit('updateHome', openGames)
-            console.log('retrieve games end----------------------')
-          }).catch(function(err){
-            console.log(err)
           })
-
       } 
-      console.log('findUser endddd ================================')
     }).catch(function(err) {
         console.log(err)
       })
-
   },
+
   updateHome: function(user) {
     return helpers.retrieveGames(user.name)
     .then(function(games) {
       console.log('retrieveGames updateHome begin --------------')
-      var openGames = {
-        yourTurn: [],
-        opponentTurn: [],
-        finished: []
-      }
-      games.forEach(function(game) {
-        if (game.dataValues.user1 === user.name ) {
-            game.dataValues.opponentName = game.dataValues.user2;
-            game.dataValues.opponentID = game.dataValues.user2ID;
-          } else {
-            game.dataValues.opponentName = game.dataValues.user1;
-            game.dataValues.opponentID = game.dataValues.user1ID;
-          }
-
-        if (game.dataValues.turn === user.name) {
-          openGames.yourTurn.push(game)
-        } else if (game.dataValues.round == 8 && openGames.finished.length < 5) {
-          game.dataValues.round = 'Finished';
-          openGames.finished.push(game);
-        } 
-        else {
-          openGames.opponentTurn.push(game)
-        }
-      })
-
-    
+      parseGames(games, user.name)
       user.io.to(user.socket).emit('updateHome', openGames)
       console.log('retrieveGames updateHome end -----------------------')
     }).catch(function(err) {

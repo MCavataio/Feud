@@ -152,8 +152,34 @@ module.exports = {
       })
     })
   },
+  parseGames: function(games) {
+    var openGames = {
+      yourTurn: [],
+      opponentTurn: [],
+      finished: []
+    }
+    games.forEach(function(game) {
+      if (game.dataValues.user1 === user ) {
+          game.dataValues.opponentName = game.dataValues.user2;
+          game.dataValues.opponentID = game.dataValues.user2ID;
+        } else {
+          game.dataValues.opponentName = game.dataValues.user1;
+          game.dataValues.opponentID = game.dataValues.user1ID;
+        }
+
+      if (game.dataValues.turn === user && game.dataValues.round !== 8) {
+        openGames.yourTurn.push(game)
+      } else if (game.dataValues.round == 8 && openGames.finished.length < 5) {
+        openGames.finished.push(game);
+      } 
+      else if (game.dataValues.round !== 8){
+        openGames.opponentTurn.push(game)
+      }
+    })
+    return games;
+  },
   findUser: function(user) {
-    return new  Promise(function(resolve, reject) {
+    return new Promise(function(resolve, reject) {
       db.User.findOne({
         where: {
           name: user.name
