@@ -49,44 +49,27 @@ module.exports = function(io) {
         io: io
       }
       if (!socket.clientID) {
-
         return helpers.findUser(user)
         .then(function(userInfo) {
           console.log(userInfo, 'find user begin from updaate home ----------------------------')
           if (!userInfo) {
             return helpers.findOrCreateUser(user)
             .then(function(userData) {
-              console.log('find or create from update home begin ==============================')
               socket.clientID = userData[0].dataValues.id;
-                if(user.updatedUser) {
-                io.to(socket.id).emit('updateHome', "true")
-              } else {
-                HC.updateHome(user);
-              }
-              console.log('find or create from update home end ======================================')
+              HC.updateHome(user)
             })
           } else if (!userInfo.dataValues.online) {
             return helpers.updateUser(user)
             .then(function(userData) {
-              console.log('update user begin in update home -------------------------------------')
+              console.log(userData, 'if user is not online')
               socket.clientID = userInfo.dataValues.id;
-              if(user.updatedUser) {
-                io.to(socket.id).emit('updateHome', "true")
-              } else {
-                HC.updateHome(user);
-              }
-              console.log('update user end in update home ----------------------------------')
+              HC.updateHome(user);
             })
-          } else {
-            socket.clientID = userInfo.dataValues.id;  
-              if(user.updatedUser) {
-                io.to(socket.id).emit('updateHome', "true")
-              } else {
-                HC.updateHome(user);
-              }
-          }
-          console.log('find user from update home end----------------------------------')
+          } 
         })
+      } else {
+            socket.clientID = userInfo.dataValues.id;  
+            HC.updateHome(user);
       }
     })
 
