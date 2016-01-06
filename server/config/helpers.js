@@ -180,7 +180,7 @@ module.exports = {
         openGames.opponentTurn.push(game)
       }
     })
-    return games;
+    return openGames;
   },
   findUser: function(user) {
     return new Promise(function(resolve, reject) {
