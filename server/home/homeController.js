@@ -35,12 +35,12 @@ module.exports = {
 
   updateOpponentHome: function(user) {
     console.log('updateOpponentHome ')
-    var userInfo;
     return helpers.findUser(user)
       .then(function(userInfo) {
+        console.log(userInfo)
         if (userInfo.dataValues.online){
           user.socket = userInfo.dataValues.socket
-          return helpers.retrieveGames(user)
+          return helpers.retrieveGames(user.name)
           .then(function(games) {
             var openGames = helpers.parseGames(games, user.name)
             user.io.to(user.socket).emit('updateHome', openGames)
