@@ -25,7 +25,7 @@ angular.module("feud.home", [])
     console.log(data)
   })
   $scope.test = function() {
-    Socket.emit('playRandom', {name: 'Mark', id: 5555})
+    Socket.emit('playRandom', {name: 'Max', id: 553})
   }
   var infoTest = {
     name: 'Mark'
