@@ -30,7 +30,7 @@ module.exports = {
           info.questionRD2 = numbers[1];
           info.questionRD3 = numbers[2];
           info.questionRD4 = lightning
-          console.log(info, "----------------------------"
+          console.log(info, "----------------------------")
           return helpers.friendGame(info)
         })
         .then(function(response) {
