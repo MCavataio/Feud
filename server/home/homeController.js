@@ -14,18 +14,7 @@ module.exports = {
     delete usersOnline[socket.id];
     delete usersOnline[username];
   },
-  // updateUser: function(opponent) {
-  //   if (usersOnline[opponent]) {
-  //     var user = {
-  //       name: opponent,
-  //       id: usersOnline[opponent],
-  //       io: opponent.io,
-  //       game: opponent.game,
-  //       fromUpdate: true
-  //     }
-  //   }
-  //   updateHome(user)
-  // },
+
   getQueries: function(data) {
     return helpers.getQueries(data.ids)
     .then(function(queries) {
@@ -90,8 +79,6 @@ module.exports = {
   user: function(userInfo) {
     helpers.findOrCreateUser(userInfo)
     .then(function(user) {
-      // console.log(user, "before being send +++++++++++++++")
-      // console.log(userInfo.socket);
       userInfo.io.to(userInfo.socket).emit('userInfo', user);
     }).catch(function(error) {
       console.log(error)

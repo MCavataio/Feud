@@ -12,6 +12,14 @@ angular.module("feud.home", [])
   /////// Login
   //////////////////////////////////////////
 
+  var updateScore = {
+    socre: 200,
+    round: 2,
+    gameID: 4,
+    userCol: 'user1',
+    opponent: 'Michael'
+  }
+
        var gameInfo = {
             user2: 'Sandro Anthony',
             user2ID: 5555555,

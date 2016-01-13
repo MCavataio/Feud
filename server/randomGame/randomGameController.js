@@ -15,6 +15,7 @@ module.exports = {
     var gameID;
     var opponent;
     var opponentID;
+    var opponentScore;
     return helpers.getCount()
         .then(function(response) {
           // returns 8 random numbers based off the count value
@@ -30,7 +31,6 @@ module.exports = {
           info.questionRD2 = numbers[1];
           info.questionRD3 = numbers[2];
           info.questionRD4 = lightning
-          console.log(info, "----------------------------")
           return helpers.friendGame(info)
         })
         .then(function(response) {
@@ -38,6 +38,7 @@ module.exports = {
           gameID = response.dataValues.id;
           opponent = response.dataValues.user2;
           opponentID = response.dataValues.user2ID;
+          opponentScore = response.datavalues.user2Total
           return helpers.getQueries(rounds)
         })
         .then(function(question) {
@@ -47,7 +48,8 @@ module.exports = {
         game: gameID,
         user: 'user1',
         opponent: opponent,
-        opponentID: opponentID
+        opponentID: opponentID,
+        opponentScore: opponentScore
       }
       socket.io.to(socket.id).emit('playFriend', gameInfo)
     })
@@ -57,6 +59,7 @@ module.exports = {
     var userCol;
     var rounds;
     var opponent;
+    var opponentScore;
     // finds game where there is an open slot or creates a new game
     return helpers.findRandomGame(user)
     .then(function(game) {
@@ -66,6 +69,7 @@ module.exports = {
         gameID = game[0].dataValues.id
         userCol = 'user2'
         opponent = game[0].dataValues.user1
+        opponentScore = game[0].dataValues.user1Total
         // updates game to include reference to oppents namne in slot 2
         return helpers.updateOpponent(gameID, user)
         .then(function(response) {
@@ -78,7 +82,8 @@ module.exports = {
             question: question,
             game: gameID,
             user: userCol,
-            opponent: opponent
+            opponent: opponent,
+            opponentScore: opponentScore
           }
           socket.io.to(socket.id).emit('playRandom', question)
         })
@@ -116,26 +121,7 @@ module.exports = {
             }
             socket.io.to(socket.id).emit('playRandom', question)
           })
-  //   .then(function(response) {
-  //     // searches for first round question
-  //     return helpers.getQueries(rounds)
-  //   })
-  //   .then(function(question) {
-  //     // sends to respective user
-  //     question = {
-  //       question: question,
-  //       game: gameID,
-  //       user: userCol,
-  //       opponent: opponent
-  //     }
-  //     socket.io.to(socket.id).emit('playRandom', question)
-  //   })
-  // })
-// })
-//     .catch(function(error) {
-//       console.log(error)
-//     })
-}
+      }
 })
 }, updateScores: function(data, socket) {
   var user = data.userCol;

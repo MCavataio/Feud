@@ -24,23 +24,6 @@ module.exports = {
     data.io.to(data.id).emit('fuzzyCheck', greatest)
   },
 
-  // fuzzyCheck: function(req, res, next) {
-  //   var responses = req.body.responses
-  //   var guess = req.body.guess
-  //   var greatest = {
-  //     value: .1,
-  //     index: null
-  //   } 
-  //   for (var i = 0; i < responses.length; i++) {
-  //     var ratio = natural.JaroWinklerDistance(responses[i], guess)
-  //     if (ratio > greatest.value) {
-  //       greatest.value = ratio;
-  //       greatest.index = i
-  //     }
-  //   }
-  //   res.json(greatest);
-
-  // },
   getQueries: function(room) {
     helpers.getCount()
     .then(function(size) {
@@ -55,16 +38,4 @@ module.exports = {
       console.log(err)
     })
   }
-
-  // startRound: function(req, res, next) {
-  //   console.log(req.params.id)
-  //   helpers.getQuery(req.params.id, function (err, response) {
-  //     if (err) {
-  //       console.log(err);
-  //     } else {
-  //         req.io.sockets.to('req.paramas.id').emit('playRound', response)
-  //       // res.json(response);
-  //     }
-  //   })
-  // },
 }

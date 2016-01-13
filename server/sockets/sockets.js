@@ -23,7 +23,6 @@ module.exports = function(io) {
       HC.user(user);
     })
 
-    //************************************************
     // initializes games for playing Random Opponent
     socket.on('playRandom', function(user) {
       console.log('in playRandom')
