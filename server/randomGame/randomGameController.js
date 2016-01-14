@@ -38,7 +38,6 @@ module.exports = {
           gameID = response.dataValues.id;
           opponent = response.dataValues.user2;
           opponentID = response.dataValues.user2ID;
-          opponentScore = response.datavalues.user2Total
           return helpers.getQueries(rounds)
         })
         .then(function(question) {
