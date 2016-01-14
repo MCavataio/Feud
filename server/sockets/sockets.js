@@ -99,8 +99,9 @@ module.exports = function(io) {
     })
 
     socket.on('disconnect', function() {
-      console.log(socket.clientID, '++++++++++++++++')
-      helpers.logout(socket.clientID)
+      if (socket.clientID) {
+        helpers.logout(socket.clientID)
+      }
     })
   })
 }
