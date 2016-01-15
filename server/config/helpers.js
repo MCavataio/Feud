@@ -44,6 +44,7 @@ module.exports = {
         user1: user.name,
         user1ID: String(user.id),
         user2: 'open',
+        user2Total: 0,
         created: 0
         }
       })
@@ -164,10 +165,14 @@ module.exports = {
         console.log('in here')
           game.dataValues.opponentName = game.dataValues.user2;
           game.dataValues.opponentID = game.dataValues.user2ID;
+          game.dataValues.opponentScore = game.dataValues.user2Total;
+          game.dataValues.yourScore = game.dataValues.user1Total;
         } else {
           console.log('in else')
           game.dataValues.opponentName = game.dataValues.user1;
           game.dataValues.opponentID = game.dataValues.user1ID;
+          game.dataValues.opponentScore = game.dataValues.user1Total;
+          game.dataValues.yourScore = game.dataValues.user2Total;
         }
 
       if (game.dataValues.turn === user && game.dataValues.round !== 8) {
