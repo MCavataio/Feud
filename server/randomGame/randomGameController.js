@@ -30,7 +30,8 @@ module.exports = {
           info.questionRD1 = numbers[0];
           info.questionRD2 = numbers[1];
           info.questionRD3 = numbers[2];
-          info.questionRD4 = lightning
+          info.questionRD4 = lightning;
+          info.user2Total = 0;
           return helpers.friendGame(info)
         })
         .then(function(response) {
