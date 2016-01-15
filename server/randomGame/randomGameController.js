@@ -37,7 +37,7 @@ module.exports = {
           // searches for first round question
           gameID = response.dataValues.id;
           opponent = response.dataValues.user2;
-          opponentID = response.dataValues.user2ID;
+          opponentID = Number(response.dataValues.user2ID);
           return helpers.getQueries(rounds)
         })
         .then(function(question) {

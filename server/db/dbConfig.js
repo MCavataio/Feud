@@ -54,8 +54,8 @@ var FriendGame = db.define('game', {
 
 var RandomGame = db.define('randomGame', {
   user1: Sequelize.STRING,
-  user1ID: Sequelize.INTEGER,
-  user2ID: Sequelize.INTEGER,
+  user1ID: Sequelize.STRING,
+  user2ID: Sequelize.STRING,
   created: Sequelize.INTEGER,
   user2: Sequelize.STRING,
   round: Sequelize.INTEGER,
@@ -89,7 +89,7 @@ var Query = db.define('query', {
   response10: Sequelize.STRING
 });
 
-db.sync({force: false})
+db.sync({force: true})
   .then(function(err) {
     console.log('created database')
   }, function (err) {

@@ -31,7 +31,6 @@ module.exports = {
   })
   },
   findRandomGame: function(user) {
-    console.log(user, "++++++++++")
     return new Promise(function(resolve, reject) {
       db.RandomGame.findOrCreate({ 
         where: {
@@ -43,7 +42,7 @@ module.exports = {
           }
         }, defaults: {
         user1: user.name,
-        user1ID: user.id,
+        user1ID: String(user.id),
         user2: 'open',
         created: 0
         }
@@ -60,7 +59,7 @@ module.exports = {
     return new Promise(function(resolve, reject) {
       db.RandomGame.update({
         user2: user.name,
-        user2ID: game,
+        user2ID: String(user.id),
         created: 2
       }, {
         where:

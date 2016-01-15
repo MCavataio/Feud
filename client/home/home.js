@@ -22,7 +22,7 @@ angular.module("feud.home", [])
 
        var gameInfo = {
             user2: 'Sandro Anthony',
-            user2ID: 5555555,
+            user2ID: 55555555555555555,
             user1: 'Michael Vincent',
             user1ID: 33333333
         }
@@ -33,7 +33,7 @@ angular.module("feud.home", [])
     console.log(data)
   })
   $scope.test = function() {
-    Socket.emit('playRandom', {name: 'Max', id: 553})
+    Socket.emit('playRandom', {name: 'Max', id: 555555555555555555})
   }
   var infoTest = {
     name: 'Mark'
